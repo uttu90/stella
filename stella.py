@@ -13,6 +13,9 @@ class Stock(object):
     def current_value(self):
         return self.values[-1]
 
+    def values(self):
+        return self.values
+
     def __call__(self):
         self.values.append(self.change_value)
 

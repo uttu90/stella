@@ -6,7 +6,7 @@ import numpy as np
 
 # Form the time simulation
 start = 0
-stop = 12.0
+stop = 50.0
 step = 0.25
 time_simulation = np.arange(start, stop, step)
 
@@ -37,7 +37,7 @@ for time in time_simulation:
     death_flow(100)
     stock()
 
-plot(np.append(time_simulation, stop), stock.values)
+plot(np.append(time_simulation, stop), stock.values())
 show()
 
 

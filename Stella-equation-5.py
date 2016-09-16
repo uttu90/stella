@@ -50,7 +50,7 @@ for time in time_simulation:
     stockX()
     stockY()
 
-plot(np.append(time_simulation, stop), stockX.values,'r--',np.append(time_simulation, stop) ,stockY.values)
+plot(np.append(time_simulation, stop), stockX.values(),'r--',np.append(time_simulation, stop) ,stockY.values())
 show()
 
 

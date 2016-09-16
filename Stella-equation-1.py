@@ -30,6 +30,6 @@ for time in time_simulation:
     flow(converter())
     stock()
 
-plot(np.append(time_simulation, stop), stock.values)
+plot(np.append(time_simulation, stop), stock.values())
 show()
 
