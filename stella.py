@@ -8,12 +8,13 @@ class Stock(object):
     def __init__(self, init_value):
         self.values = []
         self.values.append(init_value)
+        self.change_value = init_value
 
-    def run(self):
+    def current_value(self):
         return self.values[-1]
 
-    def update(self, new_value):
-        self.values.append(new_value)
+    def __call__(self):
+        self.values.append(self.change_value)
 
 class Flow(object):
     ''''''
@@ -22,11 +23,12 @@ class Flow(object):
         self.source_stock = source_stock
         self.destination_stock = destination_stock
 
-
     def __call__(self, *args):
-        flow_in = 0 if not self.destination_stock else self.destination_stock() + self.change(args)
-        flow_out = 0 if not self.source_stock else self.source_stock() + self.change(args)
-        return flow_in, flow_out
+        if self.source_stock is not None:
+            self.source_stock.change_value = self.source_stock.change_value - self.change(args)
+
+        if self.destination_stock is not None:
+            self.destination_stock.change_value = self.destination_stock.change_value + self.change(args)
 
 
 class Converter(object):
@@ -36,15 +38,33 @@ class Converter(object):
     def __init__(self, convert_function):
         self.convert_function = convert_function
 
-
     def __call__(self, *args):
         return self.convert_function(args)
 
 if __name__ == '__main__':
-    def v_flow():
+
+    def v_flow(x):
+        return x[0]
+
+    def x_flow(x):
+        return x[0]
 
     init_v = 0
     init_x = 0
 
     velocity = Stock(init_v)
     position = Stock(init_x)
+
+    velocity_flow = Flow(v_flow, None, velocity)
+    position_flow = Flow(x_flow, None, position)
+
+    for i in range(0, 1000):
+        velocity_flow(1)
+        position_flow(velocity.current_value())
+        velocity()
+        position()
+    print(position.values)
+    plot(position.values)
+    show()
+    plot(velocity.values)
+    show()
