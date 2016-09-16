@@ -18,17 +18,20 @@ class Stock(object):
 
 class Flow(object):
     ''''''
-    def __init__(self, change_function, source_stock, destination_stock):
+    def __init__(self, time_step, change_function, source_stock, destination_stock):
         self.change = change_function
         self.source_stock = source_stock
         self.destination_stock = destination_stock
+        self.time_step = time_step
 
     def __call__(self, *args):
         if self.source_stock is not None:
-            self.source_stock.change_value = self.source_stock.change_value - self.change(args)
+            self.source_stock.change_value = self.source_stock.change_value - self.change(args)*self.time_step
 
         if self.destination_stock is not None:
-            self.destination_stock.change_value = self.destination_stock.change_value + self.change(args)
+            self.destination_stock.change_value = self.destination_stock.change_value + self.change(args)*self.time_step
+
+        return self.change(args)
 
 
 class Converter(object):
