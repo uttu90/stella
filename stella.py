@@ -6,18 +6,18 @@ from pylab import *
 class Stock(object):
     ''''''
     def __init__(self, init_value):
-        self.values = []
-        self.values.append(init_value)
+        self._values = []
+        self._values.append(init_value)
         self.change_value = init_value
 
     def current_value(self):
-        return self.values[-1]
+        return self._values[-1]
 
     def values(self):
-        return self.values
+        return self._values
 
     def __call__(self):
-        self.values.append(self.change_value)
+        self._values.append(self.change_value)
 
 class Flow(object):
     ''''''

@@ -6,7 +6,7 @@ import numpy as np
 
 # Form the time simulation
 start = 0
-stop = 50.0
+stop = 100.0
 step = 0.25
 time_simulation = np.arange(start, stop, step)
 
