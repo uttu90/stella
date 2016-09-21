@@ -22,6 +22,7 @@ def f_converter(x):
     return 10
 
 
+
 flow = Flow(step, f_flow, source_stock=None, destination_stock=stock)
 converter = Converter(f_converter)
 
