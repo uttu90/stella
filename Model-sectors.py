@@ -1,8 +1,17 @@
 __author__ = 'TuHV'
 
 import numpy as np
+from pylab import *
 
 # Constants
+
+# 0. RAINFALL
+I_UseSpatVarRain_ = 0.0
+I_RainMultiplier = 1.0
+I_RainCycle_ = 0.0
+I_Rain_IntensMean = 10.0
+I_Rain_IntensCoefVar = 0.30
+II_Rain_GenSeed = 200.0
 
 # 1. SOIL AND PLANT WATER
 
@@ -102,3 +111,9 @@ O_FrSurfQuickFlow = 0.0
 O_Hepp_Kwh_per_dayMP = [0.0, 0.0, 0.0]
 O_CumHEPPOutFlowMP = [0.0, 0.0, 0.0]
 O_RelOpTimeHEPPMP = [0.0, 0.0, 0.0]
+
+
+# Translate sector
+
+I_DailyRain_ = np.zeros(10950)
+I_DailyRain = I_RainMultiplier * I_DailyRain_
