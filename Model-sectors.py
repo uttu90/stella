@@ -2,6 +2,7 @@ __author__ = 'TuHV'
 
 import numpy as np
 from pylab import *
+from Read_Input import *
 
 # Constants
 
@@ -115,5 +116,5 @@ O_RelOpTimeHEPPMP = [0.0, 0.0, 0.0]
 
 # Translate sector
 
-I_DailyRain_ = np.zeros(10950)
-I_DailyRain = I_RainMultiplier * I_DailyRain_
+
+

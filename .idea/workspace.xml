@@ -23,18 +23,8 @@
       <file leaf-file-name="stella.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/stella.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
+            <state relative-caret-position="-26">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Stella-equation-1.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Stella-equation-1.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -43,8 +33,8 @@
       <file leaf-file-name="Model-sectors.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Model-sectors.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="505">
-              <caret line="119" column="0" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
+            <state relative-caret-position="1581">
+              <caret line="117" column="0" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
               <folding>
                 <element signature="e#21#39#0" expanded="true" />
               </folding>
@@ -52,13 +42,37 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Excel-tutorial.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Sectors.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Sectors.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="178">
+              <caret line="70" column="13" selection-start-line="70" selection-start-column="13" selection-end-line="70" selection-end-column="13" />
+              <folding>
+                <element signature="e#21#51#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Excel-tutorial.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Excel-tutorial.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="19" column="34" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
+            <state relative-caret-position="289">
+              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="34" />
               <folding>
                 <element signature="e#19#30#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Read_Input.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Read_Input.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="348">
+              <caret line="43" column="53" selection-start-line="43" selection-start-column="53" selection-end-line="43" selection-end-column="53" />
+              <folding>
+                <element signature="e#21#32#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -67,7 +81,7 @@
       <file leaf-file-name="Stella-equation-2.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Stella-equation-2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
+            <state relative-caret-position="365">
               <caret line="32" column="53" selection-start-line="32" selection-start-column="53" selection-end-line="32" selection-end-column="53" />
               <folding />
             </state>
@@ -135,8 +149,10 @@
         <option value="$PROJECT_DIR$/Stella-equation-5.py" />
         <option value="$PROJECT_DIR$/stella.py" />
         <option value="$PROJECT_DIR$/Stella-equation-4.py" />
-        <option value="$PROJECT_DIR$/Model-sectors.py" />
         <option value="$PROJECT_DIR$/Excel-tutorial.py" />
+        <option value="$PROJECT_DIR$/Read_Input.py" />
+        <option value="$PROJECT_DIR$/Model-sectors.py" />
+        <option value="$PROJECT_DIR$/Sectors.py" />
       </list>
     </option>
   </component>
@@ -200,24 +216,7 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
-  <component name="RunManager" selected="Python.Excel-tutorial">
-    <configuration default="false" name="Stella-equation-4" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="stella" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Stella-equation-4.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Python.Read_Input">
     <configuration default="false" name="Stella-equation-5" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -282,6 +281,23 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="stella" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Excel-tutorial.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Read_Input" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="stella" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Read_Input.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -421,19 +437,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.Stella-equation-4" />
-      <item index="1" class="java.lang.String" itemvalue="Python.Stella-equation-5" />
-      <item index="2" class="java.lang.String" itemvalue="Python.Stella-equation-1" />
-      <item index="3" class="java.lang.String" itemvalue="Python.Model-sectors" />
-      <item index="4" class="java.lang.String" itemvalue="Python.Excel-tutorial" />
+      <item index="0" class="java.lang.String" itemvalue="Python.Stella-equation-5" />
+      <item index="1" class="java.lang.String" itemvalue="Python.Stella-equation-1" />
+      <item index="2" class="java.lang.String" itemvalue="Python.Model-sectors" />
+      <item index="3" class="java.lang.String" itemvalue="Python.Excel-tutorial" />
+      <item index="4" class="java.lang.String" itemvalue="Python.Read_Input" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.Excel-tutorial" />
-        <item index="1" class="java.lang.String" itemvalue="Python.Model-sectors" />
-        <item index="2" class="java.lang.String" itemvalue="Python.Stella-equation-1" />
-        <item index="3" class="java.lang.String" itemvalue="Python.Stella-equation-5" />
-        <item index="4" class="java.lang.String" itemvalue="Python.Stella-equation-4" />
+        <item index="0" class="java.lang.String" itemvalue="Python.Read_Input" />
+        <item index="1" class="java.lang.String" itemvalue="Python.Excel-tutorial" />
+        <item index="2" class="java.lang.String" itemvalue="Python.Model-sectors" />
+        <item index="3" class="java.lang.String" itemvalue="Python.Stella-equation-1" />
+        <item index="4" class="java.lang.String" itemvalue="Python.Stella-equation-5" />
       </list>
     </recent_temporary>
   </component>
@@ -454,7 +470,7 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14860907" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14787701" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -489,22 +505,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Stella-equation-6.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="867">
-          <caret line="53" column="6" selection-start-line="53" selection-start-column="6" selection-end-line="53" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stella.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Stella-equation-1.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
@@ -833,26 +833,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Stella-equation-1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Stella-equation-3.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="629">
           <caret line="39" column="53" selection-start-line="39" selection-start-column="53" selection-end-line="39" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Stella-equation-6.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="867">
-          <caret line="53" column="6" selection-start-line="53" selection-start-column="6" selection-end-line="53" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Stella-equation-2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="32" column="53" selection-start-line="32" selection-start-column="53" selection-end-line="32" selection-end-column="53" />
           <folding />
         </state>
       </provider>
@@ -873,17 +865,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Stella-equation-1.py">
+    <entry file="file://$PROJECT_DIR$/Stella-equation-6.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+        <state relative-caret-position="867">
+          <caret line="53" column="6" selection-start-line="53" selection-start-column="6" selection-end-line="53" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Excel-tutorial.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="34" />
+          <folding>
+            <element signature="e#19#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Read_Input.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="43" column="53" selection-start-line="43" selection-start-column="53" selection-end-line="43" selection-end-column="53" />
+          <folding>
+            <element signature="e#21#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Stella-equation-2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="32" column="53" selection-start-line="32" selection-start-column="53" selection-end-line="32" selection-end-column="53" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/stella.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
+        <state relative-caret-position="-26">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="19" />
           <folding />
         </state>
@@ -891,20 +911,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Model-sectors.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="505">
-          <caret line="119" column="0" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
+        <state relative-caret-position="1581">
+          <caret line="117" column="0" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
           <folding>
             <element signature="e#21#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Excel-tutorial.py">
+    <entry file="file://$PROJECT_DIR$/Sectors.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="34" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
+        <state relative-caret-position="178">
+          <caret line="70" column="13" selection-start-line="70" selection-start-column="13" selection-end-line="70" selection-end-column="13" />
           <folding>
-            <element signature="e#19#30#0" expanded="true" />
+            <element signature="e#21#51#0" expanded="true" />
           </folding>
         </state>
       </provider>

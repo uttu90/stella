@@ -15,8 +15,9 @@ print wksheet.name
 print wksheet.nrows
 print wksheet.ncols
 
-col = wksheet.col_values(27)
+col = wksheet.col_values(0)
 print col
+print type(col[5])
 col1 = [x for x in col if x != '']
 print col1
 
