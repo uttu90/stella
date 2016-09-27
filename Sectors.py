@@ -69,16 +69,209 @@ I_RFlowdata_mmday = Flow(f_I_RFlowdata_mmday, None, O_CumDebitData)
 
 # 3. I Landcover
 VegClass = 20
-I_InterceptClass = [0 for i in range(11)]
-I_RelDroughtFact = [0 for i in range(11)]
+I_InterceptClass = [0 for i in range(VegClass)]
+I_RelDroughtFact = [0 for i in range(VegClass)]
 
 Subcatchment = 20
-D_FeedingIntoLake_ = [1 for i in range(20)]
-I_RoutingDistance = [0 for i in range(20)]
-I_Area = [0 for i in range(20)]
+D_FeedingIntoLake_ = [1 for i in range(Subcatchment)]
+I_RoutingDistance = [0 for i in range(Subcatchment)]
+I_Area = [0 for i in range(Subcatchment)]
 I_TotalArea = sum(I_Area)
 I_RelArea = I_Area/I_TotalArea
 
 
+I_Frac1_1 = [0 for i in range(Subcatchment)]
+I_Frac2_1 = [0 for i in range(Subcatchment)]
+I_Frac3_1 = [0 for i in range(Subcatchment)]
+I_Frac4_1 = [0 for i in range(Subcatchment)]
+I_Frac5_1 = [0 for i in range(Subcatchment)]
+I_Frac6_1 = [0 for i in range(Subcatchment)]
+I_Frac7_1 = [0 for i in range(Subcatchment)]
+I_Frac8_1 = [0 for i in range(Subcatchment)]
+I_Frac9_1 = [0 for i in range(Subcatchment)]
+I_Frac10_1 = [0 for i in range(Subcatchment)]
+I_Frac11_1 = [0 for i in range(Subcatchment)]
+I_Frac12_1 = [0 for i in range(Subcatchment)]
+I_Frac13_1 = [0 for i in range(Subcatchment)]
+I_Frac14_1 = [0 for i in range(Subcatchment)]
+I_Frac15_1 = [0 for i in range(Subcatchment)]
+I_Frac16_1 = [0 for i in range(Subcatchment)]
+I_Frac17_1 = [0 for i in range(Subcatchment)]
+I_Frac18_1 = [0 for i in range(Subcatchment)]
+I_Frac19_1 = [0 for i in range(Subcatchment)]
+I_Frac20_1 = [0 for i in range(Subcatchment)]
 
 
+I_Frac1_2 = [0 for i in range(Subcatchment)]
+I_Frac2_2 = [0 for i in range(Subcatchment)]
+I_Frac3_2 = [0 for i in range(Subcatchment)]
+I_Frac4_2 = [0 for i in range(Subcatchment)]
+I_Frac5_2 = [0 for i in range(Subcatchment)]
+I_Frac6_2 = [0 for i in range(Subcatchment)]
+I_Frac7_2 = [0 for i in range(Subcatchment)]
+I_Frac8_2 = [0 for i in range(Subcatchment)]
+I_Frac9_2 = [0 for i in range(Subcatchment)]
+I_Frac10_2 = [0 for i in range(Subcatchment)]
+I_Frac11_2 = [0 for i in range(Subcatchment)]
+I_Frac12_2 = [0 for i in range(Subcatchment)]
+I_Frac13_2 = [0 for i in range(Subcatchment)]
+I_Frac14_2 = [0 for i in range(Subcatchment)]
+I_Frac15_2 = [0 for i in range(Subcatchment)]
+I_Frac16_2 = [0 for i in range(Subcatchment)]
+I_Frac17_2 = [0 for i in range(Subcatchment)]
+I_Frac18_2 = [0 for i in range(Subcatchment)]
+I_Frac19_2 = [0 for i in range(Subcatchment)]
+I_Frac20_2 = [0 for i in range(Subcatchment)]
+
+
+I_Frac1_3 = [0 for i in range(Subcatchment)]
+I_Frac2_3 = [0 for i in range(Subcatchment)]
+I_Frac3_3 = [0 for i in range(Subcatchment)]
+I_Frac4_3 = [0 for i in range(Subcatchment)]
+I_Frac5_3 = [0 for i in range(Subcatchment)]
+I_Frac6_3 = [0 for i in range(Subcatchment)]
+I_Frac7_3 = [0 for i in range(Subcatchment)]
+I_Frac8_3 = [0 for i in range(Subcatchment)]
+I_Frac9_3 = [0 for i in range(Subcatchment)]
+I_Frac10_3 = [0 for i in range(Subcatchment)]
+I_Frac11_3 = [0 for i in range(Subcatchment)]
+I_Frac12_3 = [0 for i in range(Subcatchment)]
+I_Frac13_3 = [0 for i in range(Subcatchment)]
+I_Frac14_3 = [0 for i in range(Subcatchment)]
+I_Frac15_3 = [0 for i in range(Subcatchment)]
+I_Frac16_3 = [0 for i in range(Subcatchment)]
+I_Frac17_3 = [0 for i in range(Subcatchment)]
+I_Frac18_3 = [0 for i in range(Subcatchment)]
+I_Frac19_3 = [0 for i in range(Subcatchment)]
+I_Frac20_3 = [0 for i in range(Subcatchment)]
+
+
+I_Frac1_4 = [0 for i in range(Subcatchment)]
+I_Frac2_4 = [0 for i in range(Subcatchment)]
+I_Frac3_4 = [0 for i in range(Subcatchment)]
+I_Frac4_4 = [0 for i in range(Subcatchment)]
+I_Frac5_4 = [0 for i in range(Subcatchment)]
+I_Frac6_4 = [0 for i in range(Subcatchment)]
+I_Frac7_4 = [0 for i in range(Subcatchment)]
+I_Frac8_4 = [0 for i in range(Subcatchment)]
+I_Frac9_4 = [0 for i in range(Subcatchment)]
+I_Frac10_4 = [0 for i in range(Subcatchment)]
+I_Frac11_4 = [0 for i in range(Subcatchment)]
+I_Frac12_4 = [0 for i in range(Subcatchment)]
+I_Frac13_4 = [0 for i in range(Subcatchment)]
+I_Frac14_4 = [0 for i in range(Subcatchment)]
+I_Frac15_4 = [0 for i in range(Subcatchment)]
+I_Frac16_4 = [0 for i in range(Subcatchment)]
+I_Frac17_4 = [0 for i in range(Subcatchment)]
+I_Frac18_4 = [0 for i in range(Subcatchment)]
+I_Frac19_4 = [0 for i in range(Subcatchment)]
+I_Frac20_4 = [0 for i in range(Subcatchment)]
+
+I_FracVegClass1 = [I_Frac1_1, I_Frac2_1, I_Frac3_1, I_Frac4_1, I_Frac5_1, I_Frac6_1, I_Frac7_1, I_Frac8_1, I_Frac9_1, I_Frac10_1,
+                   I_Frac11_1, I_Frac12_1, I_Frac13_1, I_Frac14_1, I_Frac15_1, I_Frac16_1, I_Frac17_1, I_Frac18_1, I_Frac19_1,
+                   I_Frac20_1]
+
+I_FracVegClass2 = [I_Frac1_2, I_Frac2_2, I_Frac3_2, I_Frac4_2, I_Frac5_2, I_Frac6_2, I_Frac7_2, I_Frac8_2, I_Frac9_2, I_Frac10_2,
+                   I_Frac11_2, I_Frac12_2, I_Frac13_2, I_Frac14_2, I_Frac15_2, I_Frac16_2, I_Frac17_2, I_Frac18_2, I_Frac19_2,
+                   I_Frac20_2]
+
+I_FracVegClass3 = [I_Frac1_3, I_Frac2_3, I_Frac3_3, I_Frac4_3, I_Frac5_3, I_Frac6_3, I_Frac7_3, I_Frac8_3, I_Frac9_3, I_Frac10_3,
+                   I_Frac11_3, I_Frac12_3, I_Frac13_3, I_Frac14_3, I_Frac15_3, I_Frac16_3, I_Frac17_3, I_Frac18_3, I_Frac19_3,
+                   I_Frac20_3]
+
+I_FracVegClass4 = [I_Frac1_4, I_Frac2_4, I_Frac3_4, I_Frac4_4, I_Frac5_4, I_Frac6_4, I_Frac7_4, I_Frac8_4, I_Frac9_4, I_Frac10_4,
+                   I_Frac11_4, I_Frac12_4, I_Frac13_4, I_Frac14_4, I_Frac15_4, I_Frac16_4, I_Frac17_4, I_Frac18_4, I_Frac19_4,
+                   I_Frac20_4]
+
+I_FracVegClassSum1 = sum([sum(x) for x in I_FracVegClass1])
+I_FracVegClassSum2 = sum([sum(x) for x in I_FracVegClass2])
+I_FracVegClassSum3 = sum([sum(x) for x in I_FracVegClass3])
+I_FracVegClassSum4 = sum([sum(x) for x in I_FracVegClass4])
+
+I_OneInputDataYears = [i for i in range(4)]
+I_InputDataYears = [i for i in range(4)]
+
+I_Flag1 = 1 if time < I_InputDataYears[1] *365 else 0
+I_Flag2 = 1 if time < I_InputDataYears[2] *365 else 0
+
+I_RivFlowTime1 = [0 for i in range(Subcatchment)]
+I_RivFlowTime2 = [0 for i in range(Subcatchment)]
+I_RivFlowTime3 = [0 for i in range(Subcatchment)]
+I_RivFlowTime4 = [0 for i in range(Subcatchment)]
+
+
+if I_Flag1 ==1:
+    I_RivFlowTimeNow = I_RivFlowTime1 + I_RivFlowTime2 - I_RivFlowTime1*(time/365 - I_InputDataYears[0])/(I_InputDataYears[1] - I_InputDataYears[0])
+if I_Flag2 ==1:
+    I_RivFlowTimeNow = I_RivFlowTime3 + I_RivFlowTime4 - I_RivFlowTime3 * (time / 365 - I_InputDataYears[2]) / (I_InputDataYears[3] - I_InputDataYears[2])
+
+
+I_GWRelFrac1 = [0 for i in range(Subcatchment)]
+I_GWRelFrac2 = [0 for i in range(Subcatchment)]
+I_GWRelFrac3 = [0 for i in range(Subcatchment)]
+I_GWRelFrac4 = [0 for i in range(Subcatchment)]
+
+if I_Flag1 ==1:
+    I_GWRelFracNow = I_GWRelFrac1 + I_GWRelFrac2 - I_GWRelFrac1*(time/365 - I_InputDataYears[0])/(I_InputDataYears[1] - I_InputDataYears[0])
+if I_Flag2 ==1:
+    I_GWRelFracNow = I_GWRelFrac3 + I_GWRelFrac4 - I_GWRelFrac3 * (time / 365 - I_InputDataYears[2]) / (I_InputDataYears[3] - I_InputDataYears[2])
+
+
+I_MaxDynGwSub1 = [0 for i in range(Subcatchment)]
+I_MaxDynGwSub2 = [0 for i in range(Subcatchment)]
+I_MaxDynGwSub3 = [0 for i in range(Subcatchment)]
+I_MaxDynGwSub4 = [0 for i in range(Subcatchment)]
+
+
+if I_Flag1 ==1:
+    I_MaxDynGwSubNow = I_MaxDynGwSub1 + I_MaxDynGwSub2 - I_MaxDynGwSub1*(time/365 - I_InputDataYears[0])/(I_InputDataYears[1] - I_InputDataYears[0])
+if I_Flag2 ==1:
+    I_MaxDynGwSubNow = I_MaxDynGwSub3 + I_MaxDynGwSub4 - I_MaxDynGwSub3 * (time / 365 - I_InputDataYears[2]) / (I_InputDataYears[3] - I_InputDataYears[2])
+
+
+I_PlantAvWatSub1 = [0 for i in range(Subcatchment)]
+I_PlantAvWatSub2 = [0 for i in range(Subcatchment)]
+I_PlantAvWatSub3 = [0 for i in range(Subcatchment)]
+I_PlantAvWatSub4 = [0 for i in range(Subcatchment)]
+
+
+if I_Flag1 ==1:
+    I_PlantAvWatSubNow = I_PlantAvWatSub1 + I_PlantAvWatSub2 - I_PlantAvWatSub1*(time/365 - I_InputDataYears[0])/(I_InputDataYears[1] - I_InputDataYears[0])
+if I_Flag2 ==1:
+    I_PlantAvWatSubNow = I_PlantAvWatSub3 + I_PlantAvWatSub4 - I_PlantAvWatSub3 * (time / 365 - I_InputDataYears[2]) / (I_InputDataYears[3] - I_InputDataYears[2])
+
+
+I_PWPSub1 = [0 for i in range(Subcatchment)]
+I_PWPSub2 = [0 for i in range(Subcatchment)]
+I_PWPSub3 = [0 for i in range(Subcatchment)]
+I_PWPSub4 = [0 for i in range(Subcatchment)]
+
+
+if I_Flag1 ==1:
+    I_PWPSubNow = I_PWPSub1 + I_PWPSub2 - I_PWPSub1*(time/365 - I_InputDataYears[0])/(I_InputDataYears[1] - I_InputDataYears[0])
+if I_Flag2 ==1:
+    I_PWPSubNow = I_PWPSub3 + I_PWPSub4 - I_PWPSub4 * (time / 365 - I_InputDataYears[2]) / (I_InputDataYears[3] - I_InputDataYears[2])
+
+
+I_SoilSatminFCSub1 = [0 for i in range(Subcatchment)]
+I_SoilSatminFCSub2 = [0 for i in range(Subcatchment)]
+I_SoilSatminFCSub3 = [0 for i in range(Subcatchment)]
+I_SoilSatminFCSub4 = [0 for i in range(Subcatchment)]
+
+
+if I_Flag1 ==1:
+    I_SoilSatminFCSubNow = I_SoilSatminFCSub1 + I_SoilSatminFCSub2 - I_SoilSatminFCSub1*(time/365 - I_InputDataYears[0])/(I_InputDataYears[1] - I_InputDataYears[0])
+if I_Flag2 ==1:
+    I_SoilSatminFCSubNow = I_SoilSatminFCSub3 + I_SoilSatminFCSub4 - I_SoilSatminFCSub4 * (time / 365 - I_InputDataYears[2]) / (I_InputDataYears[3] - I_InputDataYears[2])
+
+
+I_TopSoilBD_BDRef1 = [0 for i in range(Subcatchment)]
+I_TopSoilBD_BDRef2 = [0 for i in range(Subcatchment)]
+I_TopSoilBD_BDRef3 = [0 for i in range(Subcatchment)]
+I_TopSoilBD_BDRef4 = [0 for i in range(Subcatchment)]
+
+
+if I_Flag1 ==1:
+    I_BD_BDVegRefNow = I_TopSoilBD_BDRef1 + I_TopSoilBD_BDRef2 - I_TopSoilBD_BDRef1*(time/365 - I_InputDataYears[0])/(I_InputDataYears[1] - I_InputDataYears[0])
+if I_Flag2 ==1:
+    I_BD_BDVegRefNow = I_TopSoilBD_BDRef3 + I_TopSoilBD_BDRef4 - I_TopSoilBD_BDRef4 * (time / 365 - I_InputDataYears[2]) / (I_InputDataYears[3] - I_InputDataYears[2])
