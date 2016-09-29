@@ -194,6 +194,20 @@ I_InputDataYears = [i for i in range(4)]
 I_Flag1 = 1 if time < I_InputDataYears[1] *365 else 0
 I_Flag2 = 1 if time < I_InputDataYears[2] *365 else 0
 
+if I_RelArea > 0:
+    if I_Flag1 == 1:
+        I_FracVegClassNow = I_FracVegClass1 + I_FracVegClass2 - I_FracVegClass1*(int(time/365) - I_InputDataYears[0])/(I_InputDataYears[1]-I_InputDataYears[0])*sum(I_FracVegClass1)
+
+    elif I_Flag2 == 1:
+        I_FracVegClassNow = I_FracVegClass2 + I_FracVegClass3 - I_FracVegClass2 * (
+        int(time / 365) - I_InputDataYears[1]) / (I_InputDataYears[2] - I_InputDataYears[1]) * sum(I_FracVegClass2)
+
+    else:
+        I_FracVegClassNow = I_FracVegClass3 + I_FracVegClass4 - I_FracVegClass3 * (
+        int(time / 365) - I_InputDataYears[2]) / (I_InputDataYears[2] - I_InputDataYears[1]) * sum(I_FracVegClass3)
+else:
+    I_FracVegClassNow = 0
+
 I_RivFlowTime1 = [0 for i in range(Subcatchment)]
 I_RivFlowTime2 = [0 for i in range(Subcatchment)]
 I_RivFlowTime3 = [0 for i in range(Subcatchment)]
@@ -275,3 +289,78 @@ if I_Flag1 ==1:
     I_BD_BDVegRefNow = I_TopSoilBD_BDRef1 + I_TopSoilBD_BDRef2 - I_TopSoilBD_BDRef1*(time/365 - I_InputDataYears[0])/(I_InputDataYears[1] - I_InputDataYears[0])
 if I_Flag2 ==1:
     I_BD_BDVegRefNow = I_TopSoilBD_BDRef3 + I_TopSoilBD_BDRef4 - I_TopSoilBD_BDRef4 * (time / 365 - I_InputDataYears[2]) / (I_InputDataYears[3] - I_InputDataYears[2])
+
+
+# 4. I Subcatchment Param
+
+I_GWRelFracConst_ = 0
+I_GWRelFracConst = 0
+I_MaxDynGWConst = 0
+I_InitRelGW = 0
+I_AvaiWaterConst = 0
+I_SoilSatMinFCConst = 0
+I_SoilPropConst_ = 0
+I_MaxInf = 0
+I_MaxInfSSoil = 0
+I_PowerInfiltRed = 0
+I_PercFracMultiplier = 0
+I_RoutVeloc_m_per_s = 0
+I_Tortuosity = 0
+I_SurfLossFrac = 0
+I_RiverFlowDispersalFactor = 0
+I_InterceptEffectonTransp = 0
+L_ResrDepth = 0
+L_LakeTranspMultiplier = 0
+I_InitRelSoi = 0
+L_Lake_ = [0 for i in range(subcatchment)]
+I_DaminThisStream_ = [0 for i in range(subcatchment)]
+
+if I_RainDoY == 0:
+    I_TimeEvap = 0
+elif (I_RainDoY % 365) == 0:
+    I_TimeEvap = 365
+else:
+    I_TimeEvap = I_RainDoY%365
+
+I_MoY = 0 if I_RainDoY == 0 else int(I_TimeEvap/30.5) + 1
+
+I_MultiplierEvapoTrans = [0 for i in range(VegClass)]
+I_Evapotrans = 0
+I_EvapotransMethod = 0
+
+I_GWRelFrac = I_GWRelFracConst if I_GWRelFracConst_ == 1 else I_GWRelFracNow
+I_MaxDynGWact = I_MaxDynGWConst if I_GWRelFracConst_ == 1 else I_MaxDynGwSubNow
+I_MaxDynGWArea = I_MaxDynGWact * I_RelArea
+I_InitTotGW = sum(I_MaxDynGWArea)*I_InitRelGW
+if I_SoilPropConst_ == 1:
+    I_SoilSatClass = (I_AvaiWaterConst + I_SoilSatMinFCConst)*I_FracVegClassNow*I_RelArea
+else:
+    I_SoilSatClass = I_SoilSatminFCSubNow + I_AvaiWatClassNow * I_FracVegClassNow*I_RelArea
+if I_SoilPropConst_ == 1:
+    I_AvailWaterClass = I_AvailWaterConst*I_FracVegClassNow*I_RelArea
+else:
+    I_AvailWaterClass = I_AvailWatClassNow*I_FracVegClassNow*I_RelArea
+
+I_CanInterAreaClass = I_InterceptClass*I_FracVegClassNow*I_RelArea
+if I_BD_BDVegRefNow > 0:
+    I_MaxInfArea = I_MaxInf * I_RelArea * I_FracVegClassNow*(0.7/I_BD_BDVegRefNow)^I_PowerInfiltRed
+else:
+    I_MaxInfArea = 0
+
+I_MaxInfSubSAreaClass = I_MaxInfSSoil * I_RelArea * I_FracVegClassNow
+
+
+# 5. Patch Water Balance
+
+D_GW_Utilization_fraction = [0 for i in range(Subcatchment)]
+D_GWUseFacility_ = [0 for i in range(Subcatchment)]
+D_IrrigEfficiency = [0 for i in range(Subcatchment)]
+
+D_EvapTranspClass = Stock([0 for i in range(Subcatchment)])
+D_GWArea = Stock([0 for i in range(Subcatchment)])
+D_SoilWater = Stock([0 for i in range(Subcatchment)])
+D_CumNegRain = Stock([0 for i in range(Subcatchment)])
+D_CumEvapTranspClass = Stock([0 for i in range(Subcatchment)])
+
+
+
