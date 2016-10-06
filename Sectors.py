@@ -1,6 +1,7 @@
 __author__ =  'TuHV'
 from stella import Flow, Stock
 from random import normalvariate
+import math
 
 # 1. Rainfall
 time = 0
@@ -352,15 +353,91 @@ I_MaxInfSubSAreaClass = I_MaxInfSSoil * I_RelArea * I_FracVegClassNow
 
 # 5. Patch Water Balance
 
-D_GW_Utilization_fraction = [0 for i in range(Subcatchment)]
-D_GWUseFacility_ = [0 for i in range(Subcatchment)]
-D_IrrigEfficiency = [0 for i in range(Subcatchment)]
-
 D_EvapTranspClass = Stock([0 for i in range(Subcatchment)])
 D_GWArea = Stock([0 for i in range(Subcatchment)])
 D_SoilWater = Stock([0 for i in range(Subcatchment)])
 D_CumNegRain = Stock([0 for i in range(Subcatchment)])
 D_CumEvapTranspClass = Stock([0 for i in range(Subcatchment)])
 
+D_GW_Utilization_fraction = [0 for i in range(Subcatchment)]
+D_GWUseFacility_ = [0 for i in range(Subcatchment)]
+D_IrrigEfficiency = [0 for i in range(Subcatchment)]
+
+if I_AvailWaterClass > 0 and I_RelDroughtFact > 0:
+    D_RelWaterAv = min(1, D_SoilWater.current_value()/(I_RelDroughtFact*I_AvailWaterClass))
+else:
+    D_RelWaterAv = 1
+
+if D_IrrigEfficiency[Subcatchment] > 0:
+    D_Irrigation = min(D_GWArea * D_GWUseFacility_*D_GW_Utilization_fraction*(1-D_RelWaterAv)/D_IrrigEfficiency, I_PotEvapTransp_)
+else:
+    D_Irrigation = 0
+
+I_SoilQflowFrac = 0.5
+D_SoilQflowRelFrac = [I_SoilQflowFrac for i in range(Subcatchment)]
+
+if I_FracVegClassNow > 0 and I_RelArea > 0:
+    D_RainInterc = D_InterceptEvap/I_FracVegClassNow*I_RelArea
+else:
+    D_RainInterc = 0
+
+I_RainMaxIntDripDur = 0.9
+I_RainIntercDripRt = 0
+
+D_RainIntercDelay = min(I_RainMaxIntDripDur, sum(D_RainInterc)/I_RainIntercDripRt)
+I_RainTimeAvForInf = min(24, I_RainDuration + D_RainIntercDelay)
+
+def f_D_GWaDisch(D_GWArea, I_GWRelFrac):
+    return D_GWArea * I_GWRelFrac
+
+D_GWaDisch = Flow(1, f_D_GWaDisch, D_GWArea.current_value(), None)
+
+def f_D_WaterEvapIrrigation(D_Irrigation, D_IrrigEfficiency):
+    if D_IrrigEfficiency > 0:
+        return D_Irrigation
+    else:
+        return 0
+
+D_WaterEvapIrrigation = Flow(1, f_D_WaterEvapIrrigation, D_GWArea, D_EvapTranspClass)
+
+def f_D_SoilDischarge(D_SoilWater, D_SoilQflowRelFrac, I_AvailWaterClass):
+    return D_SoilQflowRelFrac*(D_SoilWater - I_AvailWaterClass)
+
+D_SoilDischarge = Flow(1, f_D_SoilDischarge, D_SoilWater, None)
+
+def f_D_ActEvapTransp(D_InterceptEvap, D_RelWaterAv, I_InterCeptEffectonTransp, I_PotEvapTransp_, L_Lake_):
+    if L_Lake_ == 1:
+        return 0
+    else:
+        return (I_PotEvapTransp_- I_InterCeptEffectonTransp*D_InterceptEvap.current_value())*D_RelWaterAv
+
+
+D_ActEvapTransp = Flow(1, f_D_ActEvapTransp, D_SoilWater, D_CumEvapTranspClass)
+
+def f_D_InterceptEvap( I_CanIntercAreaClass, I_DailyRainAmount):
+    if I_CanIntercAreaClass > 0:
+        return I_CanIntercAreaClass*(1-math.exp(-I_DailyRainAmount)/I_CanIntercAreaClass)
+    else:
+        return 0
+
+D_InterceptEvap = Flow(1, f_D_InterceptEvap, D_CumNegRain, D_CumEvapTranspClass)
+
+def f_D_Infiltration(D_SoilWater, D_InterCeptEvap, I_DailyRainAmout, I_MaxInfArea, I_RainTimeAvForInf, I_SoilSatClass, L_Lake_):
+    if L_Lake_ == 1:
+        return 0
+    else:
+        return min(min(I_SoilSatClass-D_SoilWater.current_value(), I_MaxInfArea*I_RainTimeAvForInf/24), I_DailyRainAmount-D_InterceptEvap)
+
+D_Infiltration = Flow(1, f_D_Infiltration, D_CumNegRain, D_SoilWater)
+
+def f_D_DeepInfiltration(D_GWArea, D_SoilWater, D_Infiltration, D_InterceptEvap, I_DailyRainAmount, I_MaxDynGWArea, I_MaxInfArea, I_MaxInfSubSAreaClass, I_RainTimeAvForInf, I_SoilSatClass, L_Lake_):
+    if L_Lake_ == 1:
+        return 0
+    else:
+        return min(min(min(sum(I_MaxInfArea)*I_RainTimeAvForInf/24-sum(I_SoilSatClass)+sum(D_SoilWater), sum(I_DailyRainAmount)-sum(D_InterceptEvap) - sum(D_Infiltration), I_MaxDynGWArea-D_GWArea)))
+
+D_DeepInfiltration = Flow(1, f_D_DeepInfiltration, D_CumNegRain, D_GWArea)
+
+# 6. Stream Network
 
 
