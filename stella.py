@@ -40,6 +40,7 @@ class Flow(object):
     @property
     def value(self):
         return self._value
+        # return self.change(args)
 
 
 class Converter(object):

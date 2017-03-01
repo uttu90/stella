@@ -11,11 +11,12 @@ step = 0.25
 time_simulation = np.arange(start, stop, step)
 
 # Form the model
-stock = Stock(100)
+stock = Stock(np.array([50, 100]))
 
 
 def f_flow(x):
-    return x[0]*x[1]
+    # print x
+    return np.multiply(x[0], x[1])
 
 
 def f_converter(x):
@@ -27,10 +28,9 @@ converter = Converter(f_converter)
 
 #Simulation
 for time in time_simulation:
-    flow(converter(), stock.current_value())
+    converter()
+    flow(converter.value, stock.value)
     stock()
 
-plot(np.append(time_simulation, stop), stock.values())
+plot(np.append(time_simulation, stop), stock.values)
 show()
-
-

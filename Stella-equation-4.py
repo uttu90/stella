@@ -34,10 +34,8 @@ death_flow = Flow(step, f_death_flow, stock, None)
 #Simulation
 for time in time_simulation:
     birth_flow(100)
-    death_flow(0.11, stock.current_value())
+    death_flow(0.11, stock.value)
     stock()
 
-plot(np.append(time_simulation, stop), stock.values())
+plot(np.append(time_simulation, stop), stock.values)
 show()
-
-

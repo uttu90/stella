@@ -44,13 +44,14 @@ flow_3 = Flow(step, f_flow_3, stockY, None)
 
 #Simulation
 for time in time_simulation:
-    flow_1(a(), stockX.current_value())
-    flow_2(stockX.current_value(), b(), stockY.current_value())
-    flow_3(stockY.current_value(),c())
+    a()
+    flow_1(a.value, stockX.value)
+    b()
+    flow_2(stockX.value, b.value, stockY.value)
+    c()
+    flow_3(stockY.value,c.value)
     stockX()
     stockY()
 
-plot(np.append(time_simulation, stop), stockX.values(),'r--',np.append(time_simulation, stop) ,stockY.values())
+plot(np.append(time_simulation, stop), stockX.values,'r--',np.append(time_simulation, stop) ,stockY.values)
 show()
-
-

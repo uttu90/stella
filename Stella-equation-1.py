@@ -22,15 +22,14 @@ def f_converter(x):
     return 10
 
 
-
 flow = Flow(step, f_flow, source_stock=None, destination_stock=stock)
 converter = Converter(f_converter)
 
 #Simulation
 for time in time_simulation:
-    flow(converter())
+    converter()
+    flow(converter.value)
     stock()
 
-plot(np.append(time_simulation, stop), stock.values())
+plot(np.append(time_simulation, stop), stock.values)
 show()
-
