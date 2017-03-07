@@ -26,10 +26,15 @@ flow = Flow(step, f_flow, source_stock=None, destination_stock=stock)
 converter = Converter(f_converter)
 
 #Simulation
+
 for time in time_simulation:
     converter()
     flow(converter.value)
     stock()
 
-plot(np.append(time_simulation, stop), stock.values)
+values = [100]
+for timve in time_simulation:
+    values.append(values[-1] + 10 * step)
+
+plot(np.append(time_simulation, stop), values)
 show()
