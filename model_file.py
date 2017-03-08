@@ -8,6 +8,14 @@ VegClass = 20
 Subcatchment = 20
 
 # Initial
+# Input time
+I_InputDataYears = [0, 5, 10, 15]
+I_RainMultiplier = 1
+I_RainYearStart = 0
+I_Rain_GenSeed = 200
+I_Rain_IntensCoefVar = 0.3
+I_Rain_IntensMean = 10
+
 # Cattle
 C_StockingRate = [1]
 C_DailyIntake = 1
@@ -36,8 +44,14 @@ G_GrassStandingBiomass = [1]
 G_SurfaceLitter = [0]
 G_SurfMaunre = [0]
 
+# I Evapotransp
+I_GWRelFrac = [0, 0, 0, 0]
+
+# I_Rainfall
+I_WarmEdUp = [0]
+
 # Simulation
-time = 1
+I_Simulation_Time  = 1
 dt = 0.25
 # Cattle
 C_CattleSale = 0
@@ -68,7 +82,7 @@ O_RealWatAv_subc = np.divide(np.mean(O_RelWatAvVegSubc, axis=1), np.sum(I_FracVe
                              out=np.ones_like(np.mean(O_RelWatAvVegSubc, axis=1)),
                              where=np.sum(I_FracVegClassNow, axis=1)!= 0)
 O_Rel_ET_Subc = np.divide(D_InterceptEvap + D_ActEvapTransp, I_PotEvapTransp_,
-                          out=np.zeros_like(I_PotEvapTransp),
+                          out=np.(I_PotEvapTransp),
                           where=I_PotEvapTransp_!=0)
 O_Reset = 1 if I_Warmedup == 1 or I_WUcorrection == 1 else 0
 S_RainAtSoilSurface = I_DailyRainAmount - D_InterceptEvap
@@ -135,7 +149,7 @@ G_Incorporation_DecayManure = G_SurfMaunre[-1] * G_SurfManunreDecFrac
 update(G_SurfMaunre, G_FaecesProd - G_Incorporation_DecayManure, dt)
 
 G_GrassAll = np.sum(G_GrassStandingBiomass)
-G_GrassFract_Biomass = np.zeros_like(VegClass) # Check for input
+G_GrassFract_Biomass = np.(VegClass) # Check for input
 G_GrassLitConv = 1
 G_GrassMortFrac = 0.03
 G_GrazingManConv = 0.1
@@ -146,38 +160,38 @@ G_TramplingMultiplier = 0
 G_WUE = 0.04
 
 # I Daily Evapotranspiration
-I_Daily_Evapotrans = I_RainDoY[time]
+I_Daily_Evapotrans = I_RainDoY[I_Simulation_Time ]
 
 # I Land cover
 D_FeedingIntoLake
 
-I_Flag1 = 1 if time < I_InputDataYears[1] * 365 else 0
-I_Flag2 = 1 if time < I_InputDataYears[2] and I_Flag1 ==0 else 0
+I_Flag1 = 1 if I_Simulation_Time  < I_InputDataYears[1] * 365 else 0
+I_Flag2 = 1 if I_Simulation_Time  < I_InputDataYears[2] and I_Flag1 ==0 else 0
 if I_Flag1 == 1:
     I_AvailWatClassNow = (I_PlantAvWatSub1 +
                           (I_PlantAvWatSub2-I_PlantAvWatSub1) *
-                          (int(time/365) -
+                          (int(I_Simulation_Time /365) -
                            I_InputDataYears[0])/(I_InputDataYears[1] - I_InputDataYears[0]))
     I_BD_BDRefVegNow = (I_TopSoilBD_BDRef1 +
                         (I_TopSoilBD_BDRef2-I_TopSoilBD_BDRef1) *
-                        (int(time/365) -
+                        (int(I_Simulation_Time /365) -
                          I_InputDataYears[0])/(I_InputDataYears[1] - I_InputDataYears[0]))
 elif I_Flag2 == 1:
     I_AvailWatClassNow = (I_PlantAvWatSub2 +
                           (I_PlantAvWatSub3 - I_PlantAvWatSub2) *
-                          (int(time / 365) -
+                          (int(I_Simulation_Time  / 365) -
                            I_InputDataYears[1]) / (I_InputDataYears[2] - I_InputDataYears[1]))
     I_BD_BDRefVegNow = (I_TopSoilBD_BDRef2 +
                         (I_TopSoilBD_BDRef3-I_TopSoilBD_BDRef4) *
-                        (int(time/365) -
+                        (int(I_Simulation_Time /365) -
                          I_InputDataYears[1])/(I_InputDataYears[2] - I_InputDataYears[2]))
 else:
     I_AvailWatClassNow = (I_PlantAvWatSub3 +
                           (I_PlantAvWatSub4 - I_PlantAvWatSub3) *
-                          (int(time/365)-I_InputDataYears[2])/(I_InputDataYears[3]-I_InputDataYears[2]))
+                          (int(I_Simulation_Time /365)-I_InputDataYears[2])/(I_InputDataYears[3]-I_InputDataYears[2]))
     I_BD_BDRefVegNow = (I_TopSoilBD_BDRef3 +
                         (I_TopSoilBD_BDRef4-I_TopSoilBD_BDRef3) *
-                        (int(time/365)-I_InputDataYears[2])/(I_InputDataYears[3]-I_InputDataYears[2]))
+                        (int(I_Simulation_Time /365)-I_InputDataYears[2])/(I_InputDataYears[3]-I_InputDataYears[2]))
 
 I_FracVegClass1 = I_Frac1 # Reading table from Excel
 I_FracVegClass2 = I_Frac2
@@ -189,24 +203,24 @@ I_RoutingDistance = np.zeros(Subcatchment)
 I_Area = np.zeros(Subcatchment)
 I_TotalArea = np.sum(I_Area)
 I_RelArea = I_Area/I_TotalArea
-I_FracVegClassNow = np.zeros_like(I_FracVegClass1)
+I_FracVegClassNow = np.(I_FracVegClass1)
 for i in range(Subcatchment):
     if I_RelArea[i] > 0:
         if I_Flag1 == 1:
             I_FracVegClassNow[:][i] = ((I_FracVegClass1[:][i] +
                                         (I_FracVegClass2[:][i] - I_FracVegClass1[:][i]) *
-                                        (int(time/365)-I_InputDataYears[0])/
+                                        (int(I_Simulation_Time /365)-I_InputDataYears[0])/
                                         (I_InputDataYears[1]-I_InputDataYears[0]))/
                                        np.sum(I_FracVegClass1, axis=1))
         elif I_Flag2 == 1:
             I_FracVegClassNow[:][i] = ((I_FracVegClass2[:][i] +
                                         (I_FracVegClass3[:][i] - I_FracVegClass2[:][i])*
-                                        (int(time/365) - I_InputDataYears[1])/
+                                        (int(I_Simulation_Time /365) - I_InputDataYears[1])/
                                         (I_InputDataYears[2]-I_InputDataYears[1]))/np.sum(I_FracVegClass2, axis=1))
         else:
             I_FracVegClassNow[:][i] = ((I_FracVegClass3[:][i] +
                                         (I_FracVegClass4[:][i] - I_FracVegClass3[:][i])*
-                                        (int(time/365) - I_InputDataYears[2])/
+                                        (int(I_Simulation_Time /365) - I_InputDataYears[2])/
                                         (I_InputDataYears[3]-I_InputDataYears[2]))/np.sum(I_FracVegClass3, axis=1))
     else:
         I_FracVegClassNow[:][i] = 0
@@ -217,8 +231,56 @@ I_FracVegClassSum3 = np.sum(I_FracVegClass3)
 I_FracVegClassSum4 = np.sum(I_FracVegClass4)
 I_FracVegClassSumNow = np.sum(I_FracVegClassNow)
 
-I_GWRelFrac1 = np.zeros_like(Subcatchment)
-I_GWRelFrac2 = np.zeros_like(Subcatchment)
-I_GWRelFrac3 = np.zeros_like(Subcatchment)
-I_GWRelFrac4 = np.zeros_like(Subcatchment)
+I_GWRelFrac = [np.zeros(Subcatchment) for i in range(0, 4)]
+I_MaxDynGWSub = [np.zeros(Subcatchment) for i in range(0, 4)]
+I_PWPSub = [np.zeros(Subcatchment) for i in range(0, 4)]
+I_RivFlowTime = [np.zeros(Subcatchment) for i in range(0, 4)]
+I_SoilSatminFCSub = [np.zeros(Subcatchment) for i in range(0, 4)]
+D_FeedingIntoLake = np.zeros(Subcatchment) # Get from GRAPH
+def FracProcess(fract, flag_1, flag_2, time, time_stage):
+    if flag_1 == 1:
+        stage = 0
+    elif flag_2 == 1:
+        stage = 1
+    else:
+        stage = 2
+    rel = (fract[stage] +
+           (fract[stage + 1] - fract[stage]) *
+           (int(time / 365) - time_stage[stage]) /
+           (time_stage[stage + 1] - time_stage[stage]))
+    return rel
+
+I_GWRelFracNow = FracProcess(I_GWRelFrac, I_Flag1, I_Flag2, I_Simulation_Time , I_InputDataYears)
+I_MaxDynGWSubNow = FracProcess(I_MaxDynGWSub, I_Flag1, I_Flag2, I_Simulation_Time , I_InputDataYears)
+I_PWPSubNow = FracProcess(I_PWPSub, I_Flag1, I_Flag2, I_Simulation_Time , I_InputDataYears)
+I_RivFlowTimeNow = FracProcess(I_RivFlowTime, I_Flag1, I_Flag2, I_Simulation_Time , I_InputDataYears)
+I_SoilSatminFCSubNow = FracProcess(I_RivFlowTime, I_Flag1, I_Flag2, I_Simulation_Time , I_InputDataYears)
+
+# I_Land Cover
+I_PlantAvWatSub = [np.zeros(Subcatchment) for i in range(0, 4)]
+I_PlantAvWatSubNow = FracProcess(I_PlantAvWatSub, I_Flag1, I_Flag2, I_Simulation_Time , I_InputDataYears)
+I_TopSoilBD_BDRef = [np.zeros(Subcatchment) for i in range(0, 4)]
+I_BD_BDRefVegNow = FracProcess(I_TopSoilBD_BDRef, I_Flag1, I_Flag2, I_Simulation_Time , I_InputDataYears)
+
+# I_Rainfall
+I_Warmedup = 1 if I_WarmEdUp[-1] == I_Simulation_Time  else 0
+update(I_WarmEdUp, I_Warmedup, dt)
+I_CaDOYStart = 0
+I_DailyRain = I_DailyRainYear[I_Simulation_Time ] * I_RainMultiplier
+I_DailyRainAmount = np.multiply(np.multiply(I_RainPerday, I_FracVegClassNow), I_RelArea)
+I_RainCycle = 0
+I_RainDoY = I_Simulation_Time  if I_RainCycle == 0 else 1 + (I_Simulation_Time  % 365)
+I_RainDuration = ((I_RainPerDay/I_Rain_IntensMean) *
+                  min(max(0,1 - 3 * I_Rain_IntensCoefVar,
+                          np.normal(1, I_Rain_IntensCoefVar, I_Rain_GenSeed + 11250)),
+                      1 + 3 * I_Rain_IntensCoefVar))
+I_RainPerDay = I_SpatRainTime if I_UseSpatVarRain == 1 else I_DailyRain
+
+I_Simulation_Time = TIME + I_CaDOYStart + 365 * I_RainYearStart - I_WarmEdUp * (I_WarmUpTime + 1)
+I_SpatRainTime = I_SpatRain[TIME]
+I_StillWarmUp = 1 if time <= I_WarmUpTime + 1 else 0
+I_UseSpatVarRain = 0
+I_WarmUpTime = 730
+I_WUCorrection = 1 if time == (I_WarmUpTime + 1) else 0
+
 
