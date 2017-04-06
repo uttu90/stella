@@ -521,3 +521,34 @@ D_InterceptEvap = np.multiply(I_CanIntercAreaClass, (1 - np.exp(np.divide(-I_Dai
 D_Infiltration[VegClass,Subcatchement] = np.min(np.min(I_SoilSatClass-D_SoilWater,np.multiply(I_MaxInfArea, I_RainTimeAvForInf)/24),
 I_DailyRainAmount - D_InterceptEvap, out=np.zeros_like(D_Infiltration), where=L_Lake_!=1)
 
+D_DeepInfiltration = np.multiply(L_Lake_, min(min(np.sum(I_MaxInfArea, axis=1) + np.sum(I_RainTimeAvForInf)/24 - np.sum(I_SoilSatClass, axis=1) + np.sum(D_SoilWater, axis=1),
+                                                  np.sum(I_MaxInfSubSAreaClass, axis=1),
+                                                  np.sum(I_DailyRainAmount, axis=1) - np.sum(D_InterceptEvap, axis=1) - np.sum(D_Infiltration, axis=1)),
+                                              I_MaxDynGWArea - D_GWArea))
+D_SurfaceFlow = np.multiply(L_Lake_, np.sum(I_DailyRainAmount, axis=1)) + np.multiply((1-L_Lake_), (np.sum(I_DailyRainAmount, axis=1) - np.sum(D_InterceptEvap, axis=1) - np.sum(D_Infiltration, axis=1) -  D_DeepInfiltration))
+update(D_CumNegRain, - D_InterceptEvap - D_InfiltrationD_Infiltration - D_DeepInfiltration - D_SurfaceFlow, dt)
+
+# D_EvapTranspClass[Subcatchement,VegClass](t) = D_EvapTranspClass[Subcatchement,VegClass](t - dt) + (D_WaterEvapIrrigation[Subcatchement,VegClass]) * dt
+D_WaterEvapIrrigation = np.multiply(D_IrrigEfficiency, np.multiply(D_Irrigation, 1- D_IrrigEfficiency))
+update(D_EvapTranspClass, D_WaterEvapIrrigation, dt)
+
+# D_EvapTranspClass[Subcatchement,VegClass](t) = D_EvapTranspClass[Subcatchement,VegClass](t - dt) + (D_WaterEvapIrrigation[Subcatchement,VegClass]) * dt
+D_WaterEvapIrrigation  = np.multiply(D_IrrigEfficiency > 0, np.multiply(D_Irrigation, (1 - D_IrrigEfficiency)))
+update(D_EvapTranspClass, D_WaterEvapIrrigation, dt)
+
+# D_GWArea[Subcatchement](t) = D_GWArea[Subcatchement](t - dt) + (D_Percolation[VegClass,Subcatchement] + D_DeepInfiltration[Subcatchement] - D_GWaDisch[Subcatchement] - D_WaterEvapIrrigation[Subcatchement,VegClass]) * dt
+D_Percolation = np.multiply(I_AvailWaterClass > 0, np.minimum(I_MaxInfSubSAreaClass, np.minimum(np.multiply(D_SoilWater, np.multiply(I_PercFracMultiplier, I_GWRelFrac)), I_MaxDynGWArea - D_GWArea))) - np.multiply(D_IrrigEfficiency, D_Irrigation) + np.multiply(I_AvailWaterClass <=0, - np.multiply(D_IrrigEfficiency, D_Irrigation))
+D_GWaDisch = np.multiply(D_GWArea, I_GWRelFrac)
+D_WaterEvapIrrigation = np.multiply(D_IrrigEfficiency > 0, np.multiply(D_Irrigation, 1- D_IrrigEfficiency))
+update(D_GWArea, D_Percolation + D_DeepInfiltration - D_GWaDisch - D_WaterEvapIrrigation, dt)
+
+# D_SoilWater[VegClass,Subcatchement](t) = D_SoilWater[VegClass,Subcatchement](t - dt) + (D_Infiltration[VegClass,Subcatchement] - D_ActEvapTransp[VegClass,Subcatchement] - D_Percolation[VegClass,Subcatchement] - D_SoilDischarge[VegClass,Subcatchement]) * dt
+D_SoilWater = I_AvailWaterClass * I_InitRelSoil
+D_SoilDischarge = np.multiply(D_SoilQflowRelFrac, D_SoilWater - I_AvailWaterClass)
+D_GWUseFacility = 1
+D_GW_Utilization_fraction = 0.02
+D_Irrigation = np.multiply(D_IrrigEfficiency > 0, np.minimum(np.divide(np.multiply(D_GWArea, np.multiply(D_GWUseFacility, np.multiply(D_GW_Utilization_fraction, 1-D_RelWaterAv))), D_IrrigEfficiency), I_PotEvapTransp_))
+D_IrrigEfficiency = 0
+D_RainInterc = np.multiply(np.multiply(I_FracVegClassNow * I_RelArea) > 0, np.divide(D_InterceptEvap, np.multiply(I_FracVegClassNow, I_RelArea)))
+D_RainIntercDelay = np.minimum(I_RainMaxIntDripDur, np.divide(np.sum(D_RainInterc, axis=1), I_RainIntercDripRt))
+
