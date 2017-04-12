@@ -1,5 +1,5 @@
 import numpy as np
-from rainfall import I_RainDoY
+from I_Rainfall import I_RainDoY
 import config
 
 I_MultiplierEvapoTrans = [np.zeros(config.SUBCATCHMENT) for i in range(config.MONTH)]

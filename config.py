@@ -30,9 +30,10 @@ L_ResrDepth = 10000
 I_AvailWaterConst = 0
 
 
-SUBCATCHMENT = 20
+# SUBCATCHMENT = 20
 FOURYEARS = 1460
 LANDCOVERTYPE = 20
+# OBSPOINT = 8
 MONTH = 12
 dt = 1
 
@@ -57,3 +58,25 @@ LANDCOVER["crop"] = 17
 LANDCOVER["padang_rumput"] = 18
 LANDCOVER["lahan_terbuka"] = 19
 LANDCOVER["pemukiman"] = 20
+
+# A matrix with [Subcatchement, VegClass] will be a normal matrix
+# A matrix with [VegClass, Subcatchement] will be a transpose matrix
+# Subcatchement will role as a row
+# VegClass will role as a column
+# Add, Multiply, Divide w
+
+
+YEARS = range(1975, 2001)
+VEGCLASS = ['hutan_primer', 'Hutan_sekunder_kerapatan_tinggi', 'hutan_sekunder_kerapatan_rendah',
+            'lahan_basah', 'AF_Kelapa', 'AF_Coklat', 'Kebun_campur', 'Hutan_pinus',
+            'Hutan_Jati', 'Perkebunan_Kelapa', 'Perkebunan_Coklat', 'perkebunan_kelapa_sawit',
+            'perkebunan_jambu_mete', 'perkebunan_cengkeh', 'belukar',
+            'persawahan', 'crop', 'padang_rumput', 'lahan_terbuka', 'pemukiman']
+SUBCATCHMENT = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+                'Q', 'R', 'S', 'T']
+MEASUREPERIOD = range(1, 4)
+OBSPOINT = ['Inflowlake', 'obs_1', 'obs_2', 'obs_3', 'obs_4', 'obs_5', 'obs_6', 'obs_7']
+PATCH = range(1, 101)
+INPUTDATAYEAR = ['Start', 'Trans1', 'Trans2', 'End']
+LANDCOVERSUBCATCHM = [subcatch + vegclass for subcatch in SUBCATCHMENT for vegclass in VEGCLASS]
+OBSPOINT1 = ['Outflow', 2, 3, 4, 5]

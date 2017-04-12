@@ -8,9 +8,7 @@ time = 0
 
 I_WarmEdUp_ = [0]
 
-I_WarmUpTime = 730
-I_CaDOYStart = 0
-I_RainYearStart = 0
+
 I_RainCycle = config.rainfallConfig['I_RainCycle?']
 I_RainMultiplier = config.rainfallConfig['I_RainMultiplier']
 I_UseSpatVarRain = config.rainfallConfig['I_UseSpatVarRain?']
