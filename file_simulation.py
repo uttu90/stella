@@ -78,6 +78,17 @@ I_InterceptEffectonTransp = 0.1
 
 L_LakeTranspMultiplier = 1
 
+# Stream Network
+D_FracGWtoLake = np.zeros(len(config.SUBCATCHMENT))
+L_ResrDepth = 10000
+I_RiverflowDispersalFactor = 0.06
+I_RoutVeloc_m_per_s = 0.55
+I_Tortuosity = 0.6
+
+# Measurement Period
+O_MPeriodLength = [365, 365, 365]
+
+
 # Getting data from excel file
 
 I_Frac_1_1 = np.zeros(len(config.SUBCATCHMENT))
@@ -241,10 +252,25 @@ I_Daily_Evap_21_to_24 = [0 for i in range(config.FOURYEARS)]
 I_Daily_Evap_25_to_28 = [0 for i in range(config.FOURYEARS)]
 I_Daily_Evap_29_to_32 = [0 for i in range(config.FOURYEARS)]
 
+I_RFlowData_Year_1_to_4 = [0 for i in range(config.FOURYEARS)]
+I_RFlowData_Year_5_to_8 = [0 for i in range(config.FOURYEARS)]
+I_RFlowData_Year_9_to_12 = [0 for i in range(config.FOURYEARS)]
+I_RFlowData_Year_13_to_16 = [0 for i in range(config.FOURYEARS)]
+I_RFlowData_Year_17_to_20 = [0 for i in range(config.FOURYEARS)]
+I_RFlowData_Year_21_to_24 = [0 for i in range(config.FOURYEARS)]
+I_RFlowData_Year_25_to_28 = [0 for i in range(config.FOURYEARS)]
+I_RFlowData_Year_29_to_32 = [0 for i in range(config.FOURYEARS)]
+
+
+
 I_MultiplierEvapoTrans = [np.zeros(len(config.SUBCATCHMENT)) for i in range(config.MONTH)]
 I_EvapoTrans = [0 for i in range(config.MONTH)]
 
 I_RelDroughtFact = np.zeros(len(config.VEGCLASS))
+D_SubCResUseFrac = np.zeros(len(config.SUBCATCHMENT))
+isI_DaminThisStream = np.zeros(len(config.SUBCATCHMENT))
+isI_SubcContr = np.ones(len(config.SUBCATCHMENT))
+
 
 # Stocks initialisation
 
@@ -458,9 +484,10 @@ I_FracVegClassSumNow = np.sum(I_FracVegClassNow)
 
 I_DailyRainAmount = np.multiply(I_RainPerDay, np.multiply(I_FracVegClassNow, I_RelArea))
 
-I_StillWarmUp_ = 1 if time <= I_WarmUpTime else 0
+isI_StillWarmUp = 1 if time <= I_WarmUpTime else 0
 I_WUcorrection = 1 if time == int(I_WarmUpTime + 1 ) else 0
 I_WarmedUp = 1 if time == int(I_WarmUpTime) else 0
+isO_Reset = 1 if I_WarmedUp == 1 or I_WUcorrection == 1 else 0
 calculate.update(stock=isI_WarmEdUp, inflow=I_WarmedUp, dt=config.dt)
 
 if I_RainDoY <= 1460:
@@ -607,10 +634,48 @@ calculate.update(S_RelBulkDensity,
                  inflow=S_SplashErosion + S_StructureFormation + S_RippingSurface,
                  outflow=S_Compaction,
                  dt=config.dt)
-isO_Reset = 1 if I_WarmedUp == 1 or I_WUcorrection == 1 else 0
+D_ReservoirVol = L_ResrDepth*np.multiply(isL_Lake, I_RelArea)
+D_SubCResOutflow = (np.multiply(np.divide(D_SubcResVol, D_ReservoirVol) > 1,
+                                D_SubcResVol-D_ReservoirVol) +
+                    np.multiply(np.divide(D_SubcResVol, D_ReservoirVol) <= 1,
+                                D_SubCResUseFrac*D_SubcResVol))
+D_RoutingTime = np.divide(I_RoutingDistance, (np.multiply(I_RivFlowTimeNow, I_RoutVeloc_m_per_s)*3.6*24*I_Tortuosity))
+I_ReleaseFrac = np.minimum(1,np.divide(I_RiverflowDispersalFactor, D_RoutingTime, out=np.ones(shape=(len(config.SUBCATCHMENT), len(config.OBSPOINT)))))
+D_TotalStreamInflow = (D_SurfaceFlow + np.multiply(D_GWaDisch, (1-D_FracGWtoLake)+np.sum(D_SoilDischarge, axis=1))+np.multiply(D_SubCResOutflow, (1-isI_DaminThisStream)))
+D_RivLakeSameDay = np.multiply(isD_FeedingIntoLake, np.multiply(D_TotalStreamInflow, I_ReleaseFrac),
+                               out=np.zeros(shape=(len(config.SUBCATCHMENT), len(config.OBSPOINT))),
+                               where=D_RoutingTime>=0 and D_RoutingTime<1)
+D_RivInflLake = np.multiply(np.multiply(I_ReleaseFrac, D_TotRiverFlowNoDelay), isD_FeedingIntoLake)
+D_RiverFlowtoLake = np.sum(D_RivLakeSameDay, axis=0) + np.sum(D_RivInflLake, axis=0)
+D_GWLakeSub = np.multiply(D_FracGWtoLake, D_GWaDisch)
+D_GWtoLake = np.sum(D_GWLakeSub)
+D_RestartL = isO_Reset * D_CumInflowtoLake[time]/config.dt
+
+I_ReleaseFract = np.minimummin(1, np.divide(I_RiverflowDispersalFactor,
+                                            D_RoutingTime,
+                                            out=np.ones((config.SUBCATCHMENT, config.OBSPOINT)),
+                                            where=D_RoutingTime>0))
+D_TotalStreamInflow = (D_SurfaceFlow + np.multiply(D_GWaDisch, (1-D_FracGWtoLake)) + np.sum(D_SoilDischarge, axis=0)) + np.multiply(D_SubCResOutflow, (1-isI_DaminThisStream))
+D_SurfFlowObspoint = np.multiply(D_RoutingTime>=1, D_TotalStreamInflow)
+D_DirectSurfFkowObsPoint = np.multiply(np.multiply(D_RoutingTime>=0, D_RoutingTime<1), np.multiply(D_TotalStreamInflow*(1-I_ReleaseFrac)))
+D_RiverDirect = np.multiply(np.multiply(D_RoutingTime>0, D_RoutingTime<1), np.multiply((1-D_FeedingIntoLake_), np.multiply(D_TotalStreamInflow, (I_ReleaseFrac))))
+D_RivInfLake = np.multiply(np.multiply(I_ReleaseFrac, D_TotRiverFlowNoDelay), D_FeedingIntoLake_)
+D_SurfFlowRiver = np.multiply(D_RoutingTime>1, D_RoutingTime)
+D_CurrRivFlow = np.sum(D_StreamsSurfQ, axis=0)+np.sum(D_TotRiverFlowNoDelay, axis=0)
+D_RestartR = np.multiply(isO_Reset, D_CumTotRiverFlow)/config.dt
+calculate.update(D_CumInflowtoLake, inflow=D_RiverFlowtoLake + D_GWtoLake, outflow=D_RestartL, dt=config.dt)
+D_RiverDelay = np.multiply(I_ReleaseFrac, np.multiply(D_TotRiverFlowNoDelay, (1-isD_FeedingIntoLake)))
+calculate.update(D_CumTotRiverFlow, inflow=D_RiverDelay + D_RiverDirect, outflow=D_RestartR, dt=config.dt)
+calculate.update(D_TotRiverFlowNoDelay, inflow=D_SurfFlowRiver+D_DirectSurfFkowObsPoint, outflow=D_RiverDelay+D_RivInflLake, dt=config.dt)
+D_SurfFlowObsPoint = np.multiply(D_RoutingTime >= 1, D_TotalStreamInflow)
+calculate.update_conveyor(D_StreamsSurfQ, inflow=D_SurfFlowObsPoint, outflow=D_SurfFlowRiver, time=time, dt=config.dt)
+
+
+
+
 L_LakeTransDef = np.add(np.multiply(isL_Lake, (-D_ActEvapTransp[config.LANDCOVER["AF_Kelapa"]])),
                         I_PotEvapTransp[config.LANDCOVER["AF_Kelapa"]])
-L_LakeArea = np.multiply(isL_Lake, I_RelArea, out= np.zeros_like(isL_Lake), where=isL_Lake!=1)
+L_LakeArea = np.multiply(isL_Lake, I_RelArea, out=np.zeros_like(isL_Lake), where=isL_Lake!=1)
 L_LakeLevel = np.multiply(np.sum(L_LakeArea)>0, L_LakeVol/(1000*np.sum(L_LakeArea)) + L_LakeBottomElev)
 L_Lakelevelexcess = L_LakeLevel-(1-isL_HEPP_Active)*L_LakeElevPreHEPP-isL_HEPP_Active*L_LakeOverFlPostHEPP
 L_LakeArea = np.multiply(isL_Lake==1, np.multiply(isL_Lake*I_RelArea))
@@ -620,13 +685,226 @@ L_EvapLake = min(np.sum(L_LakeTransDef),L_LakeVol)*L_LakeTranspMultiplier
 L_RivOutFlow = max(isL_HEPP_Active*L_SanitaryFlow,(L_LakeVol-(L_OutflTrVoPostHEPP*isL_HEPP_Active)-L_OutflTrVolPreHEPP*(1-isL_HEPP_Active))*(L_LakeOverFlowFrac)*(1+L_Lakelevelexcess^L_LakeOverFlPow))
 L_InFlowtoLake =  D_RiverFlowtoLake+D_GWtoLake
 L_RestartR = isO_Reset * L_CumRivOutFlow / config.dt
-L_RivOutFlow = max(isL_HEPP_Active*L_SanitaryFlow,(L_LakeVol-(L_OutflTrVoPostHEPP*isL_HEPP_Active)-L_OutflTrVolPreHEPP*(1-isL_HEPP_Active))*(L_LakeOverFlowFrac)*(1+L_Lakelevelexcess^L_LakeOverFlPow))
 L_RestartH = isO_Reset * L_CumHEPPUse
 L_HEPPWatUseFlow = L_HEPP_Outflow if isL_HEPP_Active==1 else 0
 L_RestartE = isO_Reset * L_CumEvapLake / config.dt
-L_EvapLake = min(np.sum(L_LakeTransDef),L_LakeVol)*L_LakeTranspMultiplier
 
 calculate.update(L_CumEvapLake, inflow=L_EvapLake, outflow=L_RestartE, dt=config.dt)
 calculate.update(L_CumHEPPUse, inflow=L_HEPPWatUseFlow, outflow=L_RestartH, dt=config.dt)
 calculate.update(L_CumRivOutFlow, inflow=L_RivOutFlow, outflow=L_RestartR, dt=config.dt)
 calculate.update(L_LakeVol, inflow=L_InFlowtoLake, outflow=L_EvapLake, dt=config.dt)
+D_CurrRivVol = np.sum(D_StreamsSurfQ, axis=0) + np.sum(D_TotRiverFlowNoDelay, axis=0)
+O_TotStreamFlow = O_CumBaseFlow[time] + O_CumSoilQFlow[time] + O_CumSurfQFlow[time]
+D_DeltaStockRiver = D_InitRivVol[time] - D_CurrRivVol
+D_SurfaceFlowAcc = np.sum(D_SurfaceFlow[time])
+O_DeltaGWStock = O_InitGWStock[time] - np.sum(D_GWArea)
+O_DeltaSoilWStock = O_InitSoilW[time] - np.sum(D_SoilWater)
+O_ChkAllCatchmAccFor = -O_CumRain[time] + O_CumIntercE[time] + O_CumTransp[time] + O_TotStreamFlow - O_DeltaGWStock - O_DeltaSoilWStock
+O_DeltaStockLake = D_InitLakeVol-L_LakeVol
+O_ChkAllLakeAccFor = D_CumInflowtoLake[time] - L_CumEvapLake[time] - L_CumRivOutFlow[time] - L_CumHEPPUse[time] + O_DeltaStockLake[time]
+D_CumTotRiverFlowAll = np.sum(D_CumTotRiverFlow, axis=0)
+O_ChkAllRiverAccFor = O_TotStreamFlow -D_CumTotRiverFlowAll - D_CumInflowtoLake + D_DeltaStockRiver
+O_DailyRainSubCtm = np.sum(I_DailyRainAmount, axis=0)
+O_DeltaStockLake =D_InitLakeVol[time] - L_LakeVol[time]
+O_FrBaseFlow = O_CumBaseFlow[time]/O_TotStreamFlow if O_TotStreamFlow > 0 else 0
+O_FrSoilQuickFlow = O_CumSoilQFlow[time]/O_TotStreamFlow if O_TotStreamFlow > 0 else 0
+O_FrSurfQuickFlow = O_CumSurfQFlow[time]/O_TotStreamFlow if O_TotStreamFlow else 0
+O_RainYesterday = O_RainYest[time] * I_WarmedUp
+O_RainHalfDelayed = (np.sum(O_RainYesterday[time]) + np.sum(I_DailyRainAmount))/2
+O_RelWatAvVegSubc = np.multiply(D_RelWaterAv, I_FracVegClassNow)
+O_RelWatAv_Subc = np.divide(np.mean(O_RelWatAvVegSubc, axis=0), np.sum(I_FracVegClassNow, axis=0),
+                            out=np.ones(len(config.SUBCATCHMENT)),
+                            where=np.sum(I_FracVegClassNow, axis=0)>0)
+O_RelWatAv_Overall = np.mean(O_RelWatAv_Subc)
+O_RealWatAv_subc = np.divide(np.mean(O_RelWatAvVegSubc, axis=1), np.sum(I_FracVegClassNow, axis=1),
+                             out=np.ones_like(np.mean(O_RelWatAvVegSubc, axis=1)),
+                             where=np.sum(I_FracVegClassNow, axis=1)!= 0)
+O_Rel_ET_Subc = np.divide(D_InterceptEvap + D_ActEvapTransp, I_PotEvapTransp,
+                          out=np.zeros_like(I_PotEvapTransp),
+                          where=I_PotEvapTransp!=0)
+O_Reset = 1 if I_WarmedUp == 1 or I_WUcorrection == 1 else 0
+S_RainAtSoilSurface = I_DailyRainAmount - D_InterceptEvap
+
+O_InitLake = O_Reset * (L_LakeVol[time] - D_InitLakeVol[time])
+calculate.update(D_InitLakeVol, O_InitLake, dt=config.dt)
+
+O_InitRiv = O_Reset * (D_CurrRivVol - D_InitLakeVol[time])
+calculate.update(D_InitRivVol, O_InitRiv, dt=config.dt)
+
+O_BaseFlowAcc = np.sum(D_GWaDisch) * I_WarmedUp
+calculate.update(O_CumBaseFlow, O_BaseFlowAcc, dt=config.dt)
+
+O_CumDeepInfAcc = np.sum(D_DeepInfiltration) * I_WarmedUp
+calculate.update(O_CumBaseFlow, O_CumDeepInfAcc, dt=config.dt)
+
+O_EvapoTransAcc = ((np.sum(D_ActEvapTransp) + np.sum(D_InterceptEvap)) * I_WarmedUp
+                   if np.sum(I_PotEvapTransp) > 0 else 0)
+calculate.update(O_CumEvapotrans, O_EvapoTransAcc, dt=config.dt)
+
+O_InfAcc = np.sum(D_Infiltration) * I_WarmedUp
+calculate.update(O_CumInfiltration, O_InfAcc, dt=config.dt)
+
+O_AccET = np.sum(D_InterceptEvap) * I_WarmedUp
+calculate.update(O_CumIntercE, O_AccET, dt=config.dt)
+
+O_PercAcc = np.sum(D_Percolation) * I_WarmedUp
+calculate.update(O_CumPercolation, O_PercAcc, dt=config.dt)
+
+O_RainAcc = np.sum(I_DailyRainAmount) * I_WarmedUp
+calculate.update(O_CumRain, O_RainAcc, dt=config.dt)
+
+O_CumSoilQFlowAcc = np.sum(D_SoilDischarge) * I_WarmedUp
+calculate.update(O_CumSoilQFlow, O_CumSoilQFlowAcc, dt=config.dt)
+
+O_SurfQFlowAcc = np.sum(D_SurfaceFlow) * I_WarmedUp
+calculate.update(O_CumSoilQFlow, O_SurfQFlowAcc, dt=config.dt)
+
+O_TranspAcc = np.sum(D_ActEvapTransp) * I_WarmedUp
+calculate.update(O_CumTransp, O_TranspAcc, dt=config.dt)
+
+O_InitGW = (np.sum(D_GWArea) - O_InitGWStock[time])
+calculate.update(O_InitGWStock, O_InitGW, dt=config.dt)
+
+O_InitSW = O_Reset * (np.sum(D_SoilWater) - O_InitSoilW[time])
+calculate.update(O_InitSoilW, O_InitSW, dt=config.dt)
+
+O_RainToday = np.sum(I_DailyRainAmount, axis=0) * I_WarmedUp
+calculate.update(O_RainYest, O_RainToday - O_RainYesterday, dt=config.dt)
+O_LastYearHEPP = (O_ThisYHepp-O_LastYHepp)/(365*L_HEPP_Daily_Dem) if O_LastYHepp>0 else 0
+O_BYP = -O_BestYyHEPP+O_LastYearHEPP if O_LastYearHEPP>0 and O_LastYearHEPP>O_BestYyHEPP else 0
+calculate.update(O_BestYyHEPP, O_BYP, dt=config.dt)
+O_StarMYear = [4, 6, 8]
+O_StartDOY = [1, 1, 1]
+O_StartMDay = (O_StarMYear-1)*365+1+(O_StartDOY-1)
+O_EndMDay = O_StartMDay+O_MPeriodLength
+Yearly_Tick = 1 if I_WarmedUp == 1 and time%365 == 0 else 0
+I_DebitTime = (I_RFlowData_Year_1_to_4 if I_Simulation_Time <= 1460
+               else I_RFlowData_Year_5_to_8 if I_Simulation_Time <= 2920
+               else I_RFlowData_Year_9_to_12 if I_Simulation_Time <= 4380
+               else I_RFlowData_Year_13_to_16 if I_Simulation_Time <= 5840
+               else I_RFlowData_Year_17_to_20 if I_Simulation_Time <= 7300
+               else I_RFlowData_Year_21_to_24 if I_Simulation_Time <= 8760
+               else I_RFlowData_Year_25_to_28 if I_Simulation_Time <= 10220
+               else I_RFlowData_Year_29_to_32)
+I_RFlowDataQmecs = I_DebitTime
+I_ContrSubcArea = np.multiply(I_RelArea, isI_SubcContr)
+I_RFlowdata_mmday = (I_RFlowDataQmecs*24*3600*10^3)/(np.sum(I_ContrSubcArea)*I_TotalArea*10^6) if np.sum(I_ContrSubcArea) > 0 else 0
+# O_Ch_inGWStock(t) = O_Ch_inGWStock(t - dt=config.dt) + (O_Ch_in_GWStockMP) * dt=config.dt
+O_Ch_in_GWStockMP = (np.sum(D_GWArea) - O_InitGWStockMP) -  O_Ch_inGWStock if time > O_StartMDay and time < O_EndMDay+1 else 0
+calculate.update(O_Ch_inGWStock, O_Ch_in_GWStockMP, dt=config.dt)
+
+# O_Ch_inWStock(t) = O_Ch_inWStock(t - dt=config.dt) + (O_Ch_in_WStockMP) * dt=config.dt
+
+O_Ch_in_WStockMP = (np.sum(D_SoilWater) - O_InitSWMP) - O_Ch_inWStock if time > O_StartMDay and time < O_EndMDay + 1 else 0
+calculate.update(O_Ch_inWStock, O_Ch_in_WStockMP, dt=config.dt)
+
+# O_CumBaseFlowMP(t) = O_CumBaseFlowMP(t - dt=config.dt) + (O_BaseFlowAccMP) * dt=config.dt
+O_BaseFlowAccMP = np.sum(D_GWaDisch) if I_Simulation_Time >= O_StartMDay and I_Simulation_Time < O_EndMDay and isI_StillWarmUp == 0 else 0
+calculate.update(O_CumBaseFlowMP, O_BaseFlowAccMP, dt=config.dt)
+
+#O_CumDebitDataMP(t) = O_CumDebitDataMP[MeasurePeriod](t - dt=config.dt) + (O_DebitDataAccMP[MeasurePeriod]) * dt=config.dt
+O_DebitDataAccMP = I_RFlowdata_mmday if I_Simulation_Time >= O_StartMDay and I_Simulation_Time < O_EndMDay and isI_StillWarmUp == 0  else 0
+calculate.update(O_CumDebitDataMP, O_DebitDataAccMP, dt=config.dt)
+
+# O_CumDebitPredMP[MeasurePeriod](t) = O_CumDebitPredMP[MeasurePeriod](t - dt=config.dt) + (O_DebitPredAccMP[MeasurePeriod]) * dt=config.dt
+O_DebitPredAccMP = D_RiverFlowtoLake if I_Simulation_Time >= O_StartMDay and I_Simulation_Time < O_EndMDay and isI_StillWarmUp == 0 else 0
+calculate.update(O_CumDebitPredMP, O_DebitPredAccMP, dt=config.dt)
+
+# O_CumEvapLakeMP[MeasurePeriod](t) = O_CumEvapLakeMP[MeasurePeriod](t - dt=config.dt) + (O_EvapLakeMP[MeasurePeriod]) * dt=config.dt
+O_EvapLakeMP = L_EvapLake if I_Simulation_Time >= O_StartMDay and I_Simulation_Time < O_EndMDay and isI_StillWarmUp == 0 else 0
+calculate.update(O_CumEvapLakeMP, O_EvapLakeMP, dt=config.dt)
+
+# O_CumEvapTransMP[MeasurePeriod](t) = O_CumEvapTransMP[MeasurePeriod](t - dt=config.dt) + (O_Ch_in_EvapoTrans[MeasurePeriod]) * dt=config.dt
+O_Ch_in_EvapoTrans = np.sum(D_CumEvapTranspClass) - O_InitEvapoMP-O_CumEvapTransMP if I_Simulation_Time >= O_StartMDay and I_Simulation_Time < O_EndMDay and isI_StillWarmUp == 0  else 0
+calculate.update(O_CumEvapTransMP, O_Ch_in_EvapoTrans, dt=config.dt)
+
+# O_CumGWMP[MeasurePeriod](t) = O_CumGWMP[MeasurePeriod](t - dt=config.dt) + (O_GWAccMP[MeasurePeriod]) * dt=config.dt
+O_GWAccMP = np.sum(D_GWArea)  if time > O_StartMDay and time < O_EndMDay else 0
+calculate.update(O_CumGWMP, O_GWAccMP, dt=config.dt)
+
+# O_CumHEPPOutFlowMP[MeasurePeriod](t) = O_CumHEPPOutFlowMP[MeasurePeriod](t - dt=config.dt) + (O_HEPPOutFlowMP[MeasurePeriod]) * dt=config.dt
+O_HEPPOutFlowMP = L_HEPPWatUseFlow if time > O_StartMDay and time < O_EndMDay else 0
+calculate.update(O_CumHEPPOutFlowMP, O_HEPPOutFlowMP, dt=config.dt)
+
+# O_CumInfiltrationMP[MeasurePeriod](t) = O_CumInfiltrationMP[MeasurePeriod](t - dt=config.dt) + (O_InfAccMP[MeasurePeriod]) * dt=config.dt
+O_InfAccMP = np.sum(D_Infiltration) if I_Simulation_Time >= O_StartMDay and I_Simulation_Time < O_EndMDay and isI_StillWarmUp == 0 else 0
+calculate.update(O_CumInfiltrationMP, O_InfAccMP, dt=config.dt)
+
+# O_CumIntercEvapMP[MeasurePeriod](t) = O_CumIntercEvapMP[MeasurePeriod](t - dt=config.dt) + (O_IntercAccMP[MeasurePeriod]) * dt=config.dt
+O_IntercAccMP = np.sum(D_InterceptEvap) if I_Simulation_Time >= O_StartMDay and I_Simulation_Time < O_EndMDay and isI_StillWarmUp == 0 else 0
+calculate.update(O_CumIntercEvapMP, O_IntercAccMP, dt=config.dt)
+
+# O_CumRainMP[MeasurePeriod](t) = O_CumRainMP[MeasurePeriod](t - dt=config.dt) + (O_RainAccMP[MeasurePeriod]) * dt=config.dt
+O_RainAccMP = np.sum(I_DailyRainAmount) if I_Simulation_Time >= O_StartMDay and I_Simulation_Time < O_EndMDay and isI_StillWarmUp == 0 else 0
+calculate.update(O_CumRainMP, O_RainAccMP, dt=config.dt)
+
+# O_CumRivInflowtoLakeMP[MeasurePeriod](t) = O_CumRivInflowtoLakeMP[MeasurePeriod](t - dt=config.dt) + (O_RivInflowtoLakeMP[MeasurePeriod]) * dt=config.dt
+O_RivInflowtoLakeMP = L_InFlowtoLake if I_Simulation_Time >= O_StartMDay and I_Simulation_Time < O_EndMDay and isI_StillWarmUp == 0 else 0
+calculate.update(O_CumRivInflowtoLakeMP, O_RivInflowtoLakeMP, dt=config.dt)
+
+# O_CumRivOutFlowMP[MeasurePeriod](t) = O_CumRivOutFlowMP[MeasurePeriod](t - dt=config.dt) + (O_RivOutFlowMP[MeasurePeriod]) * dt=config.dt
+O_RivOutFlowMP = L_RivOutFlow if I_Simulation_Time >= O_StartMDay and I_Simulation_Time < O_EndMDay and isI_StillWarmUp == 0 else 0
+calculate.update(O_CumRivOutFlowMP, O_RivOutFlowMP, dt=config.dt)
+
+# O_CumSoilQFlowMP[MeasurePeriod](t) = O_CumSoilQFlowMP[MeasurePeriod](t - dt=config.dt) + (O_SoilQFlowAccMP[MeasurePeriod]) * dt=config.dt
+O_SoilQFlowAccMP = np.sum(D_SoilDischarge) if I_Simulation_Time >= O_StartMDay and I_Simulation_Time < O_EndMDay and isI_StillWarmUp == 0 else 0
+calculate.update(O_CumSoilQFlowMP, O_SoilQFlowAccMP, dt=config.dt)
+
+# O_CumSoilWMP[MeasurePeriod](t) = O_CumSoilWMP[MeasurePeriod](t - dt=config.dt) + (O_SoilWAccMP[MeasurePeriod]) * dt=config.dt
+O_SoilWAccMP = np.sum(D_SoilWater) if I_Simulation_Time >= O_StartMDay and I_Simulation_Time < O_EndMDay and isI_StillWarmUp == 0 else 0
+calculate.update(O_CumSoilWMP, O_SoilWAccMP, dt=config.dt)
+
+# O_CumSurfQFlowMP[MeasurePeriod](t) = O_CumSurfQFlowMP[MeasurePeriod](t - dt=config.dt) + (O_SurfQFlowAccMP[MeasurePeriod]) * dt=config.dt
+O_SurfQFlowAccMP = np.sum(D_SurfaceFlow) if I_Simulation_Time >= O_StartMDay and I_Simulation_Time < O_EndMDay and isI_StillWarmUp == 0 else 0
+calculate.update(O_CumSurfQFlowMP, O_SurfQFlowAccMP, dt=config.dt)
+
+# O_CumTranspMP[MeasurePeriod](t) = O_CumTranspMP[MeasurePeriod](t - dt=config.dt) + (O_TranspAccMP[MeasurePeriod]) * dt=config.dt
+O_TranspAccMP = np.sum(D_ActEvapTransp)  if I_Simulation_Time >= O_StartMDay and I_Simulation_Time < O_EndMDay and isI_StillWarmUp == 0 else 0
+calculate.update(O_CumTranspMP, O_TranspAccMP, dt=config.dt)
+
+# O_DeltaCatchmStMP[MeasurePeriod](t) = O_DeltaCatchmStMP[MeasurePeriod](t - dt=config.dt) + (O_Ch_in_CatchmStMP[MeasurePeriod]) * dt=config.dt
+O_Ch_in_CatchmStMP = O_Ch_inGWStock+ O_Ch_in_GWStockMP+O_Ch_inWStock + O_Ch_in_WStockMP - O_DeltaCatchmStMP if time > O_StartMDay and time < O_EndMDay + 1 else 0
+calculate.update(O_DeltaCatchmStMP, O_Ch_in_CatchmStMP, dt=config.dt)
+
+# O_Hepp_Kwh_per_dayMP[MeasurePeriod](t) = O_Hepp_Kwh_per_dayMP[MeasurePeriod](t - dt=config.dt) + (O_Hepp_ElctrProd[MeasurePeriod]) * dt=config.dt
+O_Hepp_ElctrProd = L_HEPP_Kwh /( O_EndMDay-O_StartMDay) if I_Simulation_Time >= O_StartMDay and I_Simulation_Time < O_EndMDay and isI_StillWarmUp ==0 else 0
+upadt=config.dte(O_Hepp_Kwh_per_dayMP, O_Hepp_ElctrProd, dt=config.dt)
+
+# O_InitEvapoMP[MeasurePeriod](t) = O_InitEvapoMP[MeasurePeriod](t - dt=config.dt) + (O_Ch_EvapoTran[MeasurePeriod]) * dt=config.dt
+O_Ch_EvapoTran = np.sum(D_CumEvapTranspClass) if time == int(O_StartMDay) else 0
+calculate.update(O_InitEvapoMP, O_Ch_EvapoTran, dt=config.dt)
+
+# O_InitGWStockMP[MeasurePeriod](t) = O_InitGWStockMP[MeasurePeriod](t - dt=config.dt) + (O_ChGWMP[MeasurePeriod]) * dt=config.dt
+O_ChGWMP = np.sum(D_GWArea)  if time == int(O_StartMDay) else 0
+calculate.update(O_InitGWStockMP, O_ChGWMP, dt=config.dt)
+
+# O_InitSWMP[MeasurePeriod](t) = O_InitSWMP[MeasurePeriod](t - dt=config.dt) + (O_ChSoilWMP[MeasurePeriod]) * dt=config.dt
+O_ChSoilWMP = np.sum(D_SoilWater) if time == int(O_StartMDay) else 0
+calculate.update(O_InitSWMP, O_ChSoilWMP, dt=config.dt)
+
+# O_InitSWMP[MeasurePeriod](t) = O_InitSWMP[MeasurePeriod](t - dt=config.dt) + (O_ChSoilWMP[MeasurePeriod]) * dt=config.dt
+O_ChSoilWMP =  np.sum(D_SoilWater) if time == int(O_StartMDay) else 0
+calculate.update(O_InitSWMP, O_ChSoilWMP, dt=config.dt)
+
+# O_LastYHepp(t) = O_LastYHepp(t - dt=config.dt) + (O_HeppUseF1 - O_HeppUseF2) * dt=config.dt
+O_HeppUseF1 = Yearly_Tick*O_ThisYHepp
+O_HeppUseF2 = Yearly_Tick*O_LastYHepp
+calculate.update(O_LastYHepp, O_HeppUseF1 - O_HeppUseF2, dt=config.dt)
+
+# O_ThisYHepp(t) = O_ThisYHepp(t - dt=config.dt) + (O_HeppUseF0 - O_HeppUseF1) * dt=config.dt
+O_HeppUseF0 = Yearly_Tick * L_CumHEPPUse
+O_HeppUseF1 = Yearly_Tick * O_ThisYHepp
+calculate.update(O_ThisYHepp, O_HeppUseF0 - O_HeppUseF1, dt=config.dt)
+
+# O_WorstYHEPP(t) = O_WorstYHEPP(t - dt=config.dt) + (O_WYP) * dt=config.dt
+O_WYP = -O_WorstYHEPP+O_LastYearHEPP if O_LastYearHEPP>0 and O_LastYearHEPP< O_WorstYHEPP else 0
+calculate.update(O_WorstYHEPP, O_WYP, dt=config.dt)
+
+# O_YearSim(t) = O_YearSim(t - dt=config.dt) + (Yearly_Tick) * dt=config.dt
+calculate.update(O_YearSim, Yearly_Tick, dt=config.dt)
+
+O_CumET_LandMP= O_CumIntercEvapMP + O_CumTranspMP
+O_CurrentETall = np.sum(D_ActEvapTransp)
+O_RelOpTimeHEPPMP =  (O_CumHEPPOutFlowMP/L_HEPP_Daily_Dem)/ (O_EndMDay - O_StartMDay )
+O_SoilWaterTot = np.sum(D_SoilWater)
+
