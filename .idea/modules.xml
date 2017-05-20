@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/stella.iml" filepath="$PROJECT_DIR$/.idea/stella.iml" />
+      <module fileurl="file://$USER_HOME$/PycharmProjects/stella-ui/.idea/stella-ui.iml" filepath="$USER_HOME$/PycharmProjects/stella-ui/.idea/stella-ui.iml" />
     </modules>
   </component>
 </project>
