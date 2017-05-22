@@ -23,7 +23,7 @@
       <file leaf-file-name="MainUI.py" pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/PycharmProjects/stella-ui/MainUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="73">
+            <state relative-caret-position="4454">
               <caret line="268" column="14" lean-forward="false" selection-start-line="268" selection-start-column="14" selection-end-line="268" selection-end-column="14" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
@@ -35,7 +35,7 @@
       <file leaf-file-name="Equations.TXT" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Equations.TXT">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
+            <state relative-caret-position="357">
               <caret line="21" column="31" lean-forward="false" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="31" />
               <folding />
             </state>
@@ -45,7 +45,7 @@
       <file leaf-file-name="config.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
+            <state relative-caret-position="153">
               <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="29" selection-end-column="21" />
               <folding />
             </state>
@@ -55,8 +55,8 @@
       <file leaf-file-name="file_simulation.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/file_simulation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-316">
-              <caret line="965" column="16" lean-forward="false" selection-start-line="965" selection-start-column="16" selection-end-line="965" selection-end-column="16" />
+            <state relative-caret-position="486">
+              <caret line="1395" column="0" lean-forward="true" selection-start-line="1395" selection-start-column="0" selection-end-line="1395" selection-end-column="0" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -77,8 +77,8 @@
       <file leaf-file-name="test.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="277">
-              <caret line="32" column="29" lean-forward="true" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
+            <state relative-caret-position="549">
+              <caret line="40" column="0" lean-forward="true" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -105,10 +105,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>D_RivLakeSameDay</find>
-      <find>D_RiverFlowtoLake</find>
-      <find>D_RivInflLake</find>
-      <find>I_RiverflowDispersalFactor</find>
       <find>I_ReleaseFract</find>
       <find>I_ReleaseFrac</find>
       <find>D_SurfFlowObspoint</find>
@@ -116,7 +112,6 @@
       <find>D_SoilDischarge</find>
       <find>L_LakeVol</find>
       <find>L_CumRivOutFlow</find>
-      <find>L_CumHEPPUse</find>
       <find>O_DeltaGWStock</find>
       <find>D_GWArea</find>
       <find>O_DeltaStockLake</find>
@@ -135,6 +130,11 @@
       <find>D_CurrRiv</find>
       <find>D_CurrRivFlow</find>
       <find>D_CurrRivVol</find>
+      <find>ARRAY_SUM</find>
+      <find>O_ThisYHepp</find>
+      <find>O_LastYHepp</find>
+      <find>O_WorstYHEPP</find>
+      <find>L_CumHEPPUse</find>
     </findStrings>
     <replaceStrings>
       <replace>0</replace>
@@ -164,6 +164,7 @@
       <replace>subCatchment</replace>
       <replace>measurePeriod</replace>
       <replace>obsPoint</replace>
+      <replace>array_sum</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -253,7 +254,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -292,6 +292,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -920,13 +921,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="143">
           <caret line="1813" column="0" lean-forward="false" selection-start-line="1813" selection-start-column="0" selection-end-line="1813" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/PycharmProjects/stella-ui/MainUI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="73">
+        <state relative-caret-position="4454">
           <caret line="268" column="14" lean-forward="false" selection-start-line="268" selection-start-column="14" selection-end-line="268" selection-end-column="14" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
@@ -934,17 +934,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="32" column="29" lean-forward="true" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
+        <state relative-caret-position="153">
           <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="29" selection-end-column="21" />
           <folding />
         </state>
@@ -952,16 +944,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Equations.TXT">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
+        <state relative-caret-position="357">
           <caret line="21" column="31" lean-forward="false" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="549">
+          <caret line="40" column="0" lean-forward="true" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/file_simulation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-316">
-          <caret line="965" column="16" lean-forward="false" selection-start-line="965" selection-start-column="16" selection-end-line="965" selection-end-column="16" />
+        <state relative-caret-position="486">
+          <caret line="1395" column="0" lean-forward="true" selection-start-line="1395" selection-start-column="0" selection-end-line="1395" selection-end-column="0" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>

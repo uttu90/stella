@@ -35,3 +35,8 @@ print np.repeat(m, 2).reshape(3, 2)
 
 np.divide(1, m)
 np.minimum(1, m)
+
+x = np.array([1, 2, 3])
+y = np.array([0, 0, 0])
+
+print np.divide(x, y, out=np.ones_like(x), where=y != 0)
