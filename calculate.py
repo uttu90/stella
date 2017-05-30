@@ -8,7 +8,7 @@ def update(stock, inflow=0, outflow=0, dt=1, non_negative=True):
 
 
 def update_conveyor(stock, inflow=0, outflow=1, time=0, dt=1):
-    leak = 0 if time < outflow else 1
+    leak = np.multiply(outflow> time, np.ones_like(outflow))
     value = np.add(stock[-1], (inflow - inflow * leak) * dt)
     stock.append(value)
 

@@ -712,8 +712,8 @@ D_RainInterc = np.divide(D_InterceptEvap,
                          out=np.ones_like(D_InterceptEvap),
                          where=I_FracVegClassNow_Multiply_I_RelArea!=0)
 D_RainIntercDelay = (np.minimum(I_RainMaxIntDripDur,
-                               array_sum(D_RainInterc,
-                                         shape=(subCatchment, 1))) /
+                                array_sum(D_RainInterc,
+                                          shape=(subCatchment, 1))) /
                      I_RainIntercDripRt)
 I_RainTimeAvForInf = np.minimum(24, I_RainDuration + D_RainIntercDelay)
 D_Infiltration = np.multiply(
@@ -728,7 +728,7 @@ D_RelWaterAv = np.minimum(1, np.divide(
     D_SoilWater[time],
     I_RelDroughtFact_AvailWaterClass,
     out=np.ones_like(D_SoilWater[time]),
-    where=I_RelDroughtFact_AvailWaterClass!=0))
+    where=I_RelDroughtFact_AvailWaterClass != 0))
 x = np.multiply(D_GWArea[time],
                 np.multiply(isD_GWUseFacility,
                             np.multiply(D_GW_Utilization_fraction,
@@ -741,7 +741,7 @@ D_Irrigation = np.minimum(
                                             np.subtract(1, D_RelWaterAv)))),
         D_IrrigEfficiency,
         out=np.zeros(shape=(subCatchment, vegClass)),
-        where=D_IrrigEfficiency!=0),
+        where=D_IrrigEfficiency != 0),
     I_PotEvapTransp)
 
 D_Percolation = np.multiply(
@@ -881,7 +881,7 @@ S_SplashErosion = (0 * np.divide(
                 S_RainAtSoilSurface),
     I_RainDuration,
     out=np.zeros_like(G_SurfaceCover),
-    where=I_RainDuration!=0))
+    where=I_RainDuration != 0))
 
 S_StructureFormation = 0 * np.multiply(S_RelBulkDensity, G_SurfaceCover)
 S_RippingSurface = 0
@@ -935,9 +935,9 @@ D_RivInflLake = np.multiply(
     isD_FeedingIntoLake)
 D_RivInflLake = np.repeat(D_RivInflLake, 8).reshape(subCatchment, obsPoint)
 D_RiverFlowtoLake = (array_sum(D_RivLakeSameDay,
-                               shape=(obsPoint, 1)) +
+                               shape=(obsPoint, 1))[0] +
                      array_sum(D_RivInflLake,
-                               shape=(obsPoint, 1)))
+                               shape=(obsPoint, 1))[0])
 D_GWLakeSub = np.multiply(D_FracGWtoLake, D_GWaDisch)
 D_GWtoLake = np.sum(D_GWLakeSub)
 D_RestartL = isO_Reset * D_CumInflowtoLake[time]/dt
@@ -952,7 +952,6 @@ D_TotalStreamInflow = (
      np.multiply(D_GWaDisch, (1 - D_FracGWtoLake)) +
      np.sum(D_SoilDischarge, axis=0).reshape(subCatchment, 1)) +
     np.multiply(D_SubCResOutflow, (1 - isI_DaminThisStream)))
-D_SurfFlowObsPoint = np.multiply(D_RoutingTime >= 1, D_TotalStreamInflow)
 D_DirectSurfFkowObsPoint = np.multiply(
     np.multiply(D_RoutingTime >= 0, D_RoutingTime < 1),
     np.multiply(D_TotalStreamInflow, (1 - I_ReleaseFrac)))
@@ -1068,7 +1067,7 @@ O_ChkAllCatchmAccFor = (-O_CumRain[time] +
                         O_TotStreamFlow -
                         O_DeltaGWStock -
                         O_DeltaSoilWStock)
-O_DeltaStockLake =D_InitLakeVol[time] - L_LakeVol[time]
+O_DeltaStockLake = D_InitLakeVol[time] - L_LakeVol[time]
 O_ChkAllLakeAccFor = (D_CumInflowtoLake[time] -
                       L_CumEvapLake[time] -
                       L_CumRivOutFlow[time] -
@@ -1224,7 +1223,7 @@ O_DebitPredAccMP = np.multiply(
     np.multiply(I_Simulation_Time >= O_StartMDay,
                 np.multiply(I_Simulation_Time < O_EndMDay,
                             isI_StillWarmUp == 0)))
-
+print O_DebitPredAccMP.shape
 calculate.update(O_CumDebitPredMP, inflow=O_DebitPredAccMP, dt=dt)
 
 
