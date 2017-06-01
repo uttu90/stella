@@ -2,6 +2,8 @@ from PyQt4 import QtCore
 import numpy as np
 import utils as np_utils
 import spatrain
+import calculate.update as update
+import calculate.update_conveyor as update_conveyor
 
 
 class SimulatingThread(QtCore.QThread):
@@ -587,7 +589,6 @@ class SimulatingThread(QtCore.QThread):
             I_RivFlowTime3,
             I_RivFlowTime4
         ]
-
 
         I_AvailWatSub1 = np.array(
             self.data['I_AvailWatSub1']
@@ -1212,11 +1213,9 @@ class SimulatingThread(QtCore.QThread):
             D_ReservoirVol = L_ResrDepth * np.multiply(isL_Lake, I_RelArea)
             D_SubCResOutflow = np.add(
                 np.multiply(
-                    np.divide(
-                        D_SubcResVol[time],
-                        D_ReservoirVol) > 1,
+                    D_SubcResVol[time] > D_ReservoirVol,
                     np.subtract(D_SubcResVol[time], D_ReservoirVol)),
-                np.multiply(np.divide(D_SubcResVol[time], D_ReservoirVol) <= 1,
+                np.multiply(D_SubcResVol[time] < D_ReservoirVol,
                             D_SubCResUseFrac[I_RainDoY] * D_SubcResVol[time]))
             D_RoutingTime = np.divide(
                 I_RoutingDistance,
@@ -1227,7 +1226,8 @@ class SimulatingThread(QtCore.QThread):
                 1,
                 np.divide(I_RiverflowDispersalFactor,
                           D_RoutingTime,
-                          out=np.ones(shape=(subcatchment, obsPoint))))
+                          out=np.ones(shape=(subcatchment, obsPoint)),
+                          where=D_RoutingTime!=0))
             D_TotalStreamInflow = (
                 D_SurfaceFlow +
                 np.multiply(
@@ -1308,10 +1308,11 @@ class SimulatingThread(QtCore.QThread):
                                      out=np.zeros_like(isL_Lake),
                                      where=isL_Lake != 1)
 
-            L_LakeLevel = np.multiply(
-                np.sum(L_LakeArea) > 0,
+            L_LakeLevel = (
+                (np_utils.array_sum(L_LakeArea) > 0) *
                 L_LakeVol[time] / (
-                1000 * np.sum(L_LakeArea)) + L_LakeBottomElev)
+                    1000 * np_utils.array_sum(L_LakeArea) + L_LakeBottomElev)
+            )
 
             L_Lakelevelexcess = (
                 L_LakeLevel -
@@ -1576,5 +1577,31 @@ class SimulatingThread(QtCore.QThread):
                                   L_HEPP_Daily_Dem) /
                                  (O_EndMDay - O_StartMDay))
             O_SoilWaterTot = np.sum(D_SoilWater[time])
+
+            update(
+                C_StockingRate,
+                inflows=C_Stocking,
+                outflows=C_Destoking,
+                dt=dt
+            )
+            update(
+                D_InitLakeVol,
+                inflows=O_InitLake,
+                dt=dt
+            )
+            update(
+                D_InitRivVol,
+                inflows=O_InitRiv,
+                dt=dt
+            )
+            update(
+                O_CumBaseFlow,
+                inflows=O_DeepInfAcc,
+                dt=dt
+            )
+            update(
+
+            )
+
 
             print ('calculate finished')
