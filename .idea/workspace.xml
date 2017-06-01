@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/model.py" line="805" mnemonic="A" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="8255f4e0-dca1-4449-9b09-4bd572b5a68e" name="Default" comment="" />
     <ignored path="stella.iws" />
@@ -20,30 +23,56 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainUI.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MainUI.py" pinned="false" current-in-tab="true">
         <entry file="file://$USER_HOME$/PycharmProjects/stella-ui/MainUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="329" column="8" lean-forward="false" selection-start-line="329" selection-start-column="8" selection-end-line="329" selection-end-column="37" />
-              <caret line="333" column="8" lean-forward="false" selection-start-line="333" selection-start-column="8" selection-end-line="333" selection-end-column="37" />
-              <caret line="337" column="8" lean-forward="false" selection-start-line="337" selection-start-column="8" selection-end-line="337" selection-end-column="37" />
-              <caret line="341" column="8" lean-forward="false" selection-start-line="341" selection-start-column="8" selection-end-line="341" selection-end-column="28" />
-              <caret line="345" column="8" lean-forward="false" selection-start-line="345" selection-start-column="8" selection-end-line="345" selection-end-column="38" />
+            <state relative-caret-position="230">
+              <caret line="437" column="25" lean-forward="true" selection-start-line="437" selection-start-column="25" selection-end-line="437" selection-end-column="25" />
               <folding>
-                <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#0#10#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="model.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/PycharmProjects/stella-ui/utils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="799">
+              <caret line="47" column="17" lean-forward="false" selection-start-line="47" selection-start-column="17" selection-end-line="47" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="model.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="654" column="0" lean-forward="false" selection-start-line="654" selection-start-column="0" selection-end-line="654" selection-end-column="0" />
+            <state relative-caret-position="-1778">
+              <caret line="1456" column="43" lean-forward="true" selection-start-line="1456" selection-start-column="43" selection-end-line="1456" selection-end-column="43" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="config.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="141">
+              <caret line="44" column="26" lean-forward="true" selection-start-line="44" selection-start-column="26" selection-end-line="44" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="excel_utils.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utils/excel_utils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="43" lean-forward="false" selection-start-line="0" selection-start-column="43" selection-end-line="2" selection-end-column="41" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -52,17 +81,7 @@
         <entry file="file://$PROJECT_DIR$/Equations.TXT">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="115">
-              <caret line="1190" column="71" lean-forward="false" selection-start-line="1190" selection-start-column="48" selection-end-line="1190" selection-end-column="71" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="config.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="29" selection-end-column="21" />
+              <caret line="1190" column="11" lean-forward="false" selection-start-line="1190" selection-start-column="0" selection-end-line="1190" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -71,8 +90,8 @@
       <file leaf-file-name="file_simulation.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/file_simulation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-136">
-              <caret line="365" column="23" lean-forward="false" selection-start-line="365" selection-start-column="0" selection-end-line="365" selection-end-column="23" />
+            <state relative-caret-position="277">
+              <caret line="1388" column="0" lean-forward="false" selection-start-line="1388" selection-start-column="0" selection-end-line="1393" selection-end-column="42" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -80,41 +99,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="calculate.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/calculate.py">
+      <file leaf-file-name="np_utils.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utils/np_utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="9" column="62" lean-forward="false" selection-start-line="9" selection-start-column="62" selection-end-line="9" selection-end-column="62" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="697">
-              <caret line="41" column="56" lean-forward="false" selection-start-line="41" selection-start-column="56" selection-end-line="41" selection-end-column="56" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="I_Check _and_Balance.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/I_Check _and_Balance.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="8" selection-end-column="50" />
               <folding />
             </state>
           </provider>
@@ -131,36 +120,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>O_TotStreamFlow</find>
-      <find>D_CumTotRiverFlowAll</find>
-      <find>O_LastYearHEPP</find>
-      <find>L_HEPP_Daily_Dem</find>
-      <find>O_StartMDay</find>
-      <find>O_Ch_in_GWStockMP</find>
-      <find>config.I_GWRelFracConst</find>
-      <find>config.</find>
       <find>D_SoilQflowRelFrac</find>
-      <find>D_TotRiverFlowNoDelay</find>
-      <find>ARRAYSUM(D_StreamsSurfQ[*,InflowLake])+ARRAYSUM(D_TotRiverFlowNoDelay[*,InflowLake])</find>
-      <find>D_StreamsSurfQ</find>
-      <find>D_CurrRiv</find>
-      <find>D_CurrRivFlow</find>
-      <find>D_CurrRivVol</find>
-      <find>ARRAY_SUM</find>
-      <find>O_ThisYHepp</find>
-      <find>O_LastYHepp</find>
-      <find>O_WorstYHEPP</find>
-      <find>L_CumHEPPUse</find>
-      <find>D_SurfFlowObsPoint</find>
-      <find>D_SurfFlowRiver</find>
-      <find>O_CumDebitPredMP</find>
-      <find>D_RiverFlowtoLake</find>
-      <find>O_DebitPredAccMP</find>
-      <find>np.multiply</find>
-      <find>I_DailyRainAmount</find>
-      <find>I_DailyRain</find>
-      <find>I_RFlowData_Year_1_to_4</find>
-      <find>I_Daily</find>
+      <find>I_InterceptEffectonTransp</find>
+      <find>C_DailyIntake =</find>
+      <find>C_DailyTrampFac</find>
+      <find>C_CattleSale</find>
+      <find>G_WUE =</find>
+      <find>S_TrampMax</find>
+      <find>S_RippingSurface</find>
+      <find>D_SubCResUseFrac</find>
+      <find>D_FracGWtoLake</find>
+      <find>D_FeedingIntoLake</find>
+      <find>isD_FeedingIntoLake</find>
+      <find>I_RiverflowDispersalFactor</find>
+      <find>D_RoutingTime</find>
+      <find>I_DaminThisStream</find>
+      <find>reshape</find>
+      <find>L_LakeOverFlPostHEPP</find>
+      <find>L_HEPP_Daily_Dem =</find>
+      <find>L_QmecsHEPP =</find>
+      <find>L_m3_per_kwh</find>
+      <find>L_LakeTranspMultiplier</find>
+      <find>L_SanitaryFlow =</find>
+      <find>L_HEPPWatUseFlow</find>
+      <find>L_OutflTrVoPostHEPP `</find>
+      <find>O_MPeriodLength</find>
+      <find>I_RFlowData</find>
+      <find>I_SubcContr</find>
+      <find>I_RFlowDataQmecs</find>
+      <find>I_RFlowdata_mmday</find>
+      <find>I_DebitTime</find>
     </findStrings>
     <replaceStrings>
       <replace>0</replace>
@@ -191,10 +180,12 @@
       <replace>measurePeriod</replace>
       <replace>obsPoint</replace>
       <replace>array_sum</replace>
+      <replace>3</replace>
+      <replace>I_</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$USER_HOME$/PycharmProjects/stella-ui" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -228,13 +219,19 @@
         <option value="$PROJECT_DIR$/I_Rainfall.py" />
         <option value="$PROJECT_DIR$/I_SubcatchmParam.py" />
         <option value="$PROJECT_DIR$/I_PatchBalance.py" />
-        <option value="$PROJECT_DIR$/utils/__init__.py" />
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/GenArray.py" />
         <option value="$PROJECT_DIR$/calculate.py" />
+        <option value="$PROJECT_DIR$/utils/np/__init__.py" />
+        <option value="$PROJECT_DIR$/utils/__init__.py" />
+        <option value="$PROJECT_DIR$/utils/excel_utils.py" />
+        <option value="$PROJECT_DIR$/spatrain.txt" />
+        <option value="$USER_HOME$/PycharmProjects/stella-ui/spatrain.py" />
+        <option value="$PROJECT_DIR$/spatrain.py" />
+        <option value="$USER_HOME$/PycharmProjects/stella-ui/utils.py" />
         <option value="$USER_HOME$/PycharmProjects/stella-ui/MainUI.py" />
-        <option value="$PROJECT_DIR$/file_simulation.py" />
         <option value="$PROJECT_DIR$/Equations.TXT" />
+        <option value="$PROJECT_DIR$/file_simulation.py" />
         <option value="$PROJECT_DIR$/model.py" />
       </list>
     </option>
@@ -291,7 +288,31 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="stella-ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
               <option name="myItemId" value="stella" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="stella" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="stella" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="stella" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="utils" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -307,44 +328,14 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\adm\Documents\GitHub\stella\utils" />
       <recent name="C:\Users\adm\Documents\GitHub\stella" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\adm\PycharmProjects\stella-ui" />
     </key>
   </component>
   <component name="RunManager" selected="Python.MainUI">
-    <configuration default="false" name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="stella" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="calculate" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="stella" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/calculate.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
     <configuration default="false" name="file_simulation" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -379,7 +370,7 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="GenArray" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="spatrain" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -391,7 +382,41 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="stella" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/GenArray.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/spatrain.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="spatrain (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$USER_HOME$/PycharmProjects/stella-ui" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="stella-ui" />
+      <option name="SCRIPT_NAME" value="$USER_HOME$/PycharmProjects/stella-ui/spatrain.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="model" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="stella" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/model.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -531,19 +556,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.test" />
-      <item index="1" class="java.lang.String" itemvalue="Python.calculate" />
-      <item index="2" class="java.lang.String" itemvalue="Python.file_simulation" />
-      <item index="3" class="java.lang.String" itemvalue="Python.MainUI" />
-      <item index="4" class="java.lang.String" itemvalue="Python.GenArray" />
+      <item index="0" class="java.lang.String" itemvalue="Python.file_simulation" />
+      <item index="1" class="java.lang.String" itemvalue="Python.MainUI" />
+      <item index="2" class="java.lang.String" itemvalue="Python.spatrain" />
+      <item index="3" class="java.lang.String" itemvalue="Python.spatrain (1)" />
+      <item index="4" class="java.lang.String" itemvalue="Python.model" />
     </list>
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Python.MainUI" />
-        <item index="1" class="java.lang.String" itemvalue="Python.file_simulation" />
-        <item index="2" class="java.lang.String" itemvalue="Python.GenArray" />
-        <item index="3" class="java.lang.String" itemvalue="Python.test" />
-        <item index="4" class="java.lang.String" itemvalue="Python.calculate" />
+        <item index="1" class="java.lang.String" itemvalue="Python.model" />
+        <item index="2" class="java.lang.String" itemvalue="Python.spatrain (1)" />
+        <item index="3" class="java.lang.String" itemvalue="Python.spatrain" />
+        <item index="4" class="java.lang.String" itemvalue="Python.file_simulation" />
       </list>
     </recent_temporary>
   </component>
@@ -582,9 +607,28 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.11829653" sideWeight="0.5058565" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2564935" sideWeight="0.4941435" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23813057" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -610,48 +654,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Stella-equation-1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="32" column="53" lean-forward="false" selection-start-line="32" selection-start-column="53" selection-end-line="32" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Stella-equation-2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="32" column="53" lean-forward="false" selection-start-line="32" selection-start-column="53" selection-end-line="32" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Stella-equation-3.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="39" column="53" lean-forward="false" selection-start-line="39" selection-start-column="53" selection-end-line="39" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Stella-equation-4.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Stella-equation-5.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="884">
-          <caret line="52" column="110" lean-forward="false" selection-start-line="52" selection-start-column="110" selection-end-line="52" selection-end-column="110" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Stella-equation-6.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="901">
-          <caret line="53" column="6" lean-forward="false" selection-start-line="53" selection-start-column="6" selection-end-line="53" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/stella.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -747,13 +749,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
           <caret line="20" column="21" lean-forward="false" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/I_Lake.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="572">
-          <caret line="61" column="4" lean-forward="false" selection-start-line="61" selection-start-column="4" selection-end-line="61" selection-end-column="4" />
         </state>
       </provider>
     </entry>
@@ -870,36 +865,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/PycharmProjects/stella-ui/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/PycharmProjects/stella-ui/stella.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="4" lean-forward="false" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/I_Check _and_Balance.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/Python27/Lib/site-packages/numpy/core/fromnumeric.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="143">
@@ -912,64 +877,140 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="697">
           <caret line="41" column="56" lean-forward="false" selection-start-line="41" selection-start-column="56" selection-end-line="41" selection-end-column="56" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/calculate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
+        <state relative-caret-position="153">
           <caret line="9" column="62" lean-forward="false" selection-start-line="9" selection-start-column="62" selection-end-line="9" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/PycharmProjects/stella-ui/stella_ui.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/PycharmProjects/stella-ui/stella.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="4" lean-forward="false" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Equations.TXT">
+    <entry file="file://$PROJECT_DIR$/I_Check _and_Balance.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="1190" column="71" lean-forward="false" selection-start-line="1190" selection-start-column="48" selection-end-line="1190" selection-end-column="71" />
+        <state relative-caret-position="238">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/I_Lake.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1003">
+          <caret line="61" column="4" lean-forward="false" selection-start-line="61" selection-start-column="4" selection-end-line="61" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/site-packages/xlrd/sheet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8891">
+          <caret line="530" column="0" lean-forward="false" selection-start-line="530" selection-start-column="0" selection-end-line="530" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spatrain.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="173" column="0" lean-forward="true" selection-start-line="173" selection-start-column="0" selection-end-line="173" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/PycharmProjects/stella-ui/spatrain.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="164" column="10" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="173" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/PycharmProjects/stella-ui/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="799">
+          <caret line="47" column="17" lean-forward="false" selection-start-line="47" selection-start-column="17" selection-end-line="47" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/np_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="8" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/excel_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="43" lean-forward="false" selection-start-line="0" selection-start-column="43" selection-end-line="2" selection-end-column="41" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="29" selection-end-column="21" />
+        <state relative-caret-position="141">
+          <caret line="44" column="26" lean-forward="true" selection-start-line="44" selection-start-column="26" selection-end-line="44" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/file_simulation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-136">
-          <caret line="365" column="23" lean-forward="false" selection-start-line="365" selection-start-column="0" selection-end-line="365" selection-end-column="23" />
+        <state relative-caret-position="277">
+          <caret line="1388" column="0" lean-forward="false" selection-start-line="1388" selection-start-column="0" selection-end-line="1393" selection-end-column="42" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/PycharmProjects/stella-ui/MainUI.py">
+    <entry file="file://$PROJECT_DIR$/Equations.TXT">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="329" column="8" lean-forward="false" selection-start-line="329" selection-start-column="8" selection-end-line="329" selection-end-column="37" />
-          <caret line="333" column="8" lean-forward="false" selection-start-line="333" selection-start-column="8" selection-end-line="333" selection-end-column="37" />
-          <caret line="337" column="8" lean-forward="false" selection-start-line="337" selection-start-column="8" selection-end-line="337" selection-end-column="37" />
-          <caret line="341" column="8" lean-forward="false" selection-start-line="341" selection-start-column="8" selection-end-line="341" selection-end-column="28" />
-          <caret line="345" column="8" lean-forward="false" selection-start-line="345" selection-start-column="8" selection-end-line="345" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="115">
+          <caret line="1190" column="11" lean-forward="false" selection-start-line="1190" selection-start-column="0" selection-end-line="1190" selection-end-column="11" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="654" column="0" lean-forward="false" selection-start-line="654" selection-start-column="0" selection-end-line="654" selection-end-column="0" />
+        <state relative-caret-position="-1778">
+          <caret line="1456" column="43" lean-forward="true" selection-start-line="1456" selection-start-column="43" selection-end-line="1456" selection-end-column="43" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/PycharmProjects/stella-ui/MainUI.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="437" column="25" lean-forward="true" selection-start-line="437" selection-start-column="25" selection-end-line="437" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
