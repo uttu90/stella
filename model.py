@@ -1577,31 +1577,395 @@ class SimulatingThread(QtCore.QThread):
                                   L_HEPP_Daily_Dem) /
                                  (O_EndMDay - O_StartMDay))
             O_SoilWaterTot = np.sum(D_SoilWater[time])
-
+            O_DeepInfAcc = np_utils.array_sum(
+                D_DeepInfiltration
+            ) * isI_WarmEdUp[time]
+            O_InfAcc = np_utils.array_sum(D_Infiltration) * isI_WarmEdUp
+            O_IntercAcc = np_utils.array_sum(D_InterceptEvap) * isI_WarmEdUp
+            O_SoilQFlowAcc = np_utils.array_sum(D_SoilDischarge) * isI_WarmEdUp
+            O_SoilQflow_Subca = np_utils.array_sum(
+                D_SoilDischarge,
+                shape=(subcatchment, 1)
+            )
+            D_EvaporReservoir = I_Evapotrans * np_utils.array_sum(isL_Lake)
+            D_Influx_to_Resr = np.multiply(
+                isI_DaminThisStream == 1,
+                (D_GWaDisch +
+                 np_utils.array_sum(D_SoilDischarge, shape=(subcatchment, 1))
+                 + D_SurfaceFlow)
+            )
             update(
                 C_StockingRate,
-                inflows=C_Stocking,
-                outflows=C_Destoking,
+                inflow=C_Stocking,
+                outflow=C_Destoking,
                 dt=dt
             )
             update(
                 D_InitLakeVol,
-                inflows=O_InitLake,
+                inflow=O_InitLake,
                 dt=dt
             )
             update(
                 D_InitRivVol,
-                inflows=O_InitRiv,
+                inflow=O_InitRiv,
                 dt=dt
             )
             update(
                 O_CumBaseFlow,
-                inflows=O_DeepInfAcc,
+                inflow=O_BaseFlowAcc,
                 dt=dt
             )
             update(
-
+                O_CumDeepInfilt,
+                inflow=O_DeepInfAcc,
+                dt=dt
             )
-
+            update(
+                O_CumEvapotrans,
+                inflow=O_EvapoTransAcc,
+                dt=dt
+            )
+            update(
+                O_CumInfiltration,
+                inflow=O_InfAcc,
+                dt=dt
+            )
+            update(
+                O_CumIntercE,
+                inflow=O_AccET,
+                dt=dt
+            )
+            update(
+                O_CumIntercepEvap,
+                inflow=O_IntercAcc,
+                dt=dt
+            )
+            update(
+                O_CumPercolation,
+                inflow=O_PercAcc,
+                dt=dt
+            )
+            update(
+                O_CumRain,
+                inflow=O_RainAcc,
+                dt=dt
+            )
+            update(
+                O_CumSoilQFlow,
+                inflow=O_SoilQFlowAcc,
+                dt=dt
+            )
+            update(
+                O_CumSoilQFlow_Subca_1,
+                inflow=O_SoilQflow_Subca,
+                dt=dt
+            )
+            update(
+                O_CumSurfQFlow,
+                inflow=O_SurfQFlowAcc,
+                dt=dt
+            )
+            update(
+                O_CumTransp,
+                inflow=O_TranspAcc,
+                dt=dt
+            )
+            update(
+                O_InitGWStock,
+                inflow=O_InitGW,
+                dt=dt
+            )
+            update(
+                O_InitSoilW,
+                inflow=O_InitSW,
+                dt=dt
+            )
+            update(
+                O_RainYest,
+                inflow=O_RainToday,
+                outflow=O_RainYesterday,
+                dt=dt
+            )
+            update(
+                G_GrassStandingBiomass,
+                inflow=G_GrowthRate,
+                outflow=G_Grazing+G_LeafMortality,
+                dt=dt
+            )
+            update(
+                G_SurfaceLitter,
+                inflow=G_LitterDeposition,
+                outflow=G_Incorporation_DecaySurfLit,
+                dt=dt
+            )
+            update(
+                G_SurfManure,
+                inflow=G_FaecesProd,
+                outflow=G_Incorporation_DecayManure,
+                dt=dt
+            )
+            update(
+                isI_WarmEdUp,
+                inflow=I_Warmedup,
+                dt=dt
+            )
+            update(
+                O_CumDebitData,
+                inflow=I_RFlowdata_mmday,
+                dt=dt
+            )
+            update(
+                L_CumEvapLake,
+                inflow=L_EvapLake,
+                outflow=L_RestartE,
+                dt=dt
+            )
+            update(
+                L_CumHEPPUse,
+                inflow=L_HEPPWatUseFlow,
+                outflow=L_RestartH,
+                dt=dt
+            )
+            update(
+                L_CumRivOutFlow,
+                inflow=L_RivOutFlow,
+                outflow=L_RestartR,
+                dt=dt
+            )
+            update(
+                L_LakeVol,
+                inflow=L_InFlowtoLake,
+                outflow=L_EvapLake + L_RivOutFlow + L_HEPPWatUseFlow,
+                dt=dt
+            )
+            update(
+                O_BestYyHEPP,
+                inflow=O_BYP,
+                dt=dt
+            )
+            update(
+                O_Ch_inGWStock,
+                inflow=O_Ch_in_GWStockMP,
+                dt=dt
+            )
+            update(
+                O_Ch_inWStock,
+                inflow=O_Ch_in_WStockMP,
+                dt=dt
+            )
+            update(
+                O_CumBaseFlowMP,
+                inflow=O_BaseFlowAccMP,
+                dt=dt
+            )
+            update(
+                O_CumDebitDataMP,
+                inflow=O_DebitDataAccMP,
+                dt=dt
+            )
+            update(
+                O_CumDebitPredMP,
+                inflow=O_DebitPredAccMP,
+                dt=dt
+            )
+            update(
+                O_CumEvapLakeMP,
+                inflow=O_EvapLakeMP,
+                dt=dt
+            )
+            update(
+                O_CumEvapTransMP,
+                inflow=O_Ch_in_EvapoTrans,
+                dt=dt
+            )
+            update(
+                O_CumGWMP,
+                inflow=O_GWAccMP,
+                dt=dt
+            )
+            update(
+                O_CumHEPPOutFlowMP,
+                inflow=O_HEPPOutFlowMP,
+                dt=dt
+            )
+            update(
+                O_CumInfiltrationMP,
+                inflow=O_InfAccMP,
+                dt=dt
+            )
+            update(
+                O_CumIntercEvapMP,
+                inflow=O_IntercAccMP,
+                dt=dt
+            )
+            update(
+                O_CumRainMP,
+                inflow=O_RainAccMP,
+                dt=dt
+            )
+            update(
+                O_CumRivInflowtoLakeMP,
+                inflow=O_RivInflowtoLakeMP,
+                dt=dt
+            )
+            update(
+                O_CumRivOutFlowMP,
+                inflow=O_RivOutFlowMP,
+                dt=dt
+            )
+            update(
+                O_CumSoilQFlowMP,
+                inflow=O_SoilQFlowAccMP,
+                dt=dt
+            )
+            update(
+                O_CumSoilWMP,
+                inflow=O_SoilWAccMP,
+                dt=dt
+            )
+            update(
+                O_CumSurfQFlowMP,
+                inflow=O_SurfQFlowAccMP,
+                dt=dt
+            )
+            update(
+                O_CumTranspMP,
+                inflow=O_TranspAccMP,
+                dt=dt
+            )
+            update(
+                O_DeltaCatchmStMP,
+                inflow=O_Ch_in_CatchmStMP,
+                dt=dt
+            )
+            update(
+                O_Hepp_Kwh_per_dayMP,
+                inflow=O_Hepp_ElctrProd,
+                dt=dt
+            )
+            update(
+                O_InitEvapoMP,
+                inflow=O_Ch_EvapoTran,
+                dt=dt
+            )
+            update(
+                O_InitGWStockMP,
+                inflow=O_ChGWMP,
+                dt=dt
+            )
+            update(
+                O_InitSWMP,
+                inflow=O_ChSoilWMP,
+                dt=dt
+            )
+            update(
+                O_LastYHepp,
+                inflow=O_HeppUseF1,
+                outflow=O_HeppUseF2,
+                dt=dt
+            )
+            update(
+                O_ThisYHepp,
+                inflow=O_HeppUseF0,
+                outflow=O_HeppUseF1,
+                dt=dt
+            )
+            update(
+                O_WorstYHEPP,
+                inflow=O_WYP,
+                dt=dt
+            )
+            update(
+                O_YearSim,
+                inflow=Yearly_Tick,
+                dt=dt
+            )
+            update(
+                D_CumEvapTranspClass,
+                inflow=D_ActEvapTransp + D_InterceptEvap,
+                dt=dt
+            )
+            update(
+                D_CumNegRain,
+                outflow=(
+                    D_InterceptEvap +
+                    D_Infiltration +
+                    D_DeepInfiltration +
+                    D_SurfaceFlow
+                ),
+                dt=dt,
+                non_negative=True
+            )
+            update(
+                D_EvapTranspClass,
+                inflow=D_WaterEvapIrrigation,
+                dt=dt
+            )
+            update(
+                D_GWArea,
+                inflow=D_Percolation,
+                outflow=(
+                    D_DeepInfiltration +
+                    D_GWaDisch +
+                    D_WaterEvapIrrigation
+                ),
+                dt=dt
+            )
+            update(
+                D_SoilWater,
+                inflow=D_Infiltration,
+                outflow=(
+                    D_ActEvapTransp +
+                    D_Percolation +
+                    D_SoilDischarge
+                ),
+                dt=dt
+            )
+            update(
+                S_RelBulkDensity,
+                inflow=(
+                    S_StructureFormation +
+                    S_RippingSurface +
+                    S_SplashErosion
+                ),
+                outflow=S_Compaction,
+                dt=dt
+            )
+            update(
+                D_CumInflowtoLake,
+                inflow=D_RiverFlowtoLake + D_GWtoLake,
+                outflow=D_RestartL,
+                dt=dt
+            )
+            update(
+                D_CumTotRiverFlow,
+                inflow=D_RiverDelay + D_RiverDirect,
+                outflow=D_RestartR,
+                dt=dt
+            )
+            update_conveyor(
+                D_StreamsSurfQ,
+                inflow=D_SurfFlowObsPoint,
+                outflow=D_SurfFlowRiver,
+                time=time,
+                dt=dt
+            )
+            update(
+                D_TotRiverFlowNoDelay,
+                inflow=D_SurfFlowRiver + D_DirectSurfFkowObsPoint,
+                outflow=D_RiverDelay + D_RivInflLake,
+                dt=dt
+            )
+            update(
+                D_CumResvEvap,
+                inflow=D_EvaporReservoir,
+                dt=dt
+            )
+            update(
+                D_SubcResVol,
+                inflow=D_SubcResVol + D_Influx_to_Resr,
+                outflow=D_EvaporReservoir + D_SubCResOutflow,
+                dt=dt
+            )
 
             print ('calculate finished')
