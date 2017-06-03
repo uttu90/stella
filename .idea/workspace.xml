@@ -23,11 +23,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainUI.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MainUI.py" pinned="false" current-in-tab="true">
         <entry file="file://$USER_HOME$/PycharmProjects/stella-ui/MainUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6375">
-              <caret line="382" column="24" lean-forward="false" selection-start-line="382" selection-start-column="24" selection-end-line="382" selection-end-column="24" />
+            <state relative-caret-position="258">
+              <caret line="504" column="29" lean-forward="true" selection-start-line="504" selection-start-column="29" selection-end-line="504" selection-end-column="29" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -38,8 +38,8 @@
       <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/PycharmProjects/stella-ui/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="799">
-              <caret line="47" column="17" lean-forward="false" selection-start-line="47" selection-start-column="17" selection-end-line="47" selection-end-column="17" />
+            <state relative-caret-position="153">
+              <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -48,8 +48,8 @@
       <file leaf-file-name="model.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="973" column="30" lean-forward="false" selection-start-line="973" selection-start-column="12" selection-end-line="973" selection-end-column="30" />
+            <state relative-caret-position="125">
+              <caret line="1902" column="92" lean-forward="false" selection-start-line="1902" selection-start-column="92" selection-end-line="1902" selection-end-column="92" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -57,21 +57,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Equations.TXT" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Equations.TXT" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Equations.TXT">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="197">
-              <caret line="277" column="18" lean-forward="false" selection-start-line="277" selection-start-column="0" selection-end-line="277" selection-end-column="18" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="calculate.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/calculate.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="19" lean-forward="false" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="19" />
+            <state relative-caret-position="98">
+              <caret line="1539" column="17" lean-forward="false" selection-start-line="1539" selection-start-column="0" selection-end-line="1539" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -80,8 +70,8 @@
       <file leaf-file-name="calculate.py" pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/PycharmProjects/stella-ui/calculate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="57" lean-forward="false" selection-start-line="2" selection-start-column="45" selection-end-line="2" selection-end-column="57" />
+            <state relative-caret-position="78">
+              <caret line="9" column="17" lean-forward="false" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -110,7 +100,7 @@
       <file leaf-file-name="file_simulation.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/file_simulation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="283">
+            <state relative-caret-position="16779">
               <caret line="989" column="4" lean-forward="false" selection-start-line="989" selection-start-column="4" selection-end-line="989" selection-end-column="14" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
@@ -140,40 +130,38 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>O_MPeriodLength</find>
-      <find>I_RFlowData</find>
-      <find>I_SubcContr</find>
-      <find>I_RFlowDataQmecs</find>
-      <find>I_RFlowdata_mmday</find>
-      <find>I_DebitTime</find>
-      <find>D_SubCResOutflow</find>
-      <find>L_LakeLevel =</find>
-      <find>O_CumBaseFlow</find>
-      <find>O_DeepInfAcc</find>
-      <find>isI_WarmEdUp</find>
-      <find>O_InfAcc</find>
-      <find>O_IntercAcc</find>
-      <find>D_InterceptEvap</find>
-      <find>D_SoilDischarge</find>
-      <find>O_SoilQflow_Subca</find>
-      <find>L_EvapLake</find>
-      <find>O_CumBaseFlowMP</find>
-      <find>D_CumEvapTranspClass</find>
-      <find>D_RestartL</find>
-      <find>D_EvaporReservoir</find>
-      <find>D_Influx_to_Resr</find>
-      <find>conveyo</find>
-      <find>D_StreamsSurfQ</find>
-      <find>outflows</find>
-      <find>O_ChkAllCatchmAccFor</find>
-      <find>INIT</find>
-      <find>O_CumDebitData</find>
+      <find>I_RainTimeAvForInf</find>
+      <find>O_InitRiv</find>
+      <find>calculate</find>
+      <find>O_RainYesterday</find>
+      <find>O_RainToday</find>
+      <find>np.sum</find>
+      <find>D_CumTotRiverFlowAll</find>
+      <find>O_DailyRainSubCtm</find>
+      <find>O_RealWatAv_subc</find>
+      <find>O_Rea</find>
+      <find>np_utils.array_sum</find>
+      <find>D_CumTotRiverFlow</find>
+      <find>O_RelWatAv_Subc</find>
+      <find>O_StartMDay</find>
+      <find>O_DebitPredAccMP</find>
+      <find>D_RiverFlowtoLake</find>
+      <find>D_CurrRivVol</find>
+      <find>shape=</find>
+      <find>D_RivLakeSameDay</find>
+      <find>D_TotalStreamInflow</find>
+      <find>D_DeepInfiltration</find>
+      <find>I_MaxDynGWArea</find>
+      <find>D_GWArea</find>
+      <find>O_Hepp_ElctrProd</find>
+      <find>O_Ch_in_GWStockMP</find>
+      <find>O_InitGWStockMP</find>
+      <find>O_Ch_inGWStock</find>
+      <find>O_Ch_in_WStockMP</find>
+      <find>D_EvapTranspClass</find>
       <find>update</find>
-      <find>I_FracVegClassSum1</find>
     </findStrings>
     <replaceStrings>
-      <replace>[:][i]</replace>
-      <replace>zeros</replace>
       <replace>I_Simulation_Time</replace>
       <replace>L_LakeArea</replace>
       <replace>I_DailyRain</replace>
@@ -202,10 +190,12 @@
       <replace>I_</replace>
       <replace>inflow</replace>
       <replace>outflow</replace>
+      <replace>calculate.update</replace>
+      <replace>np_utils.array_sum</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$USER_HOME$/PycharmProjects/stella-ui" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -248,10 +238,11 @@
         <option value="$PROJECT_DIR$/spatrain.txt" />
         <option value="$USER_HOME$/PycharmProjects/stella-ui/spatrain.py" />
         <option value="$PROJECT_DIR$/spatrain.py" />
-        <option value="$USER_HOME$/PycharmProjects/stella-ui/utils.py" />
         <option value="$USER_HOME$/PycharmProjects/stella-ui/MainUI.py" />
         <option value="$PROJECT_DIR$/file_simulation.py" />
         <option value="$PROJECT_DIR$/Equations.TXT" />
+        <option value="$USER_HOME$/PycharmProjects/stella-ui/calculate.py" />
+        <option value="$USER_HOME$/PycharmProjects/stella-ui/utils.py" />
         <option value="$PROJECT_DIR$/model.py" />
       </list>
     </option>
@@ -300,6 +291,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -338,8 +331,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -617,18 +608,18 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.11829653" sideWeight="0.5058565" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34253246" sideWeight="0.4941435" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39935064" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2564935" sideWeight="0.4941435" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -639,7 +630,7 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2564935" sideWeight="0.4941435" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.512987" sideWeight="0.4941435" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23813057" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -647,7 +638,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39935064" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -663,6 +654,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$USER_HOME$/PycharmProjects/stella-ui/calculate.py</url>
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -670,6 +666,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
+      <option name="time" value="1" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -973,20 +970,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/PycharmProjects/stella-ui/utils.py">
+    <entry file="file://$PROJECT_DIR$/file_simulation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="799">
-          <caret line="47" column="17" lean-forward="false" selection-start-line="47" selection-start-column="17" selection-end-line="47" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/PycharmProjects/stella-ui/MainUI.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6375">
-          <caret line="382" column="24" lean-forward="false" selection-start-line="382" selection-start-column="24" selection-end-line="382" selection-end-column="24" />
+        <state relative-caret-position="16779">
+          <caret line="989" column="4" lean-forward="false" selection-start-line="989" selection-start-column="4" selection-end-line="989" selection-end-column="14" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -999,39 +988,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/file_simulation.py">
+    <entry file="file://$USER_HOME$/PycharmProjects/stella-ui/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="989" column="4" lean-forward="false" selection-start-line="989" selection-start-column="4" selection-end-line="989" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="153">
+          <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/PycharmProjects/stella-ui/calculate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="57" lean-forward="false" selection-start-line="2" selection-start-column="45" selection-end-line="2" selection-end-column="57" />
+        <state relative-caret-position="78">
+          <caret line="9" column="17" lean-forward="false" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Equations.TXT">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="98">
+          <caret line="1539" column="17" lean-forward="false" selection-start-line="1539" selection-start-column="0" selection-end-line="1539" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="973" column="30" lean-forward="false" selection-start-line="973" selection-start-column="12" selection-end-line="973" selection-end-column="30" />
+        <state relative-caret-position="125">
+          <caret line="1902" column="92" lean-forward="false" selection-start-line="1902" selection-start-column="92" selection-end-line="1902" selection-end-column="92" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Equations.TXT">
+    <entry file="file://$USER_HOME$/PycharmProjects/stella-ui/MainUI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="277" column="18" lean-forward="false" selection-start-line="277" selection-start-column="0" selection-end-line="277" selection-end-column="18" />
-          <folding />
+        <state relative-caret-position="258">
+          <caret line="504" column="29" lean-forward="true" selection-start-line="504" selection-start-column="29" selection-end-line="504" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
