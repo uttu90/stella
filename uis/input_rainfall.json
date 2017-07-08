@@ -1,0 +1,8 @@
+{
+   "isI_RainCycle": "0", 
+   "I_Rain_GenSeed": "200", 
+   "I_RainMultiplier": "1", 
+   "I_Rain_IntensMean": "10", 
+   "isI_UseSpatVarRain": "0", 
+   "I_Rain_IntensCoefVar": "0.3"
+}

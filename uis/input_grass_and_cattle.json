@@ -1,0 +1,12 @@
+{
+   "C_CattleSale": "0", 
+   "C_GrazingManConv": "0.1", 
+   "C_SurfManureDecFrac": "0.01", 
+   "G_WUE": "0.04", 
+   "C_DailyTramFac": "1", 
+   "C_GrassLitMortFrac": "0.03", 
+   "C_SurfLitDecFrac": "0.03", 
+   "G_TramplingMultiplier": "0", 
+   "C_DailyIntake": "1", 
+   "C_GrassLitConv": "1"
+}

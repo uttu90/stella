@@ -1,7 +1,7 @@
 __author__ = 'tuhv'
 
 from pylab import *
-from stella import *
+from stella_model_ol import *
 import numpy as np
 
 # Form the time simulation

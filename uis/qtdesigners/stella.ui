@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>819</width>
+    <height>594</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>stella Python</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout"/>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>819</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuREADME">
+    <property name="title">
+     <string>README</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuINPUT">
+    <property name="title">
+     <string>INPUT</string>
+    </property>
+    <addaction name="actionRainfall"/>
+    <addaction name="actionRiver"/>
+    <addaction name="actionSoil_and_Plant_Water"/>
+    <addaction name="actionLake"/>
+    <addaction name="actionLake_HEPP"/>
+    <addaction name="actionGrass_and_Cattle"/>
+    <addaction name="actionSoil_Structure_Dynamic"/>
+    <addaction name="actionSubcatchment_Balance"/>
+   </widget>
+   <widget class="QMenu" name="menuRUN_SPECS">
+    <property name="title">
+     <string>RUN SPECS</string>
+    </property>
+    <addaction name="actionInitial_Run"/>
+    <addaction name="actionRun_Specs"/>
+   </widget>
+   <widget class="QMenu" name="menuOUTPUT">
+    <property name="title">
+     <string>OUTPUT</string>
+    </property>
+    <addaction name="actionTimeseries"/>
+    <addaction name="actionMaps"/>
+   </widget>
+   <widget class="QMenu" name="menuSIMULATION">
+    <property name="title">
+     <string>SIMULATION</string>
+    </property>
+    <addaction name="actionRun"/>
+   </widget>
+   <addaction name="menuREADME"/>
+   <addaction name="menuINPUT"/>
+   <addaction name="menuRUN_SPECS"/>
+   <addaction name="menuOUTPUT"/>
+   <addaction name="menuSIMULATION"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionRainfall">
+   <property name="text">
+    <string>Rainfall</string>
+   </property>
+  </action>
+  <action name="actionRiver">
+   <property name="text">
+    <string>River</string>
+   </property>
+  </action>
+  <action name="actionSoil_and_Plant_Water">
+   <property name="text">
+    <string>Soil and Plant Water</string>
+   </property>
+  </action>
+  <action name="actionLake">
+   <property name="text">
+    <string>Lake</string>
+   </property>
+  </action>
+  <action name="actionLake_HEPP">
+   <property name="text">
+    <string>Lake/HEPP</string>
+   </property>
+  </action>
+  <action name="actionGrass_and_Cattle">
+   <property name="text">
+    <string>Grass and Cattle</string>
+   </property>
+  </action>
+  <action name="actionSoil_Structure_Dynamic">
+   <property name="text">
+    <string>Soil Structure Dynamic</string>
+   </property>
+  </action>
+  <action name="actionSubcatchment_Balance">
+   <property name="text">
+    <string>Subcatchment Balance</string>
+   </property>
+  </action>
+  <action name="actionTimeseries">
+   <property name="text">
+    <string>Timeseries</string>
+   </property>
+  </action>
+  <action name="actionMaps">
+   <property name="text">
+    <string>Maps</string>
+   </property>
+  </action>
+  <action name="actionRun">
+   <property name="text">
+    <string>Run</string>
+   </property>
+  </action>
+  <action name="actionInitial_Run">
+   <property name="text">
+    <string>Initial Run</string>
+   </property>
+  </action>
+  <action name="actionRun_Specs">
+   <property name="text">
+    <string>Run Specs</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,7 +1,7 @@
 __author__ = 'tuhv'
 
 from pylab import *
-from stella import *
+from stella_model_ol import *
 
 
 stock_1 = Stock(200000)

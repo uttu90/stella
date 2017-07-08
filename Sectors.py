@@ -1,5 +1,5 @@
 __author__ =  'TuHV'
-from stella import Flow, Stock
+from stella_model_ol import Flow, Stock
 from random import normalvariate
 import math
 
