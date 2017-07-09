@@ -17,6 +17,7 @@ from matplotlib.backends.backend_qt4agg import (
     FigureCanvasQTAgg as FigureCanvas,
     NavigationToolbar2QT as NavigationToolbar)
 from matplotlib.backends import qt4_compat
+import time as timer
 
 
 class OutputMap(
@@ -63,7 +64,7 @@ class OutputMap(
             )
         self._prepare_display()
         self.subcachmentId = [_ for _ in range(1, 21)]
-
+        self.updateQueue = []
 
     def _selectionchange(self):
         selection = str(self.resultBox.currentText())
@@ -83,17 +84,19 @@ class OutputMap(
 
     def display_selected_maps(self):
         screen_position = [221, 222, 223, 224]
+        self.dayProgress.display(self.time)
+        self.yearProgress.display(self.time / 365 + 1)
         self.fig.clear()
         for index, map in enumerate(self.selected_maps):
-            if self.time % 300 == 0 and self.isVisible():
-                cTime = self.time
+            if self.isVisible():
                 self.axes = self.fig.add_subplot(screen_position[index])
                 self.resul1_array = utils.array_to_maps(
                     self.subcachmentId,
-                    self.ouput[map][cTime],
+                    self.output[map][self.time],
                     self.subcachmentArray
                 )
-                self.axes.imshow(self.resul1_array)
+                plt = self.axes.imshow(self.resul1_array)
+                self.fig.colorbar(plt)
                 self.canvas.draw()
 
     def _prepare_display(self):
@@ -114,13 +117,9 @@ class OutputMap(
         self.main_frame.setLayout(vbox)
 
     def update_display(self, output, time):
-        self.ouput = output
         self.time = time
-        self.dayProgress.display(time)
-        self.yearProgress.display(time/365 + 1)
+        self.output = output
         self.display_selected_maps()
-
-
 
 if __name__ == "__main__":
     import sys

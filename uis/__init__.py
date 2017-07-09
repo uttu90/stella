@@ -182,7 +182,7 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
             landcover=self.parameters['run specs']['inputLandcoverMap'],
             subcatchment=self.parameters['run specs']['inputSubcatchmentMap']
         )
-        filename = self.parameters['run specs']['inputLandcoverMap']
+        self.periodUpdate = int(self.parameters['run specs']['outputUpdate'])
         self.outputTimeseries = output_timeseries.OutputTimeseries()
 
     def onActionRiver(self):
@@ -246,14 +246,13 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
         self.simulation.start()
 
     def update_result(self, output, time):
-        self.outputMap.update_display(output, time)
-        self.outputTimeseries.update_display(output, time)
-
+        if time % self.periodUpdate == 0:
+            self.outputMap.update_display(output, time)
+            self.outputTimeseries.update_display(output, time)
 
     def get_parameter(self, diaglog):
         diaglog_name = str(diaglog.objectName())
         self.parameters[diaglog_name] = diaglog.data
-
 
 
 if __name__ == '__main__':

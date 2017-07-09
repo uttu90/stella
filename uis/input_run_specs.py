@@ -119,7 +119,7 @@ class Input_Run_Specs_Diaglog(
             end_rowx=24)
         self.inputData['I_RoutingDistance'] = utils.read_table_to_matrix(
             wksheet,
-            col_start=52,
+            col_start=51,
             col_end=58,
             row_start=4,
             row_end=24

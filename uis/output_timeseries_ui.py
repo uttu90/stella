@@ -81,7 +81,7 @@ class Ui_Dialog(object):
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(_translate("Dialog", "Output Maps", None))
+        Dialog.setWindowTitle(_translate("Dialog", "Output Timeseries", None))
         self.label_168.setText(_translate("Dialog", "Simulation progress", None))
         self.label_169.setText(_translate("Dialog", "Day", None))
         self.label_170.setText(_translate("Dialog", "Year", None))

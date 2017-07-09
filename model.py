@@ -851,11 +851,10 @@ class SimulatingThread(QtCore.QThread):
         I_RoutingDistanceLoad = np.array(
             self.data['I_RoutingDistance']
         )
-        insert_value = [0 for _ in range(20)]
+        insert_value = [-1 for _ in range(20)]
         I_RoutingDistance = np.column_stack((
             I_RoutingDistanceLoad,
             insert_value,
-            insert_value
         ))
 
         # Initial stock value

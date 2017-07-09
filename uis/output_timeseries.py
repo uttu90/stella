@@ -83,17 +83,18 @@ class OutputTimeseries(
 
     def _display_timeseries(self):
         screen_position = [221, 222, 223, 224]
-        if self.time % 300 == 0 and self.isVisible():
+        if self.isVisible():
             ctime = self.time
             self.fig.clear()
             for index, timeseries in enumerate(self.selected_maps):
                 array = self.output[timeseries]
+                display_array = array[-10:] if len(array) >0 else array
                 self.axes = self.fig.add_subplot(screen_position[index])
                 # self.axes.set_xlim(0, len(array) - 1)
-                self.axes.set_ylim(0, max(array) * 1.1)
+                self.axes.set_ylim(0, max(display_array) * 1.1)
                 self.axes.set_autoscale_on(True)
-                self.axes.plot(array, linestyle='steps-post')
-                self.axes.set_xlabel('year')
+                self.axes.plot(display_array, linestyle='steps-post')
+                self.axes.set_xlabel('day')
                 self.canvas.draw()
 
     def update_display(self, output, time):
