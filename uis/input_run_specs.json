@@ -2,9 +2,9 @@
    "runfrom": "0", 
    "rundt": "1", 
    "inputDataFile": "C:/Users/adm/Documents/GitHub/stella/GenRiver_Vietnam (20 LC) 2014.xls", 
-   "inputLandcoverMap": "", 
+   "inputLandcoverMap": "C:/Users/adm/Downloads/Tu/HH_LC.tif", 
    "outputUpdate": "100", 
    "runto": "2", 
-   "inputSubcatchmentMap": "", 
-   "inputSimulationFile": ""
+   "inputSubcatchmentMap": "C:/Users/adm/Downloads/Tu/HH_subcats.tif", 
+   "inputSimulationFile": "C:/Users/adm/Documents/GitHub/stella/model.py"
 }

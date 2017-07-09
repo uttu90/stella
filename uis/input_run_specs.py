@@ -15,6 +15,8 @@ class Input_Run_Specs_Diaglog(
         self.file = 'input_run_specs.json'
         self.selectDataFile.clicked.connect(self._get_data_file)
         self.selectSimulationFile.clicked.connect(self._get_simulation_file)
+        self.selectLandcoverMap.clicked.connect(self._get_landcover_map)
+        self.selectSubcatchmentMap.clicked.connect(self._get_subcatchment_map)
         if file_path.isfile(self.file):
             self._initiate_value()
         else:
@@ -41,6 +43,22 @@ class Input_Run_Specs_Diaglog(
             simulation_file
         )
         self.save()
+
+    def _get_landcover_map(self):
+        landcover_file = str(QtGui.QFileDialog.getOpenFileName(
+            self,
+            'Get landcover file',
+            'c:\\', "Map files (*.tif)"
+        ))
+        self.inputLandcoverMap.setText(landcover_file)
+
+    def _get_subcatchment_map(self):
+        subcatchment_file = str(QtGui.QFileDialog.getOpenFileName(
+            self,
+            'Get Subcatchment file',
+            'c:\\', "Map files (*.tif)"
+        ))
+        self.inputSubcatchmentMap.setText(subcatchment_file)
 
     def accept(self):
         self._collect_value()

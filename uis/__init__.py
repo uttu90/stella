@@ -1,4 +1,5 @@
 import imp
+import gdal
 from PyQt4 import QtCore, QtGui
 
 from stella_ui import Ui_MainWindow
@@ -12,6 +13,8 @@ import input_river
 import input_run_specs
 import input_soil_and_plant_water
 import input_soil_structure_dynamic
+import output_map
+import output_timeseries
 
 
 class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
@@ -129,6 +132,59 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
         )
         self.inputSoilPlantWaterDiaglog.setObjectName("soil plant water")
 
+        for diaglog in [
+            self.inputRiverDiaglog,
+            self.inputRunSpecsDiaglog,
+            self.inputRainfallDiaglog,
+            self.inputLakeHEPPDiaglog,
+            self.inputLakeDiaglog,
+            self.inputGrassAndCattle,
+            self.inputInitialRunDiaglog,
+            self.inputSubcatchmentBalanceDiaglog,
+            self.inputSoilStructureDynamicDiaglog,
+            self.inputSoilPlantWaterDiaglog,
+        ]:
+            self.get_parameter(diaglog)
+
+        self.inputRunSpecsDiaglog.get_input_data()
+
+        outputMapsSubcatchment = [
+            'L_InFlowtoLake',
+            'O_EvapoTransAcc',
+            'O_PercAcc',
+            'O_RainAcc',
+            'O_SurfQFlowAcc',
+            'O_BaseFlowAcc',
+            'O_DeepInfAcc',
+            'O_IntercAcc',
+            'O_SoilQFlowAcc',
+            'O_InfAcc',
+            'D_GWaDisch',
+            'D_SoilDischarge'
+        ]
+        ouputTimeSeries = [
+            'L_HEPPWatUseFlow',
+            'L_HEPP_Kwh',
+            'L_LakeVol',
+            'L_LakeLevel',
+            'L_CumHEPPUse'
+        ]
+        self.output = dict()
+        self.output['maps'] = dict()
+        self.output['maps']['subcatchment'] = dict()
+        self.output['timeseries'] = dict()
+        for map_result in outputMapsSubcatchment:
+            self.output['maps']['subcatchment'][map_result] = []
+        for time_result in ouputTimeSeries:
+            self.output['timeseries'][time_result] = []
+
+        self.outputMap = output_map.OutputMap(
+            landcover=self.parameters['run specs']['inputLandcoverMap'],
+            subcatchment=self.parameters['run specs']['inputSubcatchmentMap']
+        )
+        filename = self.parameters['run specs']['inputLandcoverMap']
+        self.outputTimeseries = output_timeseries.OutputTimeseries()
+
     def onActionRiver(self):
         self.inputRiverDiaglog.show()
         self.get_parameter(self.inputRiverDiaglog)
@@ -158,10 +214,10 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
         self.get_parameter(self.inputSoilStructureDynamicDiaglog)
 
     def onActionTimeseries(self):
-        print "Rainfall"
+        self.outputTimeseries.show()
 
     def onActionMaps(self):
-        print "Rainfall"
+        self.outputMap.show()
 
     def onActionInitial_Run(self):
         self.inputInitialRunDiaglog.show()
@@ -177,23 +233,22 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
         self.get_parameter(self.inputSoilPlantWaterDiaglog)
 
     def onActionRun(self):
-        for diaglog in [
-            self.inputRiverDiaglog,
-            self.inputRunSpecsDiaglog,
-            self.inputRainfallDiaglog,
-            self.inputLakeHEPPDiaglog,
-            self.inputLakeDiaglog,
-            self.inputGrassAndCattle,
-            self.inputInitialRunDiaglog,
-            self.inputSubcatchmentBalanceDiaglog,
-            self.inputSoilStructureDynamicDiaglog,
-            self.inputSoilPlantWaterDiaglog,
-        ]:
-            self.get_parameter(diaglog)
+        self.outputTimeseries.show()
+        self.simulation_module = imp.load_source(
+            'model',
+            self.parameters['run specs']['inputSimulationFile'])
+        self.simulation = self.simulation_module.SimulatingThread(
+            parameters=self.parameters,
+            data=self.inputRunSpecsDiaglog.inputData
+        )
+        self.connect(self.simulation, QtCore.SIGNAL("update"),
+                     self.update_result)
+        self.simulation.start()
 
-        self.inputRunSpecsDiaglog.get_input_data()
-        print self.parameters
-        self.inputRunSpecsDiaglog.show()
+    def update_result(self, output, time):
+        self.outputMap.update_display(output, time)
+        self.outputTimeseries.update_display(output, time)
+
 
     def get_parameter(self, diaglog):
         diaglog_name = str(diaglog.objectName())
