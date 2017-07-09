@@ -17,7 +17,6 @@ from matplotlib.backends.backend_qt4agg import (
     FigureCanvasQTAgg as FigureCanvas,
     NavigationToolbar2QT as NavigationToolbar)
 from matplotlib.backends import qt4_compat
-import time as timer
 
 
 class OutputMap(
@@ -65,6 +64,9 @@ class OutputMap(
         self._prepare_display()
         self.subcachmentId = [_ for _ in range(1, 21)]
         self.updateQueue = []
+        timer = QtCore.QTimer(self)
+        timer.timeout.connect(self.display_selected_maps)
+        timer.start(3000)
 
     def _selectionchange(self):
         selection = str(self.resultBox.currentText())
@@ -84,20 +86,22 @@ class OutputMap(
 
     def display_selected_maps(self):
         screen_position = [221, 222, 223, 224]
-        self.dayProgress.display(self.time)
-        self.yearProgress.display(self.time / 365 + 1)
-        self.fig.clear()
-        for index, map in enumerate(self.selected_maps):
-            if self.isVisible():
-                self.axes = self.fig.add_subplot(screen_position[index])
-                self.resul1_array = utils.array_to_maps(
-                    self.subcachmentId,
-                    self.output[map][self.time],
-                    self.subcachmentArray
-                )
-                plt = self.axes.imshow(self.resul1_array)
-                self.fig.colorbar(plt)
-                self.canvas.draw()
+        if self.isVisible() and len(self.updateQueue) > 0:
+            time, output = self.updateQueue.pop(0)
+            self.dayProgress.display(time)
+            self.yearProgress.display(time / 365 + 1)
+            self.fig.clear()
+            for index, map in enumerate(self.selected_maps):
+                if self.isVisible():
+                    self.axes = self.fig.add_subplot(screen_position[index])
+                    self.resul1_array = utils.array_to_maps(
+                        self.subcachmentId,
+                        output[map][time],
+                        self.subcachmentArray
+                    )
+                    plt = self.axes.imshow(self.resul1_array)
+                    self.fig.colorbar(plt)
+                    self.canvas.draw()
 
     def _prepare_display(self):
         self.main_frame = self.displayResult
@@ -117,9 +121,13 @@ class OutputMap(
         self.main_frame.setLayout(vbox)
 
     def update_display(self, output, time):
-        self.time = time
-        self.output = output
-        self.display_selected_maps()
+        self.updateQueue.append((time, output))
+        # self.time = time
+        # self.output = output
+        # self.display_selected_maps()
+
+    def timer_call(self):
+        print ('abcdefghlakjdfladfja;dfkljad;fljkadf;lkadjf')
 
 if __name__ == "__main__":
     import sys
