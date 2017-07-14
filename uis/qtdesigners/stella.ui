@@ -34,6 +34,9 @@
     <property name="title">
      <string>INPUT</string>
     </property>
+    <addaction name="actionLandcover_maps"/>
+    <addaction name="actionSubcatchment_maps"/>
+    <addaction name="separator"/>
     <addaction name="actionRainfall"/>
     <addaction name="actionRiver"/>
     <addaction name="actionSoil_and_Plant_Water"/>
@@ -62,14 +65,42 @@
      <string>SIMULATION</string>
     </property>
     <addaction name="actionRun"/>
+    <addaction name="actionStop"/>
+   </widget>
+   <widget class="QMenu" name="menuLANGUAGE">
+    <property name="title">
+     <string>LANGUAGE</string>
+    </property>
+    <addaction name="actionEnglish"/>
+    <addaction name="actionVietnamese"/>
    </widget>
    <addaction name="menuREADME"/>
    <addaction name="menuINPUT"/>
    <addaction name="menuRUN_SPECS"/>
    <addaction name="menuOUTPUT"/>
    <addaction name="menuSIMULATION"/>
+   <addaction name="menuLANGUAGE"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>true</bool>
+   </attribute>
+   <addaction name="actionRun_Specs"/>
+   <addaction name="actionInitial_Run"/>
+   <addaction name="separator"/>
+   <addaction name="actionRun"/>
+   <addaction name="actionStop"/>
+   <addaction name="separator"/>
+   <addaction name="actionTimeseries"/>
+   <addaction name="actionMaps"/>
+  </widget>
   <action name="actionRainfall">
    <property name="text">
     <string>Rainfall</string>
@@ -133,6 +164,31 @@
   <action name="actionRun_Specs">
    <property name="text">
     <string>Run Specs</string>
+   </property>
+  </action>
+  <action name="actionLandcover_maps">
+   <property name="text">
+    <string>Landcover maps</string>
+   </property>
+  </action>
+  <action name="actionSubcatchment_maps">
+   <property name="text">
+    <string>Subcatchment map</string>
+   </property>
+  </action>
+  <action name="actionStop">
+   <property name="text">
+    <string>Stop</string>
+   </property>
+  </action>
+  <action name="actionEnglish">
+   <property name="text">
+    <string>English</string>
+   </property>
+  </action>
+  <action name="actionVietnamese">
+   <property name="text">
+    <string>Vietnamese</string>
    </property>
   </action>
  </widget>
