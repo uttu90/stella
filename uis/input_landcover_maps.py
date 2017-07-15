@@ -35,14 +35,6 @@ class Input_Landcover_Maps_Diaglog(
         landcover_edit = 'landcoverMap_{}'.format(index + 1)
         getattr(self, landcover_edit).setText(landcover_file)
 
-    def _get_subcatchment_map(self):
-        subcatchment_file = str(QtGui.QFileDialog.getOpenFileName(
-            self,
-            'Get Subcatchment file',
-            'c:\\', "Map files (*.tif)"
-        ))
-        self.inputSubcatchmentMap.setText(subcatchment_file)
-
     def accept(self):
         self._collect_value()
         self.save()
