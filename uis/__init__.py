@@ -1,5 +1,5 @@
 import imp
-import gdal
+from os import path as file_path
 from PyQt4 import QtCore, QtGui
 from functools import partial
 
@@ -83,7 +83,6 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
                 diaglogName = actionName.replace('action', 'input') + '_Diaglog'
                 try:
                     diaglog = getattr(self, diaglogName)
-                    print diaglog, action
                     self.connect(
                         action,
                         QtCore.SIGNAL("triggered()"),
@@ -91,6 +90,10 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
                     )
                 except AttributeError:
                     None
+        self.actionRun.triggered.connect(self.onActionRun)
+        self.actionMaps.triggered.connect(self.onActionMaps)
+        self.actionTimeseries.triggered.connect(self.onActionTimeseries)
+
 
         outputMapsSubcatchment = [
             'L_InFlowtoLake',
@@ -126,7 +129,6 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
         self.outputTimeseries = output_timeseries.OutputTimeseries()
 
     def actionDiaglog(self, diaglog):
-        print diaglog
         diaglog.show()
         self.get_parameter(diaglog)
 
@@ -136,14 +138,59 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
     def onActionMaps(self):
         self.outputMap.show()
 
+    def _show_message(self, title, message, func):
+        msg = QtGui.QMessageBox(self)
+        msg.setWindowTitle(title)
+        msg.setText(message)
+        msg.setStandardButtons(QtGui.QMessageBox.Ok)
+        msg.buttonClicked.connect(func)
+        msg.exec_()
+
+    def _check_file(self, file_name, file, func):
+        if not file_path.isfile(file):
+            message = 'Please recheck {}. It isn\'t file'.format(file_name)
+            self._show_message(file_name, message, func)
+
     def onActionRun(self):
-        self.outputTimeseries.show()
+        # Check simulation file, input data exist
+        simulation_file = self.parameters['Run_Specs']['inputSimulationFile']
+        self._check_file(
+            'simulation file',
+            simulation_file,
+            self.inputRun_Specs_Diaglog.get_simulation_file
+        )
+        subcatchment_file = self.parameters['Subcatchment_map']['subcatchmentMap']
+        self._check_file(
+            'subcatchment file',
+            subcatchment_file,
+            self.inputSubcatchment_map_Diaglog.get_subcatchment_map
+        )
+        landcover_files = [
+            self.parameters['Landcover_maps']['landcoverMap_1'],
+            self.parameters['Landcover_maps']['landcoverMap_2'],
+            self.parameters['Landcover_maps']['landcoverMap_3'],
+            self.parameters['Landcover_maps']['landcoverMap_4'],
+        ]
+        for index, landcover_file in enumerate(landcover_files):
+            self._check_file(
+                'land cover map period {}'.format(index + 1),
+                landcover_file,
+                partial(self.inputLandcover_maps_Diaglog.get_landcover_map, index)
+            )
+        inputdata_file = self.parameters['Run_Specs']['inputDataFile']
+        self._check_file(
+            'inputdata file',
+            inputdata_file,
+            self.inputRun_Specs_Diaglog.get_data_file
+        )
+        self.inputRun_Specs_Diaglog.get_input_data()
+        self.data = self.inputRun_Specs_Diaglog.inputData
         self.simulation_module = imp.load_source(
             'model',
-            self.parameters['run specs']['inputSimulationFile'])
+            simulation_file)
         self.simulation = self.simulation_module.SimulatingThread(
             parameters=self.parameters,
-            data=self.inputRunSpecsDiaglog.inputData
+            data=self.inputRun_Specs_Diaglog.inputData
         )
         self.connect(self.simulation, QtCore.SIGNAL("update"),
                      self.update_result)

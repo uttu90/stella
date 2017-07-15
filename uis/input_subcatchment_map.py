@@ -13,19 +13,20 @@ class Input_Subcatchment_Map_Diaglog(
         self.setupUi(self)
         self.inputData = dict()
         self.file = 'input_subcatchment_map.json'
-        self.subcatchmentMap_btn.clicked.connect(self._get_subcatchment_map)
+        self.subcatchmentMap_btn.clicked.connect(self.get_subcatchment_map)
         if file_path.isfile(self.file):
             self._initiate_value()
         else:
             self._collect_value()
 
-    def _get_subcatchment_map(self):
+    def get_subcatchment_map(self):
         subcatchment_file = str(QtGui.QFileDialog.getOpenFileName(
             self,
             'Get Subcatchment file',
             'c:\\', "Map files (*.tif)"
         ))
-        self.inputSubcatchmentMap.setText(subcatchment_file)
+        self.subcatchmentMap.setText(subcatchment_file)
+        self.save()
 
     def accept(self):
         self._collect_value()

@@ -13,14 +13,14 @@ class Input_Run_Specs_Diaglog(
         self.setupUi(self)
         self.inputData = dict()
         self.file = 'input_run_specs.json'
-        self.selectDataFile.clicked.connect(self._get_data_file)
-        self.selectSimulationFile.clicked.connect(self._get_simulation_file)
+        self.selectDataFile.clicked.connect(self.get_data_file)
+        self.selectSimulationFile.clicked.connect(self.get_simulation_file)
         if file_path.isfile(self.file):
             self._initiate_value()
         else:
             self._collect_value()
 
-    def _get_data_file(self):
+    def get_data_file(self):
         data_file = QtGui.QFileDialog.getOpenFileName(
             self,
             'Get data file',
@@ -30,7 +30,7 @@ class Input_Run_Specs_Diaglog(
         self.data[str(self.inputDataFile.objectName())] = str(data_file)
         self.save()
 
-    def _get_simulation_file(self):
+    def get_simulation_file(self):
         simulation_file = str(QtGui.QFileDialog.getOpenFileName(
             self,
             'Get simulation file',
@@ -48,8 +48,6 @@ class Input_Run_Specs_Diaglog(
         super(Input_Run_Specs_Diaglog, self).accept()
 
     def get_input_data(self):
-        if not self.data.get('inputDataFile'):
-            self._get_data_file()
         xl_workbook = xlrd.open_workbook(self.data.get('inputDataFile'))
         wksheet = xl_workbook.sheet_by_name("LINKTOSTELLA")
         wksheet2 = xl_workbook.sheet_by_name("LinktoStella9")

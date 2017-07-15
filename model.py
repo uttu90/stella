@@ -45,7 +45,7 @@ class SimulatingThread(QtCore.QThread):
         self.wait()
 
     def run(self):
-        run_specs = self.parameters['run specs']
+        run_specs = self.parameters['Run_Specs']
         begin = int(run_specs['runfrom'])
         end = int(run_specs['runto'])
         dt = int(run_specs['rundt'])
@@ -54,7 +54,7 @@ class SimulatingThread(QtCore.QThread):
         measurePeriod = 3
         subcatchment = 20
 
-        initial_run = self.parameters['initial run']
+        initial_run = self.parameters['Initial_Run']
         simulationTime = int(initial_run['simulationTime'])
         I_StartMYear = [
             int(initial_run['I_StartMYear_1']),
@@ -74,7 +74,7 @@ class SimulatingThread(QtCore.QThread):
             int(initial_run['O_MPeriodLength_2']),
             int(initial_run['O_MPeriodLength_3']),
         ]
-        rainfall = self.parameters['rainfall']
+        rainfall = self.parameters['Rainfall']
         isI_UseSpatVarRain = int(rainfall['isI_UseSpatVarRain'])
         I_RainMultiplier = int(rainfall['I_RainMultiplier'])
         isI_RainCycle = int(rainfall['isI_RainCycle'])
@@ -82,7 +82,7 @@ class SimulatingThread(QtCore.QThread):
         I_Rain_IntensCoefVar = float(rainfall['I_Rain_IntensCoefVar'])
         I_Rain_GenSeed = int(rainfall['I_Rain_GenSeed'])
 
-        river = self.parameters['river']
+        river = self.parameters['River']
         I_RoutVeloc_m_per_s = float(river['I_RoutVelocm_per_s'])
         I_Tortuosity = float(river['I_Tortuosity'])
         I_RiverflowDispersalFactor = float(river['I_RiverflowDispersalFactor'])
@@ -112,7 +112,7 @@ class SimulatingThread(QtCore.QThread):
             ]
         ).reshape(subcatchment, 1)
 
-        soilAndWaterBalance = self.parameters['soil plant water']
+        soilAndWaterBalance = self.parameters['Soil_and_Plant_Water']
         I_MaxInf = float(soilAndWaterBalance['I_MaxInf'])
         I_MaxInfSoil = float(soilAndWaterBalance['I_MaxInfSoil'])
         I_PowerInfiltRed = float(soilAndWaterBalance['I_PowerInfiltRed'])
@@ -137,7 +137,7 @@ class SimulatingThread(QtCore.QThread):
         I_EvapotransMethod = float(soilAndWaterBalance['I_EvapotransMethod'])
         I_SoilQflowFract = float(soilAndWaterBalance['I_SoilQflowFract'])
 
-        lake = self.parameters['lake']
+        lake = self.parameters['Lake']
         isL_Lake = np.array(
             [
                 float(lake['isL_Lake_A']),
@@ -178,7 +178,7 @@ class SimulatingThread(QtCore.QThread):
         l_m3_per_kwh = float(lake['L_m3_per_kwh'])
         l_ResrDepth = float(lake['L_ResrDepth'])
 
-        lake_hepp = self.parameters['lake hepp']
+        lake_hepp = self.parameters['Lake_HEPP']
         o_CumRivInflowtoLakeMP = [
             float(lake_hepp['O_CumRivInflowtoLakeMP_1']),
             float(lake_hepp['O_CumRivInflowtoLakeMP_2']),
@@ -208,7 +208,7 @@ class SimulatingThread(QtCore.QThread):
         o_FrSoilQuickFlow = float(lake_hepp['O_FrSoilQuickFlow'])
         o_FrSurfQuickFlow = float(lake_hepp['O_FrSurfQuickflow'])
 
-        grassAndCattle = self.parameters['grass and cattle']
+        grassAndCattle = self.parameters['Grass_and_Cattle']
         c_DailyTrampFac = float(grassAndCattle['C_DailyTramFac'])
         c_CattleSale = float(grassAndCattle['C_CattleSale'])
         c_DailyIntake = float(grassAndCattle['C_DailyIntake'])
@@ -220,10 +220,10 @@ class SimulatingThread(QtCore.QThread):
         g_WUE = float(grassAndCattle['G_WUE'])
         g_TramplingMultiplier = float(grassAndCattle['G_TramplingMultiplier'])
 
-        soilStructureDynamic = self.parameters['soil structure dynamic']
+        soilStructureDynamic = self.parameters['Soil_Structure_Dynamic']
         s_TrampMax = float(soilStructureDynamic['S_TrampMax'])
 
-        subcatchmentBalance = self.parameters['subcatchment balance']
+        subcatchmentBalance = self.parameters['Subcatchment_Balance']
         o_CumRainMP = [
             float(subcatchmentBalance['O_CumRainMP_1']),
             float(subcatchmentBalance['O_CumRainMP_2']),
