@@ -17,11 +17,13 @@ from matplotlib.backends.backend_qt4agg import (
     FigureCanvasQTAgg as FigureCanvas,
     NavigationToolbar2QT as NavigationToolbar)
 from matplotlib.backends import qt4_compat
+from stella_output import Stella_Output
 
 
 class OutputMap(
     QtGui.QDialog,
-    output_map_ui.Ui_Dialog):
+    output_map_ui.Ui_Dialog,
+    Stella_Output):
     def __init__(self, parent=None, subcatchment='', landcover=''):
         super(OutputMap, self).__init__(parent)
         self.setupUi(self)
@@ -122,12 +124,6 @@ class OutputMap(
 
     def update_display(self, output, time):
         self.updateQueue.append((time, output))
-        # self.time = time
-        # self.output = output
-        # self.display_selected_maps()
-
-    def timer_call(self):
-        print ('abcdefghlakjdfladfja;dfkljad;fljkadf;lkadjf')
 
 if __name__ == "__main__":
     import sys

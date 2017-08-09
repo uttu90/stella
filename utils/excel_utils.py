@@ -108,3 +108,16 @@ def array_to_maps(array_id, array, input_map):
     for index, value in enumerate(array):
         output_map += (input_map == array_id[index]) * value
     return output_map
+
+
+def write_array(array, sheet, column):
+    for row, value in enumerate(array):
+        sheet.write(row + 1, column, value)
+
+
+def write_dict(data, sheet, column):
+    index = 0
+    for key in data.keys():
+        sheet.write(0, column + index, key)
+        write_array(data[key], sheet, column + index)
+        index += 1

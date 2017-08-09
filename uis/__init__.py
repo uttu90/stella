@@ -68,10 +68,10 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
             input_landcover_maps.Input_Landcover_Maps_Diaglog(self)
         )
         self.inputLandcover_maps_Diaglog.setObjectName("Landcover_maps")
-        self.inputSubcatchment_map_Diaglog = (
+        self.inputSubcatchment_maps_Diaglog = (
             input_subcatchment_map.Input_Subcatchment_Map_Diaglog(self)
         )
-        self.inputSubcatchment_map_Diaglog.setObjectName("Subcatchment_map")
+        self.inputSubcatchment_maps_Diaglog.setObjectName("Subcatchment_map")
 
         for diaglog in self.children():
             if isinstance(diaglog, QtGui.QDialog):
@@ -80,6 +80,7 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
         for action in self.children():
             if isinstance(action, QtGui.QAction):
                 actionName = str(action.objectName())
+                print actionName
                 diaglogName = actionName.replace('action', 'input') + '_Diaglog'
                 try:
                     diaglog = getattr(self, diaglogName)
@@ -93,8 +94,6 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
         self.actionRun.triggered.connect(self.onActionRun)
         self.actionMaps.triggered.connect(self.onActionMaps)
         self.actionTimeseries.triggered.connect(self.onActionTimeseries)
-
-
         outputMapsSubcatchment = [
             'L_InFlowtoLake',
             'O_EvapoTransAcc',
@@ -127,6 +126,7 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
 
         self.periodUpdate = int(self.parameters['Run_Specs']['outputUpdate'])
         self.outputTimeseries = output_timeseries.OutputTimeseries()
+        self.outputMap = output_map.OutputMap()
 
     def actionDiaglog(self, diaglog):
         diaglog.show()
@@ -151,6 +151,11 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
             message = 'Please recheck {}. It isn\'t file'.format(file_name)
             self._show_message(file_name, message, func)
 
+    def _check_dir(self, dir_name, dir, func):
+        if not file_path.isdir(dir):
+            message = 'Please recheck {}. It isn\'t folder'.format(dir_name)
+            self._show_message(dir_name, message, func)
+
     def onActionRun(self):
         # Check simulation file, input data exist
         simulation_file = self.parameters['Run_Specs']['inputSimulationFile']
@@ -163,7 +168,7 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
         self._check_file(
             'subcatchment file',
             subcatchment_file,
-            self.inputSubcatchment_map_Diaglog.get_subcatchment_map
+            self.inputSubcatchment_maps_Diaglog.get_subcatchment_map
         )
         landcover_files = [
             self.parameters['Landcover_maps']['landcoverMap_1'],
@@ -183,23 +188,34 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
             inputdata_file,
             self.inputRun_Specs_Diaglog.get_data_file
         )
+        output_folder = self.parameters['Run_Specs']['outputFolder']
+        self._check_dir(
+            'output_folder',
+            output_folder,
+            self.inputRun_Specs_Diaglog.get_output_folder
+        )
+        self.get_parameter(self.inputRun_Specs_Diaglog)
+        self.get_parameter(self.inputLandcover_maps_Diaglog)
+        self.get_parameter(self.inputSubcatchment_maps_Diaglog)
+
         self.inputRun_Specs_Diaglog.get_input_data()
         self.data = self.inputRun_Specs_Diaglog.inputData
         self.simulation_module = imp.load_source(
             'model',
-            simulation_file)
+            self.parameters['Run_Specs']['inputSimulationFile'])
         self.simulation = self.simulation_module.SimulatingThread(
             parameters=self.parameters,
             data=self.inputRun_Specs_Diaglog.inputData
         )
         self.connect(self.simulation, QtCore.SIGNAL("update"),
                      self.update_result)
+        self.actionStop.triggered.connect(self.simulation.terminate)
         self.simulation.start()
 
     def update_result(self, output, time):
         if time % self.periodUpdate == 0:
-            self.outputMap.update_display(output, time)
-            self.outputTimeseries.update_display(output, time)
+            self.outputMap.update_display(output['map'], time)
+            self.outputTimeseries.update_display(output['timeseries'], time)
 
     def get_parameter(self, diaglog):
         diaglog_name = str(diaglog.objectName())

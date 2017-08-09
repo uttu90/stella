@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\stella.ui'
+# Form implementation generated from reading ui file 'stella.ui'
 #
 # Created by: PyQt4 UI code generator 4.11.4
 #
@@ -25,14 +25,16 @@ except AttributeError:
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
-        MainWindow.resize(819, 594)
+        MainWindow.resize(884, 550)
+        MainWindow.setStyleSheet(_fromUtf8(""))
         self.centralwidget = QtGui.QWidget(MainWindow)
+        self.centralwidget.setStyleSheet(_fromUtf8("border-image: url(:/background/genriver.png);"))
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
         self.gridLayout = QtGui.QGridLayout(self.centralwidget)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 819, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 884, 21))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         self.menuREADME = QtGui.QMenu(self.menubar)
         self.menuREADME.setObjectName(_fromUtf8("menuREADME"))
@@ -53,7 +55,6 @@ class Ui_MainWindow(object):
         self.toolBar = QtGui.QToolBar(MainWindow)
         self.toolBar.setObjectName(_fromUtf8("toolBar"))
         MainWindow.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar)
-        MainWindow.insertToolBarBreak(self.toolBar)
         self.actionRainfall = QtGui.QAction(MainWindow)
         self.actionRainfall.setObjectName(_fromUtf8("actionRainfall"))
         self.actionRiver = QtGui.QAction(MainWindow)
@@ -155,3 +156,4 @@ class Ui_MainWindow(object):
         self.actionEnglish.setText(_translate("MainWindow", "English", None))
         self.actionVietnamese.setText(_translate("MainWindow", "Vietnamese", None))
 
+import images_rc

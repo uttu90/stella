@@ -14,9 +14,12 @@ from matplotlib.backends.backend_qt4agg import (
     NavigationToolbar2QT as NavigationToolbar)
 from matplotlib.backends import qt4_compat
 
+from stella_output import Stella_Output
+
 class OutputTimeseries(
     QtGui.QDialog,
-    output_timeseries_ui.Ui_Dialog):
+    output_timeseries_ui.Ui_Dialog,
+    Stella_Output):
     def __init__(self, parent=None):
         super(OutputTimeseries, self).__init__(parent)
         self.setupUi(self)
@@ -47,6 +50,10 @@ class OutputTimeseries(
         self.resultBox_3.currentIndexChanged.connect(self._selectionchange_3)
         self.resultBox_4.currentIndexChanged.connect(self._selectionchange_4)
         self._prepare_display()
+        self.updateQueue = []
+        timer = QtCore.QTimer(self)
+        timer.timeout.connect(self.display_selected_maps)
+        timer.start(3000)
 
     def _selectionchange(self):
         selection = str(self.resultBox.currentText())
@@ -81,28 +88,24 @@ class OutputTimeseries(
         vbox.addWidget(self.mpl_toolbar)
         self.main_frame.setLayout(vbox)
 
-    def _display_timeseries(self):
+    def display_selected_maps(self):
         screen_position = [221, 222, 223, 224]
-        if self.isVisible():
-            ctime = self.time
-            self.fig.clear()
-            for index, timeseries in enumerate(self.selected_maps):
-                array = self.output[timeseries]
-                display_array = array[-10:] if len(array) >0 else array
-                self.axes = self.fig.add_subplot(screen_position[index])
-                # self.axes.set_xlim(0, len(array) - 1)
-                self.axes.set_ylim(0, max(display_array) * 1.1)
-                self.axes.set_autoscale_on(True)
-                self.axes.plot(display_array, linestyle='steps-post')
-                self.axes.set_xlabel('day')
-                self.canvas.draw()
+        if self.isVisible() and len(self.updateQueue) > 0:
+            time, output = self.updateQueue.pop(0)
+            if self.isVisible():
+                self.fig.clear()
+                for index, timeseries in enumerate(self.selected_maps):
+                    array = output[timeseries]
+                    display_array = array[-10:] if len(array) >0 else array
+                    self.axes = self.fig.add_subplot(screen_position[index])
+                    self.axes.set_ylim(0, max(display_array) * 1.1)
+                    self.axes.set_autoscale_on(True)
+                    self.axes.plot(display_array, linestyle='steps-post')
+                    self.axes.set_xlabel('day')
+                    self.canvas.draw()
 
     def update_display(self, output, time):
-        self.output = output
-        self.time = time
-        self.dayProgress.display(time)
-        self.yearProgress.display(time/365 + 1)
-        self._display_timeseries()
+        self.updateQueue.append((time, output))
 
 
 if __name__ == "__main__":

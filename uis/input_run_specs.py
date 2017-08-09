@@ -15,6 +15,7 @@ class Input_Run_Specs_Diaglog(
         self.file = 'input_run_specs.json'
         self.selectDataFile.clicked.connect(self.get_data_file)
         self.selectSimulationFile.clicked.connect(self.get_simulation_file)
+        self.selectOuputFolder.clicked.connect(self.get_output_folder)
         if file_path.isfile(self.file):
             self._initiate_value()
         else:
@@ -40,6 +41,15 @@ class Input_Run_Specs_Diaglog(
         self.data[str(self.inputSimulationFile.objectName())] = str(
             simulation_file
         )
+        self.save()
+
+    def get_output_folder(self):
+        output_folder = str(QtGui.QFileDialog.getExistingDirectory(
+            self,
+            'Get output folder'
+        ))
+        self.outputFolder.setText(output_folder)
+        self.data[str(self.outputFolder.objectName())] = output_folder
         self.save()
 
     def accept(self):

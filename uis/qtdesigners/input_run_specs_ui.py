@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\input_run_specs.ui'
+# Form implementation generated from reading ui file 'input_run_specs.ui'
 #
 # Created by: PyQt4 UI code generator 4.11.4
 #
@@ -35,22 +35,22 @@ class Ui_Dialog(object):
         self.label_129.setGeometry(QtCore.QRect(20, 120, 46, 13))
         self.label_129.setObjectName(_fromUtf8("label_129"))
         self.inputSimulationFile = QtGui.QLineEdit(Dialog)
-        self.inputSimulationFile.setGeometry(QtCore.QRect(200, 150, 251, 20))
+        self.inputSimulationFile.setGeometry(QtCore.QRect(200, 110, 251, 20))
         self.inputSimulationFile.setObjectName(_fromUtf8("inputSimulationFile"))
         self.selectSimulationFile = QtGui.QPushButton(Dialog)
-        self.selectSimulationFile.setGeometry(QtCore.QRect(470, 150, 75, 23))
+        self.selectSimulationFile.setGeometry(QtCore.QRect(470, 110, 75, 23))
         self.selectSimulationFile.setObjectName(_fromUtf8("selectSimulationFile"))
         self.label_131 = QtGui.QLabel(Dialog)
-        self.label_131.setGeometry(QtCore.QRect(260, 120, 161, 16))
+        self.label_131.setGeometry(QtCore.QRect(260, 80, 161, 16))
         self.label_131.setObjectName(_fromUtf8("label_131"))
         self.runfrom = QtGui.QLineEdit(Dialog)
         self.runfrom.setGeometry(QtCore.QRect(120, 40, 51, 20))
         self.runfrom.setObjectName(_fromUtf8("runfrom"))
         self.label_130 = QtGui.QLabel(Dialog)
-        self.label_130.setGeometry(QtCore.QRect(260, 40, 131, 16))
+        self.label_130.setGeometry(QtCore.QRect(260, 20, 131, 16))
         self.label_130.setObjectName(_fromUtf8("label_130"))
         self.selectDataFile = QtGui.QPushButton(Dialog)
-        self.selectDataFile.setGeometry(QtCore.QRect(470, 70, 75, 23))
+        self.selectDataFile.setGeometry(QtCore.QRect(470, 50, 75, 23))
         self.selectDataFile.setObjectName(_fromUtf8("selectDataFile"))
         self.rundt = QtGui.QLineEdit(Dialog)
         self.rundt.setGeometry(QtCore.QRect(120, 120, 51, 20))
@@ -62,7 +62,7 @@ class Ui_Dialog(object):
         self.label_127.setGeometry(QtCore.QRect(20, 40, 46, 13))
         self.label_127.setObjectName(_fromUtf8("label_127"))
         self.inputDataFile = QtGui.QLineEdit(Dialog)
-        self.inputDataFile.setGeometry(QtCore.QRect(200, 70, 251, 20))
+        self.inputDataFile.setGeometry(QtCore.QRect(200, 50, 251, 20))
         self.inputDataFile.setObjectName(_fromUtf8("inputDataFile"))
         self.runto = QtGui.QLineEdit(Dialog)
         self.runto.setGeometry(QtCore.QRect(120, 80, 51, 20))
@@ -73,6 +73,15 @@ class Ui_Dialog(object):
         self.outputUpdate = QtGui.QLineEdit(Dialog)
         self.outputUpdate.setGeometry(QtCore.QRect(120, 160, 51, 20))
         self.outputUpdate.setObjectName(_fromUtf8("outputUpdate"))
+        self.label_132 = QtGui.QLabel(Dialog)
+        self.label_132.setGeometry(QtCore.QRect(260, 140, 161, 16))
+        self.label_132.setObjectName(_fromUtf8("label_132"))
+        self.outputFolder = QtGui.QLineEdit(Dialog)
+        self.outputFolder.setGeometry(QtCore.QRect(200, 160, 251, 20))
+        self.outputFolder.setObjectName(_fromUtf8("outputFolder"))
+        self.selectOuputFolder = QtGui.QPushButton(Dialog)
+        self.selectOuputFolder.setGeometry(QtCore.QRect(470, 160, 75, 23))
+        self.selectOuputFolder.setObjectName(_fromUtf8("selectOuputFolder"))
 
         self.retranslateUi(Dialog)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), Dialog.accept)
@@ -93,4 +102,6 @@ class Ui_Dialog(object):
         self.runto.setText(_translate("Dialog", "2", None))
         self.label.setText(_translate("Dialog", "Output update", None))
         self.outputUpdate.setText(_translate("Dialog", "100", None))
+        self.label_132.setText(_translate("Dialog", "Choose output folder", None))
+        self.selectOuputFolder.setText(_translate("Dialog", "Select", None))
 
