@@ -80,7 +80,6 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
         for action in self.children():
             if isinstance(action, QtGui.QAction):
                 actionName = str(action.objectName())
-                print actionName
                 diaglogName = actionName.replace('action', 'input') + '_Diaglog'
                 try:
                     diaglog = getattr(self, diaglogName)
@@ -126,7 +125,6 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
 
         self.periodUpdate = int(self.parameters['Run_Specs']['outputUpdate'])
         self.outputTimeseries = output_timeseries.OutputTimeseries()
-        self.outputMap = output_map.OutputMap()
 
     def actionDiaglog(self, diaglog):
         diaglog.show()
@@ -136,6 +134,9 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
         self.outputTimeseries.show()
 
     def onActionMaps(self):
+        self.outputMap = output_map.OutputMap(
+            subcatchment=self.parameters['Subcatchment_map']['subcatchmentMap']
+        )
         self.outputMap.show()
 
     def _show_message(self, title, message, func):
@@ -214,8 +215,10 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
 
     def update_result(self, output, time):
         if time % self.periodUpdate == 0:
-            self.outputMap.update_display(output['map'], time)
-            self.outputTimeseries.update_display(output['timeseries'], time)
+            if hasattr(self, 'outputMap'):
+                self.outputMap.update_display(output['map'], time)
+            if hasattr(self, 'outputTimeseries'):
+                self.outputTimeseries.update_display(output['timeseries'], time)
 
     def get_parameter(self, diaglog):
         diaglog_name = str(diaglog.objectName())

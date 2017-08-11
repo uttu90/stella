@@ -6,7 +6,7 @@ from osgeo import gdal
 import numpy
 import os.path as file_path
 
-import utils
+from utils import np_utils
 from matplotlib import cm as cms
 from matplotlib.cbook import MatplotlibDeprecationWarning
 
@@ -94,16 +94,15 @@ class OutputMap(
             self.yearProgress.display(time / 365 + 1)
             self.fig.clear()
             for index, map in enumerate(self.selected_maps):
-                if self.isVisible():
-                    self.axes = self.fig.add_subplot(screen_position[index])
-                    self.resul1_array = utils.array_to_maps(
-                        self.subcachmentId,
-                        output[map][time],
-                        self.subcachmentArray
-                    )
-                    plt = self.axes.imshow(self.resul1_array)
-                    self.fig.colorbar(plt)
-                    self.canvas.draw()
+                self.axes = self.fig.add_subplot(screen_position[index])
+                self.resul1_array = np_utils.array_to_maps(
+                    self.subcachmentId,
+                    output[map][time],
+                    self.subcachmentArray
+                )
+                plt = self.axes.imshow(self.resul1_array)
+                self.fig.colorbar(plt)
+                self.canvas.draw()
 
     def _prepare_display(self):
         self.main_frame = self.displayResult

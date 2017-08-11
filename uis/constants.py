@@ -72,7 +72,7 @@ outputMapsSubcatchment = [
 ouputTimeSeries = [
     'I_RainDoY',
     'I_DailyRain',
-    'I_RivOutFlow',
+    'L_RivOutFlow',
     'O_BestYyHEPP',
     'O_WorstYHEPP',
     'L_HEPPWatUseFlow',

@@ -92,6 +92,8 @@ class OutputTimeseries(
         screen_position = [221, 222, 223, 224]
         if self.isVisible() and len(self.updateQueue) > 0:
             time, output = self.updateQueue.pop(0)
+            self.dayProgress.display(time)
+            self.yearProgress.display(time / 365 + 1)
             if self.isVisible():
                 self.fig.clear()
                 for index, timeseries in enumerate(self.selected_maps):

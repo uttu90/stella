@@ -978,7 +978,7 @@ class SimulatingThread(QtCore.QThread):
         Trans2 = 2
         End = 3
         I_RainMultiplier = 1
-        I_RainDoY_Stage = [1460, 2920, 4380, 5840, 7300, 8760]
+        I_RainDoY_Stage = [0, 1460, 2920, 4380, 5840, 7300, 8760, 10200]
         simulationTime = 10000
         I_Rain_GenSeed = 200
         I_Rain_IntensCoefVar = 0.3
@@ -1035,26 +1035,33 @@ class SimulatingThread(QtCore.QThread):
                        if I_Simulation_Time < I_InputDataYears[Trans2]
                           and I_Flag1 == 0
                        else 0)
-
-            for index, stage in enumerate(I_RainDoY_Stage):
-                I_SpatRainTime = I_RainMultiplier * (
-                    spatrain.I_SpatRain[index][Simulation_Time]
-                    if I_RainDoY < stage
-                    else spatrain.I_SpatRain[6][Simulation_Time]
-                )
-                I_Daily_Evapotrans = (
-                    I_Daily_Evap
-                    if I_Simulation_Time < stage
-                    else I_Daily_Evap[6]
-                )
-                for index, stage in enumerate(I_RainDoY_Stage):
-                    I_DailyRain = (
-                        (I_DailyRainYear[index][Simulation_Time]
-                         if I_Simulation_Time <= stage
-                         else I_DailyRainYear[6][Simulation_Time]) *
-                        np.ones(shape=(subcatchment, 1)) *
-                        I_RainMultiplier
-                    )
+            rain_time_stage = np_utils.get_stage(I_RainDoY, I_RainDoY_Stage)
+            I_SpatRainTime = I_RainMultiplier * spatrain.I_SpatRain[rain_time_stage][Simulation_Time]
+            I_Daily_Evapotrans = I_Daily_Evap[rain_time_stage][Simulation_Time]
+            I_DailyRain = (
+                I_DailyRainYear[rain_time_stage][Simulation_Time] *
+                np.ones(shape=(subcatchment, 1)) *
+                I_RainMultiplier
+            )
+            # for index, stage in enumerate(I_RainDoY_Stage):
+            #     I_SpatRainTime = I_RainMultiplier * (
+            #         spatrain.I_SpatRain[index][Simulation_Time]
+            #         if I_RainDoY < stage
+            #         else spatrain.I_SpatRain[6][Simulation_Time]
+            #     )
+            #     I_Daily_Evapotrans = (
+            #         I_Daily_Evap
+            #         if I_Simulation_Time < stage
+            #         else I_Daily_Evap[6]
+            #     )
+            #     for index, stage in enumerate(I_RainDoY_Stage):
+            #         I_DailyRain = (
+            #             (I_DailyRainYear[index][Simulation_Time]
+            #              if I_Simulation_Time <= stage
+            #              else I_DailyRainYear[6][Simulation_Time]) *
+            #             np.ones(shape=(subcatchment, 1)) *
+            #             I_RainMultiplier
+            #         )
             I_RainPerDay = I_SpatRainTime if isI_UseSpatVarRain else I_DailyRain
 
             I_RainDuration = ((I_RainPerDay / I_Rain_IntensMean) *
@@ -1643,11 +1650,13 @@ class SimulatingThread(QtCore.QThread):
             O_StartMDay = (O_StarMYear - 1) * 365 + 1 + (O_StartDOY - 1)
             O_EndMDay = O_StartMDay + O_MPeriodLength
             Yearly_Tick = 1 if I_WarmedUp == 1 and time % 365 == 0 else 0
-            for index, stage in enumerate(I_RainDoY_Stage):
-                I_DebitTime = (I_RFlowData[index]
-                               if I_Simulation_Time <= stage
-                                else I_RFlowData[6] if I_Simulation_Time <= 10220
-                                else I_RFlowData[7])
+            time_stage = np_utils.get_stage(I_Simulation_Time, I_RainDoY_Stage)
+            I_DebitTime = I_RFlowData[time_stage]
+            # for index, stage in enumerate(I_RainDoY_Stage):
+            #     I_DebitTime = (I_RFlowData[index]
+            #                    if I_Simulation_Time <= stage
+            #                     else I_RFlowData[6] if I_Simulation_Time <= 10220
+            #                     else I_RFlowData[7])
             I_RFlowDataQmecs = I_DebitTime[Simulation_Time]
             I_ContrSubcArea = np.multiply(I_RelArea, isI_SubcContr)
             I_RFlowDataQ = I_RFlowDataQmecs * 24 * 3600 * 10 ** 3
@@ -2229,7 +2238,7 @@ class SimulatingThread(QtCore.QThread):
             self.output['map']['D_GWaDisch'].append(D_GWaDisch)
             self.output['timeseries']['I_RainDoY'].append(I_RainDoY)
             self.output['timeseries']['L_RivOutFlow'].append(L_RivOutFlow)
-            self.output['timeseries']['I_DailyRain'].append(I_DailyRain)
+            self.output['timeseries']['I_DailyRain'].append(I_DailyRain[0])
             self.output['timeseries']['L_HEPPWatUseFlow'].append(L_HEPPWatUseFlow)
             self.output['timeseries']['L_HEPP_Kwh'].append(L_HEPP_Kwh)
             self.output['timeseries']['L_LakeVol'].append(L_LakeVol[time])

@@ -78,3 +78,10 @@ def array_to_maps(array_id, array, input_map):
     for index, value in enumerate(array[:, 0]):
         output_map += (input_map == array_id[index]) * value
     return output_map
+
+def get_stage(simulation_time, array_values):
+    for stage in range(len(array_values) - 1):
+        if (simulation_time >= array_values[stage] and
+            simulation_time < array_values[stage + 1]):
+            return stage
+    return stage + 1
