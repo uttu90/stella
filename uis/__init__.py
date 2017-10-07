@@ -128,11 +128,8 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
             self.output['maps']['subcatchment'][map_result] = []
         for time_result in ouputTimeSeries:
             self.output['timeseries'][time_result] = []
-
-
         self.actionStop.setEnabled(False)
         self.actionPause.setEnabled(False)
-
         # self.outputTimeseries = output_timeseries.OutputTimeseries()
 
     def actionDiaglog(self, diaglog):

@@ -57,7 +57,6 @@ class LandcoverInfo(QtGui.QDialog, landcover_info_ui.Ui_landcover_dlg):
             if isinstance(widget, QtGui.QLineEdit):
                 widget.setText(value)
             if isinstance(widget, QtGui.QPushButton):
-                print key, value
                 widget.setStyleSheet(value)
 
     def re_assign(self):
@@ -79,6 +78,5 @@ if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
     form = LandcoverInfo()
     form.exec_()
-    print form.colorResult
     form.close()
     app.exec_()
