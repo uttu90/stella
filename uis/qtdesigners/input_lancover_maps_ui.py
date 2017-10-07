@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\input_lancover_maps.ui'
+# Form implementation generated from reading ui file 'input_lancover_maps.ui'
 #
 # Created by: PyQt4 UI code generator 4.11.4
 #
@@ -75,10 +75,10 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(_translate("Dialog", "Input Landcover maps", None))
-        self.label.setText(_translate("Dialog", "Landcover map period 1 [Year 1-8]", None))
-        self.label_2.setText(_translate("Dialog", "Landcover map period 2 [Year 2-16]", None))
-        self.label_3.setText(_translate("Dialog", "Landcover map period 3 [Year 17-24]", None))
-        self.label_4.setText(_translate("Dialog", "Landcover map period 4 [Year 5-32]", None))
+        self.label.setText(_translate("Dialog", "Landcover map period 1", None))
+        self.label_2.setText(_translate("Dialog", "Landcover map period 2", None))
+        self.label_3.setText(_translate("Dialog", "Landcover map period 3", None))
+        self.label_4.setText(_translate("Dialog", "Landcover map period 4", None))
         self.landCoverMap_btn1.setText(_translate("Dialog", "Choose File", None))
         self.landCoverMap_btn2.setText(_translate("Dialog", "Choose File", None))
         self.landCoverMap_btn3.setText(_translate("Dialog", "Choose File", None))

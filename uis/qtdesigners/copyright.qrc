@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="webview">
+    <file>genriver.html</file>
+  </qresource>
+</RCC>

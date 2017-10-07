@@ -19,6 +19,7 @@ class Input_River_Diaglog(
 
     def accept(self):
         self._collect_value()
+        self.data_cb()
         self.save()
         super(Input_River_Diaglog, self).accept()
 

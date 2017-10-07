@@ -20,6 +20,7 @@ class Input_Rainfall_Diaglog(
 
     def accept(self):
         self._collect_value()
+        self.data_cb()
         self.save()
         super(Input_Rainfall_Diaglog, self).accept()
 

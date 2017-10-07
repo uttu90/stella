@@ -30,6 +30,7 @@ class Input_Subcatchment_Map_Diaglog(
 
     def accept(self):
         self._collect_value()
+        self.data_cb()
         self.save()
         super(Input_Subcatchment_Map_Diaglog, self).accept()
 

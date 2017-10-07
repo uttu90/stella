@@ -19,6 +19,7 @@ class Input_Soil_And_Plant_Water_Diaglog(
 
     def accept(self):
         self._collect_value()
+        self.data_cb()
         self.save()
         super(Input_Soil_And_Plant_Water_Diaglog, self).accept()
 

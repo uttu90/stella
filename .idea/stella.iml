@@ -6,6 +6,8 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="stella-ui" />
     <orderEntry type="module" module-name="NewFALLOW-master" />
+    <orderEntry type="module" module-name="qt_thread_example" />
+    <orderEntry type="module" module-name="color_picker" />
   </component>
   <component name="TestRunnerService">
     <option name="PROJECT_TEST_RUNNER" value="Unittests" />

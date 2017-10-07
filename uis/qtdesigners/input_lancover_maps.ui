@@ -39,7 +39,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Landcover map period 1 [Year 1-8]</string>
+    <string>Landcover map period 1</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
@@ -52,7 +52,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Landcover map period 2 [Year 2-16]</string>
+    <string>Landcover map period 2</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
@@ -65,7 +65,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Landcover map period 3 [Year 17-24]</string>
+    <string>Landcover map period 3</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_4">
@@ -78,7 +78,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Landcover map period 4 [Year 5-32]</string>
+    <string>Landcover map period 4</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="landcoverMap_1">

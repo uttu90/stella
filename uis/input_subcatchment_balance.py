@@ -19,6 +19,7 @@ class Input_Subcatchment_Balance_Diaglog(
 
     def accept(self):
         self._collect_value()
+        self.data_cb()
         self.save()
         super(Input_Subcatchment_Balance_Diaglog, self).accept()
 

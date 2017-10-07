@@ -65,6 +65,7 @@ class StellaUI(QtGui.QMainWindow, Ui_MainWindow):
         self.selectSubcatchmentMap.clicked.connect(self._get_subcatchment_map)
         self.selectLandcoverMap.clicked.connect(self._get_landcover_map)
         self.runbtn.clicked.connect(self._run)
+        self.pause
         self.resultBox.currentIndexChanged.connect(self._selectionchange)
         self.resultBox_2.currentIndexChanged.connect(self._selectionchange_2)
         self.resultBox_3.currentIndexChanged.connect(self._selectionchange_3)

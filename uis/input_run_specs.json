@@ -1,8 +1,8 @@
 {
    "runfrom": "0", 
    "rundt": "1", 
-   "inputDataFile": "C:/Users/PHUONGTRANG/Documents/GitHub/stella/GenRiver_Vietnam (20 LC) 2014.xls", 
-   "outputUpdate": "100", 
+   "inputDataFile": "C:/Users/PHUONGTRANG/Downloads/GenRiver_Vietnam (20 LC) EXP.xls", 
+   "outputUpdate": "30", 
    "runto": "2", 
    "outputFolder": "C:\\Users\\PHUONGTRANG\\Desktop", 
    "inputSimulationFile": "C:/Users/PHUONGTRANG/Documents/GitHub/stella/model.py"

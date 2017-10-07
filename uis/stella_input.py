@@ -26,6 +26,9 @@ class StellaInput(object):
                     getattr(self, key + '_' + constants.subcatchmentName[sub]
                             ).setText(str(self.data[key][sub]))
 
+    def get_params(self, dict):
+        dict = self.data
+
     def save(self):
         with open(self.file, 'w') as fp:
             json.dump(self.data, fp, indent=3)

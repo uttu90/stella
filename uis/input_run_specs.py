@@ -54,6 +54,7 @@ class Input_Run_Specs_Diaglog(
 
     def accept(self):
         self._collect_value()
+        self.data_cb()
         self.save()
         super(Input_Run_Specs_Diaglog, self).accept()
 
@@ -226,22 +227,22 @@ class Input_Run_Specs_Diaglog(
             colx=85,
             start_rowx=4,
             end_rowx=24)
-        self.inputData['I_AvailWatSub1'] = wksheet.col_values(
-            colx=86,
-            start_rowx=4,
-            end_rowx=24)
-        self.inputData['I_AvailWatSub2'] = wksheet.col_values(
-            colx=87,
-            start_rowx=4,
-            end_rowx=24)
-        self.inputData['I_AvailWatSub3'] = wksheet.col_values(
-            colx=88,
-            start_rowx=4,
-            end_rowx=24)
-        self.inputData['I_AvailWatSub4'] = wksheet.col_values(
-            colx=89,
-            start_rowx=4,
-            end_rowx=24)
+        # self.inputData['I_AvailWatSub1'] = wksheet.col_values(
+        #     colx=86,
+        #     start_rowx=4,
+        #     end_rowx=24)
+        # self.inputData['I_AvailWatSub2'] = wksheet.col_values(
+        #     colx=87,
+        #     start_rowx=4,
+        #     end_rowx=24)
+        # self.inputData['I_AvailWatSub3'] = wksheet.col_values(
+        #     colx=88,
+        #     start_rowx=4,
+        #     end_rowx=24)
+        # self.inputData['I_AvailWatSub4'] = wksheet.col_values(
+        #     colx=89,
+        #     start_rowx=4,
+        #     end_rowx=24)
         self.inputData['I_Evapotrans'] = wksheet.col_values(
             colx=31,
             start_rowx=4,

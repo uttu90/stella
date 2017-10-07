@@ -19,6 +19,7 @@ class Input_Lake_HEPP_Diaglog(
 
     def accept(self):
         self._collect_value()
+        self.data_cb()
         self.save()
         super(Input_Lake_HEPP_Diaglog, self).accept()
 

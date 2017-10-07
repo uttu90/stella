@@ -18,6 +18,8 @@ import input_landcover_maps
 import input_subcatchment_map
 import output_map
 import output_timeseries
+import landcover_info
+import copyright_view
 
 
 class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
@@ -72,10 +74,14 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
             input_subcatchment_map.Input_Subcatchment_Map_Diaglog(self)
         )
         self.inputSubcatchment_maps_Diaglog.setObjectName("Subcatchment_map")
-
+        self.inputLandcover_colors_Diaglog = landcover_info.LandcoverInfo(self)
+        self.inputLandcover_colors_Diaglog.setObjectName("Landcover_info")
+        copyright = copyright_view.Copyright(self)
+        copyright.show()
         for diaglog in self.children():
             if isinstance(diaglog, QtGui.QDialog):
                 self.get_parameter(diaglog)
+                diaglog.data_cb = partial(self.get_parameter_cb, diaglog)
 
         for action in self.children():
             if isinstance(action, QtGui.QAction):
@@ -123,8 +129,11 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
         for time_result in ouputTimeSeries:
             self.output['timeseries'][time_result] = []
 
-        self.periodUpdate = int(self.parameters['Run_Specs']['outputUpdate'])
-        self.outputTimeseries = output_timeseries.OutputTimeseries()
+
+        self.actionStop.setEnabled(False)
+        self.actionPause.setEnabled(False)
+
+        # self.outputTimeseries = output_timeseries.OutputTimeseries()
 
     def actionDiaglog(self, diaglog):
         diaglog.show()
@@ -134,9 +143,7 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
         self.outputTimeseries.show()
 
     def onActionMaps(self):
-        self.outputMap = output_map.OutputMap(
-            subcatchment=self.parameters['Subcatchment_map']['subcatchmentMap']
-        )
+        self.outputMap.colors = self.inputLandcover_colors_Diaglog.colorResult
         self.outputMap.show()
 
     def _show_message(self, title, message, func):
@@ -158,7 +165,6 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
             self._show_message(dir_name, message, func)
 
     def onActionRun(self):
-        # Check simulation file, input data exist
         simulation_file = self.parameters['Run_Specs']['inputSimulationFile']
         self._check_file(
             'simulation file',
@@ -210,15 +216,49 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
         )
         self.connect(self.simulation, QtCore.SIGNAL("update"),
                      self.update_result)
-        self.actionStop.triggered.connect(self.simulation.terminate)
+        landcover_files = [
+            self.parameters['Landcover_maps']['landcoverMap_1'],
+            self.parameters['Landcover_maps']['landcoverMap_2'],
+            self.parameters['Landcover_maps']['landcoverMap_3'],
+            self.parameters['Landcover_maps']['landcoverMap_4'],
+        ]
+        year_period = [
+            int(self.parameters['Initial_Run']['I_StartMYear_1']),
+            int(self.parameters['Initial_Run']['I_StartMYear_2']),
+            int(self.parameters['Initial_Run']['I_StartMYear_3'])
+        ]
+        self.outputMap = output_map.OutputMap(
+            subcatchment=self.parameters['Subcatchment_map']['subcatchmentMap'],
+            landcover=landcover_files,
+            period=year_period
+        )
+        self.outputTimeseries = output_timeseries.OutputTimeseries(
+            outputFolder = self.parameters['Run_Specs']['outputFolder']
+        )
+        self.actionPause.setChecked(False)
+        self.actionStop.setEnabled(True)
+        self.actionPause.setEnabled(True)
+        self.actionRun.setEnabled(False)
+        self.actionStop.triggered.connect(self.onActionStop)
         self.simulation.start()
 
+    def onActionStop(self):
+        self.actionRun.setChecked(False)
+        self.actionRun.setEnabled(True)
+        self.actionPause.setChecked(False)
+        self.simulation.stop()
+
     def update_result(self, output, time):
+        self.periodUpdate = int(self.parameters['Run_Specs']['outputUpdate'])
         if time % self.periodUpdate == 0:
             if hasattr(self, 'outputMap'):
-                self.outputMap.update_display(output['map'], time)
+                self.outputMap.update_display(output['map'], time, not self.actionPause.isChecked())
             if hasattr(self, 'outputTimeseries'):
-                self.outputTimeseries.update_display(output['timeseries'], time)
+                self.outputTimeseries.update_display(output['timeseries'], time, not self.actionPause.isChecked())
+
+    def get_parameter_cb(self, diaglog):
+        diaglog_name = str(diaglog.objectName())
+        self.parameters[diaglog_name] = diaglog.data
 
     def get_parameter(self, diaglog):
         diaglog_name = str(diaglog.objectName())

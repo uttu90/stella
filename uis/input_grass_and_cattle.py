@@ -20,6 +20,7 @@ class Input_Grass_And_Cattle_Diaglog(
 
     def accept(self):
         self._collect_value()
+        self.data_cb()
         self.save()
         super(Input_Grass_And_Cattle_Diaglog, self).accept()
 

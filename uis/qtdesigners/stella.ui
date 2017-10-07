@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>stella Python</string>
+   <string>GenRiver Python</string>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -71,6 +71,7 @@
      <string>SIMULATION</string>
     </property>
     <addaction name="actionRun"/>
+    <addaction name="actionPause"/>
     <addaction name="actionStop"/>
    </widget>
    <widget class="QMenu" name="menuLANGUAGE">
@@ -80,12 +81,19 @@
     <addaction name="actionEnglish"/>
     <addaction name="actionVietnamese"/>
    </widget>
+   <widget class="QMenu" name="menuOPTIONS">
+    <property name="title">
+     <string>OPTIONS</string>
+    </property>
+    <addaction name="actionLandcover_colors"/>
+   </widget>
    <addaction name="menuREADME"/>
    <addaction name="menuINPUT"/>
    <addaction name="menuRUN_SPECS"/>
    <addaction name="menuOUTPUT"/>
    <addaction name="menuSIMULATION"/>
    <addaction name="menuLANGUAGE"/>
+   <addaction name="menuOPTIONS"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -100,8 +108,10 @@
    </attribute>
    <addaction name="actionRun_Specs"/>
    <addaction name="actionInitial_Run"/>
+   <addaction name="actionLandcover_colors"/>
    <addaction name="separator"/>
    <addaction name="actionRun"/>
+   <addaction name="actionPause"/>
    <addaction name="actionStop"/>
    <addaction name="separator"/>
    <addaction name="actionTimeseries"/>
@@ -158,6 +168,9 @@
    </property>
   </action>
   <action name="actionRun">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Run</string>
    </property>
@@ -195,6 +208,19 @@
   <action name="actionVietnamese">
    <property name="text">
     <string>Vietnamese</string>
+   </property>
+  </action>
+  <action name="actionPause">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Pause</string>
+   </property>
+  </action>
+  <action name="actionLandcover_colors">
+   <property name="text">
+    <string>Landcover Colors</string>
    </property>
   </action>
  </widget>

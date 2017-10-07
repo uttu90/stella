@@ -19,6 +19,7 @@ class Input_Lake_Diaglog(
 
     def accept(self):
         self._collect_value()
+        self.data_cb()
         self.save()
         super(Input_Lake_Diaglog, self).accept()
 

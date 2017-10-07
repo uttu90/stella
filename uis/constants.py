@@ -55,6 +55,7 @@ landcoverName = [
 
 [Inflowlake, obs_1, obs_2, obs_3, obs_4, obs_5, obs_6, obs_7] = range(8)
 outputMapsSubcatchment = [
+    'Landcover',
     'L_InFlowtoLake',
     'O_EvapoTransAcc',
     'O_PercAcc',
@@ -70,28 +71,6 @@ outputMapsSubcatchment = [
 ]
 
 ouputTimeSeries = [
-    'I_RainDoY',
-    'I_DailyRain',
-    'L_RivOutFlow',
-    'O_BestYyHEPP',
-    'O_WorstYHEPP',
-    'L_HEPPWatUseFlow',
-    'L_HEPP_Kwh',
-    'O_FrBaseFlow',
-    'O_FrSoilQuickFlow',
-    'I_DailyRainAmount',
-    'D_SurfaceFlow',
-    'L_LakeVol',
-    'L_LakeLevel',
-    'L_CumHEPPUse',
-    'L_InFlowtoLake',
-    'O_EvapoTransAcc',
-    'O_PercAcc',
-    'O_RainAcc',
-    'O_SurfQFlowAcc',
-    'O_BaseFlowAcc',
-    'O_DeepInfAcc',
-    'O_IntercAcc',
-    'O_SoilQFlowAcc',
-    'O_InfAcc',
+    'Water Balance',
+    'HEPP'
 ]

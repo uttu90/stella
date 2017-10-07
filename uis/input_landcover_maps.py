@@ -39,6 +39,7 @@ class Input_Landcover_Maps_Diaglog(
 
     def accept(self):
         self._collect_value()
+        self.data_cb()
         self.save()
         super(Input_Landcover_Maps_Diaglog, self).accept()
 
