@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def update(stock, inflow=0, outflow=0, dt=1, non_negative=True):
     value = np.add(stock[-1], (inflow - outflow) * dt)
     if non_negative:
@@ -7,17 +8,15 @@ def update(stock, inflow=0, outflow=0, dt=1, non_negative=True):
     stock.append(value)
 
 
-def update_conveyor(stock, inflow=0, outflow=1, time=0, dt=1):
-    leak = np.multiply(outflow> time, np.ones_like(outflow))
-    value = np.add(stock[-1], (inflow - inflow * leak) * dt)
-    stock.append(value)
+def update_conveyor(stock, inflow=0, outflow=[0], transitTime=0, time=0, dt=1):
+    # None
+    new_value = np.add(stock[time], np.subtract(inflow, outflow[time]) * dt)
+    # new_value = np.zeros_like(stock[time])
+    stock.append(new_value)
+    ts = int(np.max(np.around(transitTime)) + 1)
+    # for future in range(1, ts):
 
-if __name__ == '__main__':
-    stock = [0]
-    inflow = 2
-    outflow = 2
-    dt = 1
-    simulation_time = range(12)
-    for time in simulation_time:
-        update_conveyor(stock, inflow, outflow, time, dt)
-    print stock
+    if len(outflow) < time + ts:
+        outflow += [np.zeros_like(outflow[time]) for _ in range(len(outflow), time + ts)]
+    for future in range(1, ts):
+        outflow[time + future] = np.add(outflow[time + future], np.multiply(transitTime == future, inflow))

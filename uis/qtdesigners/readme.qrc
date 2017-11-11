@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="webview">
+    <file>readme.html</file>
+  </qresource>
+</RCC>

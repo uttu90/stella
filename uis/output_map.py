@@ -201,12 +201,12 @@ class OutputMap(
         self.playingState = playingState
         self.checkBox.setEnabled(playingState)
         # self.nextBtn.setEnabled(playingState)
-        self.autoUpdate = playingState
-        if not playingState:
-            self.checkBox.setChecked(False)
-
-            self.pausingTime = time
-            self.timer.stop()
+        # self.autoUpdate = playingState
+        # if not playingState:
+        #     self.checkBox.setChecked(False)
+        #
+        #     self.pausingTime = time
+        #     self.timer.stop()
         self.updateQueue.append((time, output))
 
 if __name__ == "__main__":

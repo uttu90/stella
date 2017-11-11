@@ -72,6 +72,11 @@ def get_variable_now(
         result = np.multiply(I_RelArea > 0, result)
     return result
 
+def get_year_stage(time, years_stage):
+    for index, year in enumerate(years_stage):
+        if time >= year and time < years_stage[index + 1]:
+            return index
+
 
 def array_to_maps(array_id, array, input_map):
     output_map = 0 * input_map
