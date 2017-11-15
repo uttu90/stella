@@ -1093,12 +1093,6 @@ class SimulatingThread(QtCore.QThread):
             I_RainDoY = (I_Simulation_Time
                          if (isI_RainCycle == 0)
                          else 1 + I_Simulation_Time % 365)
-            # I_Flag1 = 1 if I_Simulation_Time < I_InputDataYears[Trans1] else 0
-            # I_Flag2 = (1
-            #            if I_Simulation_Time < I_InputDataYears[Trans2]
-            #               and I_Flag1 == 0
-            #            else 0)
-            # rain_time_stage = np_utils.get_stage(I_RainDoY, I_RainDoY_Stage)
             I_SpatRainTime = I_RainMultiplier * spatrain.I_SpatRain[I_RainDoY/1460][Simulation_Time]
             I_Daily_Evapotrans = I_Daily_Evap[I_RainDoY/1460][Simulation_Time]
             I_DailyRain = (
@@ -1182,11 +1176,11 @@ class SimulatingThread(QtCore.QThread):
                 (I_InputDataYears[year_stage + 1] - I_InputDataYears[year_stage])
             )
             # print I_AvailWatClassNow
-            I_FracVegClassSum1 = np_utils.array_sum(I_FracVegClass_1)
-            I_FracVegClassSum2 = np_utils.array_sum(I_FracVegClass_2)
-            I_FracVegClassSum3 = np_utils.array_sum(I_FracVegClass_3)
-            I_FracVegClassSum4 = np_utils.array_sum(I_FracVegClass_4)
-            I_FracVegClassSumNow = np_utils.array_sum(I_FracVegClassNow)
+            # I_FracVegClassSum1 = np_utils.array_sum(I_FracVegClass_1)
+            # I_FracVegClassSum2 = np_utils.array_sum(I_FracVegClass_2)
+            # I_FracVegClassSum3 = np_utils.array_sum(I_FracVegClass_3)
+            # I_FracVegClassSum4 = np_utils.array_sum(I_FracVegClass_4)
+            # I_FracVegClassSumNow = np_utils.array_sum(I_FracVegClassNow)
             I_DailyRainAmount = np.multiply(
                 I_RainPerDay,
                 np.multiply(I_FracVegClassNow, I_RelArea)
@@ -1202,7 +1196,7 @@ class SimulatingThread(QtCore.QThread):
                 else I_RainDoY % 365
             )
             I_MoY = 0 if I_RainDoY == 0 else int(I_TimeEvap / 30.5)
-            I_PotEvapTransp = None
+            # I_PotEvapTransp = None
             if I_EvapotransMethod == 1:
                 I_PotEvapTransp = np.multiply(
                     I_Evapotrans[I_MoY],
@@ -1325,35 +1319,55 @@ class SimulatingThread(QtCore.QThread):
                     I_AvailWaterClass <= 0,
                     np.multiply(D_IrrigEfficiency, D_Irrigation)))
             # print np.around(D_Percolation, decimals=2).transpose()
-            D_WaterEvapIrrigation = np.multiply(
-                D_IrrigEfficiency > 0,
-                D_Irrigation * (1 - D_IrrigEfficiency))
+            D_Percolation = calculate.outflow_constrain(D_Percolation, D_SoilWater[time], D_Infiltration, True, 1)
 
-            D_GWaDisch = np.multiply(D_GWArea[time], I_GWRelFrac)
-            # print np.around(D_GWArea[time], decimals=2)
             D_DeepInfiltration = np.multiply(
                 isL_Lake == 1,
                 np.minimum(
                     np.minimum(
                         np.minimum(
                             np.multiply(
-                                np.sum(I_MaxInfArea, axis=1).reshape(subcatchment,1),
+                                np.sum(I_MaxInfArea, axis=1).reshape(subcatchment, 1),
                                 I_RainTimeAvForInf
                             ) / 24 - np.sum(
                                 I_SoilSatClass,
-                                axis=1).reshape(subcatchment,1) +
+                                axis=1).reshape(subcatchment, 1) +
                             np.sum(D_SoilWater[time],
-                                      axis=1).reshape(subcatchment,1),
+                                   axis=1).reshape(subcatchment, 1),
                             np.sum(I_MaxInfSubSAreaClass,
-                                      axis=1).reshape(subcatchment,1)
+                                   axis=1).reshape(subcatchment, 1)
                         ),
                         np.sum(I_DailyRainAmount,
-                                           axis=1).reshape(subcatchment,1) -
+                               axis=1).reshape(subcatchment, 1) -
                         np.sum(D_InterceptEvap,
-                                           axis=1).reshape(subcatchment,1) -
+                               axis=1).reshape(subcatchment, 1) -
                         np.sum(D_Infiltration,
-                                           axis=1).reshape(subcatchment,1)),
+                               axis=1).reshape(subcatchment, 1)),
                     I_MaxDynGWArea - D_GWArea[time]))
+            D_DeepInfiltration = calculate.inflow_constrain(D_DeepInfiltration)
+
+            D_GWaDisch = np.multiply(D_GWArea[time], I_GWRelFrac)
+            D_GWaDisch = calculate.outflow_constrain(D_GWaDisch, D_GWArea[time],
+                                                     D_DeepInfiltration + np.sum(D_Percolation, axis=1).reshape(
+                                                         subcatchment, 1),
+                                                     True, 1)
+
+            D_WaterEvapIrrigation = np.multiply(
+                D_IrrigEfficiency > 0,
+                D_Irrigation * (1 - D_IrrigEfficiency))
+            D_WaterEvapIrrigation = calculate.outflow_constrain(D_WaterEvapIrrigation, D_GWArea[time], D_DeepInfiltration + np.sum(D_Percolation, axis=1).reshape(subcatchment, 1) - D_GWaDisch)
+
+            # print np.around(D_GWArea[time], decimals=2)
+
+            D_SoilQflowRelFrac = np.ones(
+                shape=(subcatchment, 1)
+            ) * I_SoilQflowFrac
+            D_SoilDischarge = np.multiply(
+                D_SoilQflowRelFrac,
+                (D_SoilWater[time] - I_AvailWaterClass)
+            )
+            D_SoilDischarge = calculate.outflow_constrain(D_SoilDischarge, D_SoilWater[time],
+                                                          D_Infiltration - D_Percolation, True, 1)
             # print D_DeepInfiltration
             # print 'D_DeepInfiltration', D_DeepInfiltration.shape, D_GWArea[time].shape
             D_ActEvapTransp = np.multiply(
@@ -1362,6 +1376,7 @@ class SimulatingThread(QtCore.QThread):
                     I_PotEvapTransp -
                     np.multiply(I_InterceptEffectonTransp, D_InterceptEvap),
                     D_RelWaterAv))
+            D_ActEvapTransp = calculate.outflow_constrain(D_ActEvapTransp, D_SoilWater[time], D_Infiltration - D_Percolation - D_SoilDischarge, True, 1)
             # print np.around(D_ActEvapTransp, decimals=2).transpose()
             # print 'D_SurfaceFlow'
             # print I_DailyRainAmount.shape, D_InterceptEvap.shape, D_Infiltration.shape, D_DeepInfiltration.shape
@@ -1386,24 +1401,20 @@ class SimulatingThread(QtCore.QThread):
                                   D_DeepInfiltration))
             )
 
-            D_SoilQflowRelFrac = np.ones(
-                shape=(subcatchment, 1)
-            ) * I_SoilQflowFrac
-
-            D_SoilDischarge_ = np.multiply(
-                D_SoilQflowRelFrac,
-                (D_SoilWater[time] - I_AvailWaterClass)
-            )
-            D_SoilDischarge = np.multiply(D_SoilDischarge_ > 0, D_SoilDischarge_)
+            # D_SoilDischarge = np.multiply(D_SoilDischarge_ > 0, D_SoilDischarge_)
             # print np.round(D_SoilWater[time], decimals=2).transpose()
             # print np.around(D_SoilDischarge, decimals=2).transpose()
             G_GrassAll = np_utils.array_sum(G_GrassStandingBiomass[time])
+            G_GrowthRate = G_WUE * np.multiply(D_ActEvapTransp.transpose(),
+                                               G_GrassFract_Biomass).transpose()
             G_Grazing = (0
                          if G_GrassAll == 0
                          else (C_StockingRate[time] *
                                C_DailyIntake *
                                G_GrassStandingBiomass[time] /
                                G_GrassAll))
+
+            G_Grazing = calculate.outflow_constrain(G_Grazing, G_GrassStandingBiomass[time], G_GrowthRate)
             # print np.around(C_StockingRate[time], decimals=2)
             # print np.around(G_GrassStandingBiomass[time], decimals=2)
             C_TrampComp = C_DailyTrampFac * G_Grazing / C_DailyIntake
@@ -1411,31 +1422,31 @@ class SimulatingThread(QtCore.QThread):
             C_DeathRate = (C_DeathRate > 0) * C_DeathRate
             C_Destocking = min(C_StockingRate[time], C_CattleSale + C_DeathRate)
             C_Stocking = 0 * C_StockingRate[time]
+            C_Destocking = calculate.outflow_constrain(C_Destocking, C_StockingRate[time], C_Stocking, True, 1)
             # print C_Stocking, C_Destocking
             # G_GrassFract_Biomass = np.zeros(vegClass)
-            G_GrowthRate = G_WUE * np.multiply(D_ActEvapTransp.transpose(),
-                                               G_GrassFract_Biomass).transpose()
+
             # print np.around(G_GrowthRate, decimals=2)
             # G_GrassAll = np_utils.array_sum(G_GrassStandingBiomass[time])
             G_LeafMortality = (G_GrassStandingBiomass[time] * G_GrassMortFrac +
                                G_Grazing * G_TramplingMultiplier)
+            G_LeafMortality = calculate.outflow_constrain(G_LeafMortality, G_GrassStandingBiomass[time], G_GrowthRate - G_Grazing)
             G_LitterDeposition = G_LeafMortality * G_GrassLitConv
 
             G_Incorporation_DecaySurfLit = (G_SurfaceLitter[time] *
                                             G_SurfLitDecFrac)
+            G_Incorporation_DecaySurfLit = calculate.outflow_constrain(G_Incorporation_DecaySurfLit, G_SurfaceLitter[time], G_LitterDeposition)
             # print G_SurfaceLitter[time]
             G_FaecesProd = G_Grazing * G_GrazingManConv
             G_Incorporation_DecayManure = (G_SurfManure[time] *
                                            G_SurfManureDecFrac)
+            G_Incorporation_DecayManure = calculate.outflow_constrain(G_Incorporation_DecayManure, G_SurfManure[time], G_FaecesProd)
             G_SurfaceCover = (G_GrassStandingBiomass[time] +
                               G_SurfaceLitter[time] +
                               G_SurfManure[time])
             S_RainAtSoilSurface = I_DailyRainAmount - D_InterceptEvap
             # print np.around(S_RainAtSoilSurface, decimals=2)
             # print np.around(S_RelBulkDensity[time], decimals=2)
-            S_Compaction = (
-                np.multiply((1.3 - S_RelBulkDensity[time]), C_TrampComp) /
-                S_TrampMax)
             S_SplashErosion = (0 * np.divide(
                 np.multiply(G_SurfaceCover,
                             S_RainAtSoilSurface),
@@ -1445,17 +1456,17 @@ class SimulatingThread(QtCore.QThread):
 
             S_StructureFormation = 0 * np.multiply(S_RelBulkDensity[time],
                                                    G_SurfaceCover)
+
+            S_Compaction = (
+                np.multiply((1.3 - S_RelBulkDensity[time]), C_TrampComp) /
+                S_TrampMax)
+            S_Compaction = calculate.outflow_constrain(S_Compaction, S_RelBulkDensity[time], S_SplashErosion + S_RippingSurface + S_StructureFormation)
+
             D_ReservoirVol = L_ResrDepth * np.multiply(isL_Lake, I_RelArea)
             # print D_SubcResVol[time].shape
             # print np.around(D_SubcResVol[time], decimals=2)
             D_SubCResUseFrac_ = D_SubCResUseFrac[I_RainDoY] if I_RainDoY < len(D_SubCResUseFrac) else D_SubCResUseFrac[-1]
-            D_SubCResOutflow = np.add(
-                np.multiply(
-                    D_SubcResVol[time] > D_ReservoirVol,
-                    np.subtract(D_SubcResVol[time], D_ReservoirVol)),
-                np.multiply(D_SubcResVol[time] < D_ReservoirVol,
-                            D_SubCResUseFrac_ * D_SubcResVol[time]))
-            # print np.around(D_SubCResOutflow, decimals=2)
+
             D_RoutingTime = np.divide(
                 I_RoutingDistance,
                 (I_RivFlowTimeNow * I_RoutVeloc_m_per_s) * 3.6 * 24 * I_Tortuosity)
@@ -1468,6 +1479,33 @@ class SimulatingThread(QtCore.QThread):
                           where=D_RoutingTime > 0))
             # print np.around(I_ReleaseFrac, decimals=2)
             # print D_SurfaceFlow.shape, D_GWaDisch.shape, D_FracGWtoLake.shape, D_SoilDischarge.shape, D_SubCResOutflow.shape, isI_DaminThisStream.shape
+            D_Influx_to_Resr = np.multiply(
+                isI_DaminThisStream == 1,
+                (D_GWaDisch +
+                 np.sum(D_SoilDischarge, axis=1).reshape(subcatchment, 1)
+                 + D_SurfaceFlow)
+            )
+            # print D_GWaDisch
+            D_Influx_to_Resr = calculate.inflow_constrain(D_Influx_to_Resr)
+
+            D_EvaporReservoir = I_Evapotrans[I_MoY % 12] * np.sum(isL_Lake)
+            D_EvaporReservoir = calculate.outflow_constrain(D_EvaporReservoir, D_SubcResVol[time], D_Influx_to_Resr,
+                                                            True, 1)
+
+            D_SubCResOutflow = np.add(
+                np.multiply(
+                    D_SubcResVol[time] > D_ReservoirVol,
+                    np.subtract(D_SubcResVol[time], D_ReservoirVol)),
+                np.multiply(D_SubcResVol[time] < D_ReservoirVol,
+                            D_SubCResUseFrac_ * D_SubcResVol[time]))
+            # print np.around(D_SubCResOutflow, decimals=2)
+            # print D_SubCResOutflow
+            # print D_SubcResVol[time]
+            # print D_Influx_to_Resr
+            # print D_EvaporReservoir
+            D_SubCResOutflow = calculate.outflow_constrain(D_SubCResOutflow, D_SubcResVol[time],
+                                                           D_Influx_to_Resr - D_EvaporReservoir, True, 1)
+
             D_TotalStreamInflow = (
                 D_SurfaceFlow +
                 np.multiply(
@@ -1476,24 +1514,33 @@ class SimulatingThread(QtCore.QThread):
                 np.sum(D_SoilDischarge, axis=1).reshape(subcatchment, 1) +
                 np.multiply(D_SubCResOutflow,
                             (1 - isI_DaminThisStream)))
-            # print np.around(D_GWaDisch, decimals=2)
-            # print np.around(D_TotalStreamInflow, decimals=2)
-            # print D_RoutingTime.shape, isD_FeedingIntoLake.shape, D_TotalStreamInflow.shape, I_ReleaseFrac.shape
             D_RivLakeSameDay = np.multiply(
                 D_RoutingTime >= 0,
                 np.multiply(D_RoutingTime < 1,
                             np.multiply(isD_FeedingIntoLake,
                                         np.multiply(D_TotalStreamInflow,
                                                     I_ReleaseFrac))))
-            # print np.around(D_RivLakeSameDay, decimals=2)
             D_RivInflLake = np.multiply(
                 np.multiply(
                     I_ReleaseFrac[:, constants.Inflowlake].reshape(subcatchment, 1),
                     D_TotRiverFlowNoDelay[time][:, constants.Inflowlake].reshape(subcatchment, 1)),
                 isD_FeedingIntoLake)
-            # print np.around(D_TotRiverFlowNoDelay[time], decimals=2)
-            D_RivInflLake = np.repeat(D_RivInflLake, 8).reshape(subcatchment,
-                                                                obsPoint)
+            D_DirectSurfFkowObsPoint = np.multiply(
+                np.multiply(D_RoutingTime >= 0, D_RoutingTime < 1),
+                np.multiply(D_TotalStreamInflow, (1 - I_ReleaseFrac)))
+            D_DirectSurfFkowObsPoint = calculate.inflow_constrain(D_DirectSurfFkowObsPoint)
+
+            D_RiverDelay = np.multiply(
+                I_ReleaseFrac,
+                np.multiply(D_TotRiverFlowNoDelay[time],
+                            (1 - isD_FeedingIntoLake))
+            )
+            D_RiverDelay = calculate.outflow_constrain(D_RiverDelay, D_TotRiverFlowNoDelay[time],
+                                                       D_SurfFlowRiver[time] + D_DirectSurfFkowObsPoint, True, 1)
+
+            D_RivInflLake = np.multiply(np.ones(shape=(subcatchment, obsPoint)), D_RivInflLake)
+            D_RivInflLake = calculate.outflow_constrain(D_RivInflLake, D_TotRiverFlowNoDelay[time], D_DirectSurfFkowObsPoint + D_SurfFlowRiver[time] - D_RiverDelay)
+
             D_RiverFlowtoLake = (
                 np_utils.array_sum(
                     D_RivLakeSameDay,
@@ -1502,12 +1549,16 @@ class SimulatingThread(QtCore.QThread):
                     D_RivInflLake,
                     shape=(1, obsPoint))[0][constants.Inflowlake]
             )
+            D_RiverFlowtoLake = calculate.inflow_constrain(D_RiverFlowtoLake)
+
             O_RivInflLake = (
                 D_RivInflLake[:, constants.Inflowlake].reshape(
                     subcatchment,
                     1
                 )
             )
+
+
             O_RivLakeSameDay = (
                 D_RivLakeSameDay[:, constants.Inflowlake].reshape(
                     subcatchment,
@@ -1516,28 +1567,31 @@ class SimulatingThread(QtCore.QThread):
             )
             O_RiverFlowtoLake = O_RivInflLake + O_RivLakeSameDay
             D_GWLakeSub = np.multiply(D_FracGWtoLake, D_GWaDisch)
+
             D_GWtoLake = np_utils.array_sum(D_GWLakeSub)
+            D_GWtoLake = calculate.inflow_constrain(D_GWtoLake)
+
             D_RestartL = isO_Reset * D_CumInflowtoLake[time] / dt
+            D_RestartL = calculate.biflow_constrain(D_RestartL, D_CumInflowtoLake[time] + D_RiverFlowtoLake + D_GWtoLake, True)
+
             # D_TotalStreamInflow = (
             #     (D_SurfaceFlow +
             #      np.multiply(D_GWaDisch, (1 - D_FracGWtoLake)) +
             #      np_utils.array_sum(D_SoilDischarge, shape=(subcatchment, 1))) +
             #     np.multiply(D_SubCResOutflow, (1 - isI_DaminThisStream)))
-            D_DirectSurfFkowObsPoint = np.multiply(
-                np.multiply(D_RoutingTime >= 0, D_RoutingTime < 1),
-                np.multiply(D_TotalStreamInflow, (1 - I_ReleaseFrac)))
+
+
             D_RiverDirect = np.multiply(
                 np.multiply(D_RoutingTime > 0, D_RoutingTime < 1),
                 np.multiply((1 - isD_FeedingIntoLake),
                             np.multiply(D_TotalStreamInflow, I_ReleaseFrac)))
-            # print np.around(D_RiverDirect, decimals=2)
-            D_RivInfLake = np.multiply(
-                np.multiply(I_ReleaseFrac, D_TotRiverFlowNoDelay[time]),
-                isD_FeedingIntoLake)
+            D_RiverDirect = calculate.inflow_constrain(D_RiverDirect)
+
+            # D_RivInfLake = np.multiply(
+            #     np.multiply(I_ReleaseFrac, D_TotRiverFlowNoDelay[time]),
+            #     isD_FeedingIntoLake)
             SurFlowRiverTransitTime = np.around(np.add(np.multiply(D_RoutingTime >= 1, D_RoutingTime), np.multiply(D_RoutingTime <1, 1)))
-            # print SurFlowRiverTransitTime
-            # D_SurfFlowRiver = np.multiply(D_RoutingTime > 1, D_RoutingTime)
-            # print np.around(D_SurfFlowRiver[time], decimals=2)
+
             D_CurrRivVol = (
             np.sum(
                 D_StreamsSurfQ[time],
@@ -1547,36 +1601,28 @@ class SimulatingThread(QtCore.QThread):
                 D_TotRiverFlowNoDelay[time],
                 axis=0)[0]
             )
-            # print D_CurrRivVol
             D_RestartR = np.multiply(isO_Reset, D_CumTotRiverFlow[time]) / dt
-            D_RiverDelay = np.multiply(
-                I_ReleaseFrac,
-                np.multiply(D_TotRiverFlowNoDelay[time],
-                            (1 - isD_FeedingIntoLake))
-            )
-            # print D_RiverDelay
+            D_RestartR = calculate.biflow_constrain(D_RestartR, D_CumTotRiverFlow[time] + D_RiverDelay + D_RiverDirect,
+                                                    True)
+
             D_SurfFlowObsPoint = np.multiply(D_RoutingTime >= 1,
                                              D_TotalStreamInflow)
-            # print np.around(D_SurfFlowObsPoint, decimals=2)
+            D_SurfFlowObsPoint = calculate.inflow_constrain(D_SurfFlowObsPoint)
 
             L_LakeTransDef = np.multiply(isL_Lake, I_PotEvapTransp[constants.AF_Kelapa] - D_ActEvapTransp[constants.AF_Kelapa])
             L_LakeArea = np.multiply(isL_Lake,
                                      I_RelArea,
                                      out=np.zeros_like(isL_Lake),
                                      where=isL_Lake != 1)
-            # print L_LakeArea
             L_LakeLevel =  (
                 L_LakeVol[time] /
                 (1000 * np.sum(L_LakeArea)) + L_LakeBottomElev
             ) if (np.sum(L_LakeArea) > 0) else 0
 
-            # print L_LakeLevel
-
             L_Lakelevelexcess = (
                 L_LakeLevel -
                 (1 - isL_HEPP_Active) * L_LakeElevPreHEPP -
                 isL_HEPP_Active * L_LakeOverFlPostHEPP)
-            # print L_LakeLevel, L_Lakelevelexcess
 
             L_HEPP_Daily_Dem = L_QmecsHEPP * 3600 * 24 / I_TotalArea * 10 ** -3
 
@@ -1589,17 +1635,19 @@ class SimulatingThread(QtCore.QThread):
                         (L_LakeLevel - L_LakeLevelHalfHEPP) /
                         (L_LakeLevelFullHEPP - L_LakeLevelHalfHEPP)))
                 if L_LakeLevel > L_LakeLevelNoHEPP else 0)
-            # print L_HEPP_Outflow
             L_HEPPWatUseFlow = L_HEPP_Outflow if isL_HEPP_Active == 1 else 0
             L_HEPP_Kwh = 1000 * I_TotalArea * L_HEPPWatUseFlow / L_m3_per_kwh
 
-            L_HEPP_OpTimeRel = (
-            (L_CumHEPPUse[time] / L_HEPP_Daily_Dem) / I_Simulation_Time
-            if I_Simulation_Time > 0 and isI_WarmEdUp[time] == 1
-            else 0)
+            # L_HEPP_OpTimeRel = (
+            # (L_CumHEPPUse[time] / L_HEPP_Daily_Dem) / I_Simulation_Time
+            # if I_Simulation_Time > 0 and isI_WarmEdUp[time] == 1
+            # else 0)
+
+            L_InFlowtoLake = D_RiverFlowtoLake + D_GWtoLake
+
             L_EvapLake = min(np.sum(L_LakeTransDef),
                              L_LakeVol[time]) * L_LakeTranspMultiplier
-            # print L_EvapLake
+            L_EvapLake = calculate.outflow_constrain(L_EvapLake, L_LakeVol[time], L_InFlowtoLake, True, 1)
             L_SanitaryFlow = L_QmecsSanFlow * 3600 * 24 / I_TotalArea * 10 ** -3
             L_OutflTrVolPreHEPP = 1000 * (
                 L_LakeElevPreHEPP -
@@ -1607,88 +1655,77 @@ class SimulatingThread(QtCore.QThread):
             L_OutflTrVoPostHEPP = 1000 * (
                 L_LakeOverFlPostHEPP -
                 L_LakeBottomElev) * np.sum(L_LakeArea)
-            L_InFlowtoLake = D_RiverFlowtoLake + D_GWtoLake
-            # print L_InFlowtoLake
             L_RivOutFlow = max(isL_HEPP_Active * L_SanitaryFlow,
-                           min(L_LakeVol[time] - L_EvapLake - L_HEPPWatUseFlow + L_InFlowtoLake,
                                (L_LakeVol[time] -
                                 L_OutflTrVoPostHEPP * isL_HEPP_Active -
                                 L_OutflTrVolPreHEPP * (1 - isL_HEPP_Active)) * (
                                L_LakeOverFlowFrac) * (
-                                   1 + L_Lakelevelexcess ** L_LakeOverFlPow)))
-            # print L_RivOutFlow, L_LakeVol[time]
-
-            # Total river flow -> Output in subcatchment
+                                   1 + L_Lakelevelexcess ** L_LakeOverFlPow))
+            L_RivOutFlow = calculate.outflow_constrain(L_RivOutFlow, L_LakeVol[time], L_InFlowtoLake - L_EvapLake)
             O_InFlowtoLake = O_RiverFlowtoLake + D_GWLakeSub
-            # print L_CumRivOutFlow[time], L_RivOutFlow
             L_RestartR = isO_Reset * L_CumRivOutFlow[time] / dt
             L_RestartH = isO_Reset * L_CumHEPPUse[time]
             L_RestartE = isO_Reset * L_CumEvapLake[time] / dt
             O_TotStreamFlow = (O_CumBaseFlow[time] +
                                O_CumSoilQFlow[time] +
                                O_CumSurfQFlow[time])
-            # print O_TotStreamFlow
             D_DeltaStockRiver = D_InitRivVol[time] - D_CurrRivVol
-            # print D_DeltaStockRiver
-            D_SurfaceFlowAcc = np.sum(D_SurfaceFlow)
+            # D_SurfaceFlowAcc = np.sum(D_SurfaceFlow)
             O_DeltaGWStock = O_InitGWStock[time] - np.sum(D_GWArea[time])
             # print O_DeltaGWStock
             O_DeltaSoilWStock = O_InitSoilW[time] - np.sum(D_SoilWater[time])
             # print O_InitSoilW[time]
-            O_ChkAllCatchmAccFor = (-O_CumRain[time] +
-                                    O_CumIntercE[time] +
-                                    O_CumTransp[time] +
-                                    O_TotStreamFlow -
-                                    O_DeltaGWStock -
-                                    O_DeltaSoilWStock)
+            # O_ChkAllCatchmAccFor = (-O_CumRain[time] +
+            #                         O_CumIntercE[time] +
+            #                         O_CumTransp[time] +
+            #                         O_TotStreamFlow -
+            #                         O_DeltaGWStock -
+            #                         O_DeltaSoilWStock)
             O_DeltaStockLake = D_InitLakeVol[time] - L_LakeVol[time]
-            # print O_DeltaStockLake
-            O_ChkAllLakeAccFor = (D_CumInflowtoLake[time] -
-                                  L_CumEvapLake[time] -
-                                  L_CumRivOutFlow[time] -
-                                  L_CumHEPPUse[time] +
-                                  O_DeltaStockLake)
+            # O_ChkAllLakeAccFor = (D_CumInflowtoLake[time] -
+            #                       L_CumEvapLake[time] -
+            #                       L_CumRivOutFlow[time] -
+            #                       L_CumHEPPUse[time] +
+            #                       O_DeltaStockLake)
             D_CumTotRiverFlowAll = np.sum(D_CumTotRiverFlow[time], axis=1)[0]
-            O_ChkAllRiverAccFor = (O_TotStreamFlow -
-                                   D_CumTotRiverFlowAll -
-                                   D_CumInflowtoLake[time] +
-                                   D_DeltaStockRiver)
-            O_DailyRainSubCtm = np_utils.array_sum(I_DailyRainAmount, shape=(subcatchment, 1))
+            # O_ChkAllRiverAccFor = (O_TotStreamFlow -
+            #                        D_CumTotRiverFlowAll -
+            #                        D_CumInflowtoLake[time] +
+            #                        D_DeltaStockRiver)
+            # O_DailyRainSubCtm = np_utils.array_sum(I_DailyRainAmount, shape=(subcatchment, 1))
             O_FrBaseFlow = (O_CumBaseFlow[time] / O_TotStreamFlow
                             if O_TotStreamFlow > 0
                             else 0)
-            # print D_CumTotRiverFlowAll, O_FrBaseFlow
-            O_FrSoilQuickFlow = (O_CumSoilQFlow[time] / O_TotStreamFlow
-                                 if O_TotStreamFlow > 0
-                                 else 0)
-            O_FrSurfQuickFlow = (O_CumSurfQFlow[time] / O_TotStreamFlow
-                                 if O_TotStreamFlow else 0)
+            # O_FrSoilQuickFlow = (O_CumSoilQFlow[time] / O_TotStreamFlow
+            #                      if O_TotStreamFlow > 0
+            #                      else 0)
+            # O_FrSurfQuickFlow = (O_CumSurfQFlow[time] / O_TotStreamFlow
+            #                      if O_TotStreamFlow else 0)
             O_RainYesterday = O_RainYest[time] * I_WarmedUp
-            O_RainHalfDelayed = (np_utils.array_sum(O_RainYesterday) +
-                                 np_utils.array_sum(I_DailyRainAmount)) / 2
+            # O_RainHalfDelayed = (np_utils.array_sum(O_RainYesterday) +
+            #                      np_utils.array_sum(I_DailyRainAmount)) / 2
             O_RelWatAvVegSubc = np.multiply(D_RelWaterAv, I_FracVegClassNow)
-            # print np.around(O_RelWatAvVegSubc.transpose(), decimals=2)
             O_RelWatAv_Subc = np.divide(
                 np.mean(O_RelWatAvVegSubc, axis=1).reshape(subcatchment, 1),
                 np.sum(I_FracVegClassNow, axis=1).reshape(subcatchment, 1),
                 out=np.ones(shape=(subcatchment, 1)),
                 where=np.sum(I_FracVegClassNow, axis=1).reshape(subcatchment, 1) > 0)
-            # print O_RelWatAv_Subc
-            O_RelWatAv_Overall = np_utils.array_mean(O_RelWatAv_Subc)
-            O_Rel_ET_Subc = np.divide(
-                D_InterceptEvap +
-                D_ActEvapTransp,
-                I_PotEvapTransp,
-                out=np.zeros_like(I_PotEvapTransp),
-                where=I_PotEvapTransp != 0)
+            # O_RelWatAv_Overall = np_utils.array_mean(O_RelWatAv_Subc)
+            # O_Rel_ET_Subc = np.divide(
+            #     D_InterceptEvap +
+            #     D_ActEvapTransp,
+            #     I_PotEvapTransp,
+            #     out=np.zeros_like(I_PotEvapTransp),
+            #     where=I_PotEvapTransp != 0)
             # O_Reset = 1 if I_WarmedUp == 1 or I_WUcorrection == 1 else 0
             # S_RainAtSoilSurface = I_DailyRainAmount - D_InterceptEvap
 
             O_InitLake = isO_Reset * (L_LakeVol[time] - D_InitLakeVol[time])
+            O_InitLake = calculate.biflow_constrain(O_InitLake, D_InitLakeVol[time], True)
             O_InitRiv = isO_Reset * (D_CurrRivVol - D_InitLakeVol[time])
-            # print D_InitLakeVol[time]
+            O_InitRiv = calculate.biflow_constrain(O_InitRiv, D_InitRivVol[time], True)
             O_BaseFlowAcc = np.sum(D_GWaDisch) * I_WarmedUp
-            # print O_BaseFlowAcc
+            O_BaseFlowAcc = calculate.inflow_constrain(O_BaseFlowAcc)
             # O_CumDeepInfAcc = np_utils.array_sum(D_DeepInfiltration) * I_WarmedUp
             O_EvapoTransAcc = (np.sum(I_PotEvapTransp) > 0) * (np.sum(D_ActEvapTransp) + np.sum(D_InterceptEvap)) * I_WarmedUp
             # O_InfAcc = np_utils.array_sum(D_Infiltration) * I_WarmedUp
@@ -1696,11 +1733,8 @@ class SimulatingThread(QtCore.QThread):
             O_PercAcc = np.sum(D_Percolation) * I_WarmedUp
 
             O_RainAcc = np.sum(I_DailyRainAmount) * I_WarmedUp
-            # print O_EvapoTransAcc, O_AccET, O_PercAcc, O_RainAcc
-
             # O_CumSoilQFlowAcc = np.sum(D_SoilDischarge) * I_WarmedUp
             O_SurfQFlowAcc = np.sum(D_SurfaceFlow) * I_WarmedUp
-            # print O_SurfQFlowAcc
 
             O_TranspAcc = np.sum(D_ActEvapTransp) * I_WarmedUp
             O_InitGW = isO_Reset * (
@@ -1747,133 +1781,87 @@ class SimulatingThread(QtCore.QThread):
                  O_InitSWMP[time] -
                  O_Ch_inWStock[time])
             )
-            O_BaseFlowAccMP = (I_Simulation_Time >= O_StartMDay and I_Simulation_Time < O_EndMDay and isI_StillWarmUp == 0) * np.sum(D_GWaDisch)
 
-            O_DebitDataAccMP = (I_Simulation_Time >= O_StartMDay and I_Simulation_Time < O_EndMDay and isI_StillWarmUp == 0) * I_RFlowdata_mmday        # print 'D_RiverFlowtoLake', D_RiverFlowtoLake
-            O_DebitPredAccMP = (I_Simulation_Time >= O_StartMDay and I_Simulation_Time < O_EndMDay and isI_StillWarmUp == 0) * D_RiverFlowtoLake
+            inMDay = np.multiply(I_Simulation_Time >= O_StartMDay, I_Simulation_Time < O_EndMDay)
+            inMDayStillWarmUp = np.multiply(I_Simulation_Time >= O_StartMDay, np.multiply(I_Simulation_Time < O_EndMDay, isI_StillWarmUp == 0))
 
-            O_EvapLakeMP = (I_Simulation_Time >= O_StartMDay and I_Simulation_Time < O_EndMDay and isI_StillWarmUp == 0) * L_EvapLake
+            O_BaseFlowAccMP = inMDayStillWarmUp * np.sum(D_GWaDisch)
 
-            O_Ch_in_EvapoTrans = (I_Simulation_Time >= O_StartMDay and I_Simulation_Time < O_EndMDay and isI_StillWarmUp == 0) * (np.sum(D_CumEvapTranspClass) - O_InitEvapoMP[time] - O_CumEvapTransMP[time])
+            O_DebitDataAccMP = inMDayStillWarmUp * I_RFlowdata_mmday        # print 'D_RiverFlowtoLake', D_RiverFlowtoLake
+            O_DebitPredAccMP = inMDayStillWarmUp * D_RiverFlowtoLake
 
-            O_GWAccMP = np.multiply(
-                np_utils.array_sum(D_GWArea[time]),
-                np.multiply(time > O_StartMDay, time < O_EndMDay))
+            O_EvapLakeMP = inMDayStillWarmUp * L_EvapLake
 
-            O_HEPPOutFlowMP = np.multiply(
-                L_HEPPWatUseFlow,
-                np.multiply(time > O_StartMDay, time < O_EndMDay))
+            O_Ch_in_EvapoTrans = inMDayStillWarmUp * (np.sum(D_CumEvapTranspClass) - O_InitEvapoMP[time] - O_CumEvapTransMP[time])
 
-            O_InfAccMP = np.multiply(
-                np_utils.array_sum(D_Infiltration),
-                np.multiply(I_Simulation_Time >= O_StartMDay,
-                            np.multiply(I_Simulation_Time < O_EndMDay,
-                                        isI_StillWarmUp == 0)))
-            O_IntercAccMP = np.multiply(
-                np_utils.array_sum(D_InterceptEvap),
-                np.multiply(I_Simulation_Time >= O_StartMDay,
-                            np.multiply(I_Simulation_Time < O_EndMDay,
-                                        isI_StillWarmUp == 0)))
-            O_RainAccMP = np.multiply(
-                np_utils.array_sum(I_DailyRainAmount),
-                np.multiply(I_Simulation_Time >= O_StartMDay,
-                            np.multiply(I_Simulation_Time < O_EndMDay,
-                                        isI_StillWarmUp == 0)))
-            O_RivInflowtoLakeMP = np.multiply(
-                L_InFlowtoLake,
-                np.multiply(I_Simulation_Time >= O_StartMDay,
-                            np.multiply(I_Simulation_Time < O_EndMDay,
-                                        isI_StillWarmUp == 0)))
-            O_RivOutFlowMP = np.multiply(
-                L_RivOutFlow,
-                np.multiply(I_Simulation_Time >= O_StartMDay,
-                            np.multiply(I_Simulation_Time < O_EndMDay,
-                                        isI_StillWarmUp == 0)))
-            O_SoilQFlowAccMP = np.multiply(
-                np_utils.array_sum(D_SoilDischarge),
-                np.multiply(I_Simulation_Time >= O_StartMDay,
-                            np.multiply(I_Simulation_Time < O_EndMDay,
-                                        isI_StillWarmUp == 0)))
-            O_SoilWAccMP = np.multiply(
-                np_utils.array_sum(D_SoilWater[time]),
-                np.multiply(I_Simulation_Time >= O_StartMDay,
-                            np.multiply(I_Simulation_Time < O_EndMDay,
-                                        isI_StillWarmUp == 0)))
-            O_SurfQFlowAccMP = np.multiply(
-                np_utils.array_sum(D_SurfaceFlow),
-                np.multiply(I_Simulation_Time >= O_StartMDay,
-                            np.multiply(I_Simulation_Time < O_EndMDay,
-                                        isI_StillWarmUp == 0)))
-            O_TranspAccMP = np.multiply(
-                np_utils.array_sum(D_ActEvapTransp),
-                np.multiply(I_Simulation_Time >= O_StartMDay,
-                            np.multiply(I_Simulation_Time < O_EndMDay,
-                                        isI_StillWarmUp == 0)))
-            O_Ch_in_CatchmStMP = np.multiply(
+            O_GWAccMP = inMDay * np.sum(D_GWArea[time])
+
+            O_HEPPOutFlowMP = inMDay * L_HEPPWatUseFlow
+
+            O_InfAccMP = inMDayStillWarmUp * np.sum(D_Infiltration)
+
+            O_IntercAccMP = inMDayStillWarmUp * np.sum(D_InterceptEvap)
+
+            O_RainAccMP = inMDayStillWarmUp * np.sum(I_DailyRainAmount)
+            O_RivInflowtoLakeMP = inMDayStillWarmUp * L_InFlowtoLake
+            O_RivOutFlowMP = inMDayStillWarmUp * L_RivOutFlow
+            O_SoilQFlowAccMP = inMDayStillWarmUp * np.sum(D_SoilDischarge)
+            O_SoilWAccMP = inMDayStillWarmUp * np.sum(D_SoilWater[time])
+            O_SurfQFlowAccMP = inMDayStillWarmUp * np.sum(D_SurfaceFlow)
+            O_TranspAccMP = inMDayStillWarmUp * np_utils.array_sum(D_ActEvapTransp)
+            O_Ch_in_CatchmStMP = inMDay * (
                 O_Ch_inGWStock[time] +
                 O_Ch_in_GWStockMP +
                 O_Ch_inWStock[time] +
                 O_Ch_in_WStockMP -
-                O_DeltaCatchmStMP[time],
-                np.multiply(time > O_StartMDay, time < O_EndMDay + 1))
+                O_DeltaCatchmStMP[time])
 
-            O_Hepp_ElctrProd = np.multiply(
-                L_HEPP_Kwh / (O_EndMDay - O_StartMDay),
-                np.multiply(I_Simulation_Time >= O_StartMDay,
-                            np.multiply(I_Simulation_Time < O_EndMDay,
-                                        isI_StillWarmUp == 0)))
+            O_Hepp_ElctrProd = inMDayStillWarmUp * (
+                L_HEPP_Kwh / (O_EndMDay - O_StartMDay))
             # print 'O_Hepp_ElctrProd', O_Hepp_ElctrProd.shape
-            O_Ch_EvapoTran = np.multiply(np_utils.array_sum(D_CumEvapTranspClass),
-                                         time == O_StartMDay)
-            O_ChGWMP = np.multiply(
-                np_utils.array_sum(D_GWArea[time]),
-                time == O_StartMDay
-            )
-            O_ChSoilWMP = np.multiply(np_utils.array_sum(D_SoilWater[time]),
-                                      time == O_StartMDay)
-            O_ChSoilWMP = np.multiply(np_utils.array_sum(D_SoilWater[time]),
-                                      time == O_StartMDay)
-            O_HeppUseF1 = Yearly_Tick * O_ThisYHepp[time]
+            O_Ch_EvapoTran = np.sum(D_CumEvapTranspClass) * (time == O_StartMDay)
+            O_ChGWMP = np.sum(D_GWArea[time]) *(time == O_StartMDay)
+            # O_ChSoilWMP = np.sum(D_SoilWater[time]) * (time == O_StartMDay)
+            O_ChSoilWMP = np.sum(D_SoilWater[time]) * (time == O_StartMDay)
+            # O_HeppUseF1 = Yearly_Tick * O_ThisYHepp[time]
             O_HeppUseF2 = Yearly_Tick * O_LastYHepp[time]
             O_HeppUseF0 = Yearly_Tick * L_CumHEPPUse[time]
             O_HeppUseF1 = Yearly_Tick * O_ThisYHepp[time]
-            O_CumET_LandMP = O_CumIntercEvapMP + O_CumTranspMP
-            O_CurrentETall = np_utils.array_sum(D_ActEvapTransp)
+            # O_CumET_LandMP = O_CumIntercEvapMP + O_CumTranspMP
+            # O_CurrentETall = np.sum(D_ActEvapTransp)
             O_WYP = (- O_WorstYHEPP[time] + O_LastYearHEPP
                      if 0 < O_LastYearHEPP < O_WorstYHEPP[time]
                      else 0)
-            O_CumET_LandMP = O_CumIntercEvapMP + O_CumTranspMP
-            O_CurrentETall = np_utils.array_sum(D_ActEvapTransp)
-            O_RelOpTimeHEPPMP = ((O_CumHEPPOutFlowMP[time] /
-                                  L_HEPP_Daily_Dem) /
-                                 (O_EndMDay - O_StartMDay))
-            O_SoilWaterTot = np_utils.array_sum(D_SoilWater[time])
-            O_DeepInfAcc = np_utils.array_sum(
+            # O_CumET_LandMP = O_CumIntercEvapMP + O_CumTranspMP
+            # O_CurrentETall = np_utils.array_sum(D_ActEvapTransp)
+            # O_RelOpTimeHEPPMP = ((O_CumHEPPOutFlowMP[time] /
+            #                       L_HEPP_Daily_Dem) /
+            #                      (O_EndMDay - O_StartMDay))
+            # O_SoilWaterTot = np.sum(D_SoilWater[time])
+            O_DeepInfAcc = np.sum(
                 D_DeepInfiltration
             ) * isI_WarmEdUp[time]
+            O_DeepInfAcc = calculate.inflow_constrain(O_DeepInfAcc)
 
             O_InfAcc = (
-                np_utils.array_sum(D_Infiltration) * isI_WarmEdUp[time]
+                np.sum(D_Infiltration) * isI_WarmEdUp[time]
             )
+            O_InfAcc = calculate.inflow_constrain(O_InfAcc)
+
             O_IntercAcc = (
-                np_utils.array_sum(D_InterceptEvap) * isI_WarmEdUp[time]
+                np.sum(D_InterceptEvap) * isI_WarmEdUp[time]
             )
 
             O_SoilQFlowAcc = (
-                np_utils.array_sum(D_SoilDischarge) * isI_WarmEdUp[time]
+                np.sum(D_SoilDischarge) * isI_WarmEdUp[time]
             )
 
-            O_SoilQflow_Subca = np_utils.array_sum(
+            O_SoilQflow_Subca = np.sum(
                 D_SoilDischarge,
-                shape=(subcatchment, 1)
-            )
-            D_EvaporReservoir = I_Evapotrans[I_MoY % 12] * np_utils.array_sum(isL_Lake)
-            D_Influx_to_Resr = np.multiply(
-                isI_DaminThisStream == 1,
-                (D_GWaDisch +
-                 np_utils.array_sum(D_SoilDischarge, shape=(subcatchment, 1))
-                 + D_SurfaceFlow)
-            )
+                axis=1
+            ).reshape(subcatchment, 1)
+
+
 
             calculate.update(
                 C_StockingRate,

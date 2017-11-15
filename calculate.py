@@ -1,6 +1,23 @@
 import numpy as np
 
 
+def inflow_constrain(inflow):
+    return np.multiply(inflow > 0, inflow)
+
+
+def biflow_constrain(biflow, stock, non_negative):
+    if not non_negative:
+        return biflow
+    else:
+        return np.add(np.multiply(biflow > 0, biflow), np.multiply(biflow < 0, np.minimum(-biflow, stock)))
+
+
+def outflow_constrain(outflow=0, stock=0, inflow=0, non_negative=True, dt=1):
+    if not non_negative:
+        return outflow
+    else:
+        return np.multiply(outflow > 0, np.minimum(outflow, np.add(stock, inflow * dt)))
+
 def update(stock, inflow=0, outflow=0, dt=1, non_negative=True):
     value = np.add(stock[-1], (inflow - outflow) * dt)
     if non_negative:
