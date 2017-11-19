@@ -1352,7 +1352,7 @@ class SimulatingThread(QtCore.QThread):
             D_Percolation = calculate.outflow_constrain(D_Percolation, D_SoilWater[time], D_Infiltration, True, 1)
 
             D_DeepInfiltration = np.multiply(
-                isL_Lake == 1,
+                isL_Lake == 0,
                 np.minimum(
                     np.minimum(
                         np.minimum(
@@ -2318,7 +2318,7 @@ class SimulatingThread(QtCore.QThread):
 
             # self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumRain'].append(O_CumRain[time])
             # self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumPercolation'].append(O_CumPercolation[time])
-            # Need check self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumDeepInfilt'].append(O_CumDeepInfilt[time])
+            self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumDeepInfilt'].append(O_CumDeepInfilt[time])
             # Need check self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumBaseFlow'].append(O_CumBaseFlow[time])
             # self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumSoilQFlow'].append(O_CumSoilQFlow[time])
             # print O_CumPercolation[time]

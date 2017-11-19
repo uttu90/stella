@@ -28,8 +28,8 @@
           <file leaf-file-name="model.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/model.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="143">
-                  <caret line="1359" column="30" lean-forward="false" selection-start-line="1359" selection-start-column="30" selection-end-line="1359" selection-end-column="30" />
+                <state relative-caret-position="256">
+                  <caret line="2320" column="48" lean-forward="false" selection-start-line="2320" selection-start-column="48" selection-end-line="2320" selection-end-column="48" />
                   <folding>
                     <element signature="e#0#24#0" expanded="true" />
                   </folding>
@@ -120,8 +120,8 @@
           <file leaf-file-name="Equations.TXT" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Equations.TXT">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="142">
-                  <caret line="190" column="49" lean-forward="false" selection-start-line="190" selection-start-column="33" selection-end-line="190" selection-end-column="49" />
+                <state relative-caret-position="125">
+                  <caret line="1549" column="18" lean-forward="false" selection-start-line="1549" selection-start-column="0" selection-end-line="1549" selection-end-column="18" />
                   <folding />
                 </state>
               </provider>
@@ -643,7 +643,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1" y="1" width="1364" height="726" extended-state="1" />
+    <frame x="1" y="1" width="1364" height="726" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18991098" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1068,14 +1068,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Equations.TXT">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="190" column="49" lean-forward="false" selection-start-line="190" selection-start-column="33" selection-end-line="190" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/uis/output_timeseries.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="265">
@@ -1086,10 +1078,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Equations.TXT">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="1549" column="18" lean-forward="false" selection-start-line="1549" selection-start-column="0" selection-end-line="1549" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="1359" column="30" lean-forward="false" selection-start-line="1359" selection-start-column="30" selection-end-line="1359" selection-end-column="30" />
+        <state relative-caret-position="256">
+          <caret line="2320" column="48" lean-forward="false" selection-start-line="2320" selection-start-column="48" selection-end-line="2320" selection-end-column="48" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>
