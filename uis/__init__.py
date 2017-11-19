@@ -129,7 +129,7 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
         for time_result in ouputTimeSeries:
             self.output['timeseries'][time_result] = []
         self.actionStop.setEnabled(False)
-        self.actionPause.setEnabled(False)
+        self.totalTime = self.parameters['Run_Specs']['runto']
         # self.outputTimeseries = output_timeseries.OutputTimeseries()
 
     def actionDiaglog(self, diaglog):
@@ -232,9 +232,7 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
         self.outputTimeseries = output_timeseries.OutputTimeseries(
             outputFolder = self.parameters['Run_Specs']['outputFolder']
         )
-        self.actionPause.setChecked(False)
         self.actionStop.setEnabled(True)
-        self.actionPause.setEnabled(True)
         self.actionRun.setEnabled(False)
         self.actionStop.triggered.connect(self.onActionStop)
         self.simulation.start()
@@ -242,16 +240,17 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
     def onActionStop(self):
         self.actionRun.setChecked(False)
         self.actionRun.setEnabled(True)
-        self.actionPause.setChecked(False)
         self.simulation.stop()
 
     def update_result(self, output, time):
         self.periodUpdate = int(self.parameters['Run_Specs']['outputUpdate'])
+        simulationTime = int(self.parameters['Run_Specs']['runto'])
+        self.simulatingTime.setText(str(simulationTime))
+        self.simulatingProgress.setValue(int((time + 1) * 100 / simulationTime))
+        self.outputTimeseries.update_display(output['timeseries'], time)
         if time % self.periodUpdate == 0:
             if hasattr(self, 'outputMap'):
-                self.outputMap.update_display(output['map'], time, not self.actionPause.isChecked())
-            if hasattr(self, 'outputTimeseries'):
-                self.outputTimeseries.update_display(output['timeseries'], time, not self.actionPause.isChecked())
+                self.outputMap.update_display(output['map'], time)
 
     def get_parameter_cb(self, diaglog):
         diaglog_name = str(diaglog.objectName())

@@ -88,7 +88,6 @@ class OutputMap(
         self.timer.timeout.connect(self._timer_timeout)
         if self.autoUpdate:
             self.timer.start(3000)
-        self.pausingTime = 0
         self.landcoverDialog = landcover_info.LandcoverInfo()
         self.landcoverColors = self.landcoverDialog.colorResult
         self.landcoverCMaps = colorsmap.ListedColormap(self.landcoverColors)
@@ -108,14 +107,12 @@ class OutputMap(
         self.currentTime = (self.currentTime + 1
                             if self.currentTime < len(self.updateQueue) - 1
                             else self.currentTime)
-        nextTime, data = self.updateQueue[self.currentTime]
-        if not self.playingState and not nextTime < self.pausingTime:
-            self.nextBtn.setEnabled(False)
+        # nextTime, data = self.updateQueue[self.currentTime]
         self.display_selected_maps()
 
     def _back(self):
         self.currentTime = self.currentTime - 1 if self.currentTime > 0 else 0
-        self.nextBtn.setEnabled(True)
+        # self.nextBtn.setEnabled(True)
         self.display_selected_maps()
 
     def _trigger_timer(self):
@@ -197,9 +194,7 @@ class OutputMap(
         vbox.addWidget(self.mpl_toolbar)
         self.main_frame.setLayout(vbox)
 
-    def update_display(self, output, time, playingState):
-        self.playingState = playingState
-        self.checkBox.setEnabled(playingState)
+    def update_display(self, output, time):
         # self.nextBtn.setEnabled(playingState)
         # self.autoUpdate = playingState
         # if not playingState:

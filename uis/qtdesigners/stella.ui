@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>884</width>
-    <height>550</height>
+    <width>920</width>
+    <height>564</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,16 +18,96 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/background/genriver.png);</string>
+    <string notr="true"/>
    </property>
-   <layout class="QGridLayout" name="gridLayout"/>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QFrame" name="frame">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QGridLayout" name="gridLayout">
+         <property name="margin">
+          <number>0</number>
+         </property>
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item row="1" column="0" colspan="5">
+          <widget class="QWidget" name="widget" native="true">
+           <property name="styleSheet">
+            <string notr="true">border-image: url(:/background/genriver.png);</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="totalTime">
+           <property name="minimumSize">
+            <size>
+             <width>35</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="lineWidth">
+            <number>5</number>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>Total time: </string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QProgressBar" name="simulatingProgress">
+           <property name="value">
+            <number>24</number>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>simulating time: </string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QLabel" name="simulatingTime">
+           <property name="minimumSize">
+            <size>
+             <width>32</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>884</width>
+     <width>920</width>
      <height>21</height>
     </rect>
    </property>
@@ -71,7 +151,6 @@
      <string>SIMULATION</string>
     </property>
     <addaction name="actionRun"/>
-    <addaction name="actionPause"/>
     <addaction name="actionStop"/>
    </widget>
    <widget class="QMenu" name="menuLANGUAGE">
@@ -111,11 +190,11 @@
    <addaction name="actionLandcover_colors"/>
    <addaction name="separator"/>
    <addaction name="actionRun"/>
-   <addaction name="actionPause"/>
    <addaction name="actionStop"/>
    <addaction name="separator"/>
    <addaction name="actionTimeseries"/>
    <addaction name="actionMaps"/>
+   <addaction name="separator"/>
   </widget>
   <action name="actionRainfall">
    <property name="text">

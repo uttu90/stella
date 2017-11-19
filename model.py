@@ -32,8 +32,37 @@ class SimulatingThread(QtCore.QThread):
         # Display Water Balance
         self.output['timeseries']['display'] = {}
         self.output['timeseries']['display']['Water Balance'] = {}
-        self.output['timeseries']['display']['Water Balance']['I_RFlowdata_mmday'] = []
-        self.output['timeseries']['display']['Water Balance']['L_InFlowtoLake'] = []
+        self.output['timeseries']['display']['Water Balance']['Page 1'] = {}
+        self.output['timeseries']['display']['Water Balance']['Page 1']['I_RFlowdata_mmday'] = []
+        self.output['timeseries']['display']['Water Balance']['Page 1']['L_InFlowtoLake'] = []
+
+        self.output['timeseries']['display']['Water Balance']['Page 2'] = {}
+        self.output['timeseries']['display']['Water Balance']['Page 2']['O_RainAcc'] = []
+        self.output['timeseries']['display']['Water Balance']['Page 2']['O_IntercAcc'] = []
+        self.output['timeseries']['display']['Water Balance']['Page 2']['O_EvapoTransAcc'] = []
+        self.output['timeseries']['display']['Water Balance']['Page 2']['O_SurfQFlowAcc'] = []
+        self.output['timeseries']['display']['Water Balance']['Page 2']['O_InfAcc'] = []
+
+        self.output['timeseries']['display']['Water Balance']['Page 3'] = {}
+        self.output['timeseries']['display']['Water Balance']['Page 3']['O_RainAcc'] = []
+        self.output['timeseries']['display']['Water Balance']['Page 3']['O_DeepInfAcc'] = []
+        self.output['timeseries']['display']['Water Balance']['Page 3']['O_PercAcc'] = []
+        self.output['timeseries']['display']['Water Balance']['Page 3']['O_BaseFlowAcc'] = []
+        self.output['timeseries']['display']['Water Balance']['Page 3']['O_SoilQFlowAcc'] = []
+
+        self.output['timeseries']['display']['Water Balance']['Page 4'] = {}
+        self.output['timeseries']['display']['Water Balance']['Page 4']['O_CumRain'] = []
+        self.output['timeseries']['display']['Water Balance']['Page 4']['O_CumIntercepEvap'] = []
+        self.output['timeseries']['display']['Water Balance']['Page 4']['O_CumEvapotrans'] = []
+        self.output['timeseries']['display']['Water Balance']['Page 4']['O_CumSurfQFlow'] = []
+        self.output['timeseries']['display']['Water Balance']['Page 4']['O_CumInfiltration'] = []
+
+        self.output['timeseries']['display']['Water Balance']['Page 5'] = {}
+        self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumRain'] = []
+        self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumPercolation'] = []
+        self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumDeepInfilt'] = []
+        self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumBaseFlow'] = []
+        self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumSoilQFlow'] = []
 
         # Display HEPP
         self.output['timeseries']['display']['HEPP'] = {}
@@ -113,7 +142,7 @@ class SimulatingThread(QtCore.QThread):
     def run(self):
         run_specs = self.parameters['Run_Specs']
         begin = int(run_specs['runfrom'])
-        end = int(run_specs['runto'])
+        simulationTime = int(run_specs['runto'])
         dt = int(run_specs['rundt'])
         obsPoint = 8
         vegClass = 20
@@ -122,7 +151,7 @@ class SimulatingThread(QtCore.QThread):
         print self.stopped
         self.stopped = False
         initial_run = self.parameters['Initial_Run']
-        simulationTime = int(initial_run['simulationTime'])
+        # simulationTime = int(initial_run['simulationTime'])
         I_StartMYear = [
             int(initial_run['I_StartMYear_1']),
             int(initial_run['I_StartMYear_2']),
@@ -1072,7 +1101,7 @@ class SimulatingThread(QtCore.QThread):
         L_m3_per_kwh = 1.584
         L_LakeTranspMultiplier = 1
         isI_SubcContr = np.ones(shape=(subcatchment, 1))
-        simulationTime = 100
+        # simulationTime = 100
         RainNormal = np.random.normal(1, I_Rain_IntensCoefVar, simulationTime)
         G_GrassFract_Biomass = np.array([0.2, 0.1, 0.05, 0.001, 0.4, 0.2, 0.1, 0.01, 0.3, 0.1, 0.2, 1, 1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]).reshape(vegClass, 1)
 
@@ -1083,13 +1112,14 @@ class SimulatingThread(QtCore.QThread):
         while time < int(simulationTime) and not self.stopped:
             RainNormal[time]
             print time
+            I_Warmedup = 1 if time >= int(I_WarmUpTime) else 0
             I_Simulation_Time = int(
                 time +
                 I_CaDOYStart +
                 365 * I_RainYearStart -
-                isI_WarmEdUp[time] * (I_WarmUpTime + 1))
+                I_Warmedup * (I_WarmUpTime + 1))
             Simulation_Time = time % 1460
-            I_Warmedup = 1 if time == int(I_WarmUpTime) else 0
+            # I_Warmedup = 1 if time >= int(I_WarmUpTime) else 0
             I_RainDoY = (I_Simulation_Time
                          if (isI_RainCycle == 0)
                          else 1 + I_Simulation_Time % 365)
@@ -1112,7 +1142,8 @@ class SimulatingThread(QtCore.QThread):
             # I_RainDuration=1
             # print np.around(I_RainDuration, decimals=2)
 
-            year_stage = np_utils.get_year_stage(I_Simulation_Time/365, I_InputDataYears)
+            # year_stage = np_utils.get_year_stage(I_Simulation_Time/365, I_InputDataYears)
+            year_stage = I_Simulation_Time / 1460
             I_FracVegClassNow = np.divide(
                 I_FracVegClasses[year_stage] +
                 (I_FracVegClasses[year_stage + 1] - I_FracVegClasses[year_stage]) *
@@ -1188,8 +1219,8 @@ class SimulatingThread(QtCore.QThread):
 
             isI_StillWarmUp = time <= I_WarmUpTime
             I_WUcorrection = time == int(I_WarmUpTime + 1)
-            I_WarmedUp = time == int(I_WarmUpTime)
-            isO_Reset = I_WarmedUp == 1 or I_WUcorrection == 1
+            # I_WarmedUp = time == int(I_WarmUpTime)
+            isO_Reset = I_Warmedup == 1 or I_WUcorrection == 1
             I_FracArea = np.multiply(I_FracVegClassNow, I_RelArea)
             I_TimeEvap = (
                 365 if I_RainDoY % 365 == 0
@@ -1314,10 +1345,9 @@ class SimulatingThread(QtCore.QThread):
                             D_SoilWater[time],
                             np.multiply(I_PercFracMultiplier, I_GWRelFrac)),
                         I_MaxDynGWArea - D_GWArea[time])) -
-                np.multiply(D_IrrigEfficiency, D_Irrigation) -
-                np.multiply(
+                np.multiply(D_IrrigEfficiency, D_Irrigation)) - np.multiply(
                     I_AvailWaterClass <= 0,
-                    np.multiply(D_IrrigEfficiency, D_Irrigation)))
+                    np.multiply(D_IrrigEfficiency, D_Irrigation))
             # print np.around(D_Percolation, decimals=2).transpose()
             D_Percolation = calculate.outflow_constrain(D_Percolation, D_SoilWater[time], D_Infiltration, True, 1)
 
@@ -1345,6 +1375,7 @@ class SimulatingThread(QtCore.QThread):
                                axis=1).reshape(subcatchment, 1)),
                     I_MaxDynGWArea - D_GWArea[time]))
             D_DeepInfiltration = calculate.inflow_constrain(D_DeepInfiltration)
+            # print D_DeepInfiltration
 
             D_GWaDisch = np.multiply(D_GWArea[time], I_GWRelFrac)
             D_GWaDisch = calculate.outflow_constrain(D_GWaDisch, D_GWArea[time],
@@ -1701,7 +1732,7 @@ class SimulatingThread(QtCore.QThread):
             #                      else 0)
             # O_FrSurfQuickFlow = (O_CumSurfQFlow[time] / O_TotStreamFlow
             #                      if O_TotStreamFlow else 0)
-            O_RainYesterday = O_RainYest[time] * I_WarmedUp
+            O_RainYesterday = O_RainYest[time] * I_Warmedup
             # O_RainHalfDelayed = (np_utils.array_sum(O_RainYesterday) +
             #                      np_utils.array_sum(I_DailyRainAmount)) / 2
             O_RelWatAvVegSubc = np.multiply(D_RelWaterAv, I_FracVegClassNow)
@@ -1724,19 +1755,19 @@ class SimulatingThread(QtCore.QThread):
             O_InitLake = calculate.biflow_constrain(O_InitLake, D_InitLakeVol[time], True)
             O_InitRiv = isO_Reset * (D_CurrRivVol - D_InitLakeVol[time])
             O_InitRiv = calculate.biflow_constrain(O_InitRiv, D_InitRivVol[time], True)
-            O_BaseFlowAcc = np.sum(D_GWaDisch) * I_WarmedUp
+            O_BaseFlowAcc = np.sum(D_GWaDisch) * I_Warmedup
             O_BaseFlowAcc = calculate.inflow_constrain(O_BaseFlowAcc)
             # O_CumDeepInfAcc = np_utils.array_sum(D_DeepInfiltration) * I_WarmedUp
-            O_EvapoTransAcc = (np.sum(I_PotEvapTransp) > 0) * (np.sum(D_ActEvapTransp) + np.sum(D_InterceptEvap)) * I_WarmedUp
+            O_EvapoTransAcc = (np.sum(I_PotEvapTransp) > 0) * (np.sum(D_ActEvapTransp) + np.sum(D_InterceptEvap)) * I_Warmedup
             # O_InfAcc = np_utils.array_sum(D_Infiltration) * I_WarmedUp
-            O_AccET = np.sum(D_InterceptEvap) * I_WarmedUp
-            O_PercAcc = np.sum(D_Percolation) * I_WarmedUp
+            O_AccET = np.sum(D_InterceptEvap) * I_Warmedup
+            O_PercAcc = np.sum(D_Percolation) * I_Warmedup
 
-            O_RainAcc = np.sum(I_DailyRainAmount) * I_WarmedUp
-            # O_CumSoilQFlowAcc = np.sum(D_SoilDischarge) * I_WarmedUp
-            O_SurfQFlowAcc = np.sum(D_SurfaceFlow) * I_WarmedUp
+            O_RainAcc = np.sum(I_DailyRainAmount) * I_Warmedup
+            # O_CumSoilQFlowAcc = np.sum(D_SoilDischarge) * I_Warmedup
+            O_SurfQFlowAcc = np.sum(D_SurfaceFlow) * I_Warmedup
 
-            O_TranspAcc = np.sum(D_ActEvapTransp) * I_WarmedUp
+            O_TranspAcc = np.sum(D_ActEvapTransp) * I_Warmedup
             O_InitGW = isO_Reset * (
                 np.sum(D_GWArea[time]) -
                 O_InitGWStock[time]
@@ -1748,7 +1779,7 @@ class SimulatingThread(QtCore.QThread):
             O_RainToday = np.sum(
                 I_DailyRainAmount,
                 axis=1
-            ).reshape(subcatchment, 1) * I_WarmedUp
+            ).reshape(subcatchment, 1) * I_Warmedup
             O_LastYearHEPP = (O_LastYHepp[time] > 0) * (O_ThisYHepp[time] - O_LastYHepp[time])/(365 * L_HEPP_Daily_Dem)
             O_BYP = (O_LastYearHEPP > 0 and O_LastYearHEPP > O_BestYyHEPP[time]) * (-O_BestYyHEPP[time] + O_LastYearHEPP)
 
@@ -1757,7 +1788,7 @@ class SimulatingThread(QtCore.QThread):
             O_StartMDay = (O_StarMYear - 1) * 365 + 1 + (O_StartDOY - 1)
             O_EndMDay = O_StartMDay + O_MPeriodLength
             # print O_StartMDay, O_EndMDay
-            Yearly_Tick = 1 if I_WarmedUp == 1 and time % 365 == 0 else 0
+            Yearly_Tick = 1 if I_Warmedup == 1 and time % 365 == 0 else 0
             time_stage = I_Simulation_Time / 1460
             I_DebitTime = I_RFlowData[time_stage]
             # for index, stage in enumerate(I_RainDoY_Stage):
@@ -1784,6 +1815,7 @@ class SimulatingThread(QtCore.QThread):
 
             inMDay = np.multiply(I_Simulation_Time >= O_StartMDay, I_Simulation_Time < O_EndMDay)
             inMDayStillWarmUp = np.multiply(I_Simulation_Time >= O_StartMDay, np.multiply(I_Simulation_Time < O_EndMDay, isI_StillWarmUp == 0))
+            print inMDayStillWarmUp
 
             O_BaseFlowAccMP = inMDayStillWarmUp * np.sum(D_GWaDisch)
 
@@ -1840,20 +1872,20 @@ class SimulatingThread(QtCore.QThread):
             # O_SoilWaterTot = np.sum(D_SoilWater[time])
             O_DeepInfAcc = np.sum(
                 D_DeepInfiltration
-            ) * isI_WarmEdUp[time]
+            ) * I_Warmedup
             O_DeepInfAcc = calculate.inflow_constrain(O_DeepInfAcc)
 
             O_InfAcc = (
-                np.sum(D_Infiltration) * isI_WarmEdUp[time]
+                np.sum(D_Infiltration) * I_Warmedup
             )
             O_InfAcc = calculate.inflow_constrain(O_InfAcc)
 
             O_IntercAcc = (
-                np.sum(D_InterceptEvap) * isI_WarmEdUp[time]
+                np.sum(D_InterceptEvap) * I_Warmedup
             )
 
             O_SoilQFlowAcc = (
-                np.sum(D_SoilDischarge) * isI_WarmEdUp[time]
+                np.sum(D_SoilDischarge) * I_Warmedup
             )
 
             O_SoilQflow_Subca = np.sum(
@@ -2263,9 +2295,33 @@ class SimulatingThread(QtCore.QThread):
             self.output['map']['D_SoilDischarge'].append(D_SoilDischarge)
 
             # Display Water Balance
-            self.output['timeseries']['display']['Water Balance']['I_RFlowdata_mmday'].append(I_RFlowdata_mmday)
-            self.output['timeseries']['display']['Water Balance']['L_InFlowtoLake'].append(L_InFlowtoLake)
+            self.output['timeseries']['display']['Water Balance']['Page 1']['I_RFlowdata_mmday'].append(I_RFlowdata_mmday)
+            self.output['timeseries']['display']['Water Balance']['Page 1']['L_InFlowtoLake'].append(L_InFlowtoLake)
 
+            self.output['timeseries']['display']['Water Balance']['Page 2']['O_RainAcc'].append(O_RainAcc)
+            self.output['timeseries']['display']['Water Balance']['Page 2']['O_IntercAcc'].append(O_IntercAcc)
+            self.output['timeseries']['display']['Water Balance']['Page 2']['O_EvapoTransAcc'].append(O_EvapoTransAcc)
+            self.output['timeseries']['display']['Water Balance']['Page 2']['O_SurfQFlowAcc'].append(O_SurfQFlowAcc)
+            self.output['timeseries']['display']['Water Balance']['Page 2']['O_InfAcc'].append(O_InfAcc)
+
+            self.output['timeseries']['display']['Water Balance']['Page 3']['O_RainAcc'].append(O_RainAcc)
+            self.output['timeseries']['display']['Water Balance']['Page 3']['O_DeepInfAcc'].append(O_DeepInfAcc)
+            self.output['timeseries']['display']['Water Balance']['Page 3']['O_PercAcc'].append(O_PercAcc)
+            self.output['timeseries']['display']['Water Balance']['Page 3']['O_BaseFlowAcc'].append(O_BaseFlowAcc)
+            self.output['timeseries']['display']['Water Balance']['Page 3']['O_SoilQFlowAcc'].append(O_SoilQFlowAcc)
+
+            # self.output['timeseries']['display']['Water Balance']['Page 4']['O_CumRain'].append(O_CumRain[time])
+            # self.output['timeseries']['display']['Water Balance']['Page 4']['O_CumIntercepEvap'].append(O_CumIntercepEvap[time])
+            # Need check self.output['timeseries']['display']['Water Balance']['Page 4']['O_CumEvapotrans'].append(O_CumEvapotrans[time])
+            # self.output['timeseries']['display']['Water Balance']['Page 4']['O_CumSurfQFlow'].append(O_CumSurfQFlow[time])
+            self.output['timeseries']['display']['Water Balance']['Page 4']['O_CumInfiltration'].append(O_CumInfiltration[time])
+
+            # self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumRain'].append(O_CumRain[time])
+            # self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumPercolation'].append(O_CumPercolation[time])
+            # Need check self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumDeepInfilt'].append(O_CumDeepInfilt[time])
+            # Need check self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumBaseFlow'].append(O_CumBaseFlow[time])
+            # self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumSoilQFlow'].append(O_CumSoilQFlow[time])
+            # print O_CumPercolation[time]
             # Display HEPP
             self.output['timeseries']['display']['HEPP']['L_HEPPWatUseFlow'].append(L_HEPPWatUseFlow)
             self.output['timeseries']['display']['HEPP']['L_LakeVol'].append(L_LakeVol[time])

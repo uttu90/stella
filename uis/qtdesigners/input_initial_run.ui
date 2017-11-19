@@ -33,7 +33,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>240</y>
+     <y>220</y>
      <width>91</width>
      <height>16</height>
     </rect>
@@ -46,7 +46,7 @@
    <property name="geometry">
     <rect>
      <x>460</x>
-     <y>110</y>
+     <y>90</y>
      <width>61</width>
      <height>20</height>
     </rect>
@@ -59,7 +59,7 @@
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>80</y>
+     <y>60</y>
      <width>61</width>
      <height>20</height>
     </rect>
@@ -72,7 +72,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>140</y>
+     <y>120</y>
      <width>91</width>
      <height>16</height>
     </rect>
@@ -85,7 +85,7 @@
    <property name="geometry">
     <rect>
      <x>460</x>
-     <y>240</y>
+     <y>220</y>
      <width>61</width>
      <height>20</height>
     </rect>
@@ -98,7 +98,7 @@
    <property name="geometry">
     <rect>
      <x>460</x>
-     <y>140</y>
+     <y>120</y>
      <width>61</width>
      <height>20</height>
     </rect>
@@ -111,7 +111,7 @@
    <property name="geometry">
     <rect>
      <x>320</x>
-     <y>240</y>
+     <y>220</y>
      <width>111</width>
      <height>16</height>
     </rect>
@@ -124,7 +124,7 @@
    <property name="geometry">
     <rect>
      <x>320</x>
-     <y>110</y>
+     <y>90</y>
      <width>91</width>
      <height>16</height>
     </rect>
@@ -137,7 +137,7 @@
    <property name="geometry">
     <rect>
      <x>460</x>
-     <y>80</y>
+     <y>60</y>
      <width>61</width>
      <height>20</height>
     </rect>
@@ -150,7 +150,7 @@
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>140</y>
+     <y>120</y>
      <width>61</width>
      <height>20</height>
     </rect>
@@ -163,7 +163,7 @@
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>180</y>
+     <y>160</y>
      <width>61</width>
      <height>20</height>
     </rect>
@@ -176,7 +176,7 @@
    <property name="geometry">
     <rect>
      <x>320</x>
-     <y>210</y>
+     <y>190</y>
      <width>111</width>
      <height>16</height>
     </rect>
@@ -189,7 +189,7 @@
    <property name="geometry">
     <rect>
      <x>460</x>
-     <y>210</y>
+     <y>190</y>
      <width>61</width>
      <height>20</height>
     </rect>
@@ -202,7 +202,7 @@
    <property name="geometry">
     <rect>
      <x>320</x>
-     <y>140</y>
+     <y>120</y>
      <width>91</width>
      <height>16</height>
     </rect>
@@ -215,7 +215,7 @@
    <property name="geometry">
     <rect>
      <x>320</x>
-     <y>80</y>
+     <y>60</y>
      <width>91</width>
      <height>16</height>
     </rect>
@@ -228,7 +228,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>80</y>
+     <y>60</y>
      <width>91</width>
      <height>16</height>
     </rect>
@@ -241,7 +241,7 @@
    <property name="geometry">
     <rect>
      <x>320</x>
-     <y>180</y>
+     <y>160</y>
      <width>101</width>
      <height>16</height>
     </rect>
@@ -254,7 +254,7 @@
    <property name="geometry">
     <rect>
      <x>460</x>
-     <y>180</y>
+     <y>160</y>
      <width>61</width>
      <height>20</height>
     </rect>
@@ -263,24 +263,11 @@
     <string>365</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_114">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>30</y>
-     <width>91</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Simultiion Time</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_121">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>180</y>
+     <y>160</y>
      <width>91</width>
      <height>16</height>
     </rect>
@@ -293,7 +280,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>110</y>
+     <y>90</y>
      <width>91</width>
      <height>16</height>
     </rect>
@@ -306,7 +293,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>210</y>
+     <y>190</y>
      <width>91</width>
      <height>16</height>
     </rect>
@@ -319,7 +306,7 @@
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>110</y>
+     <y>90</y>
      <width>61</width>
      <height>20</height>
     </rect>
@@ -332,7 +319,7 @@
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>240</y>
+     <y>220</y>
      <width>61</width>
      <height>20</height>
     </rect>
@@ -345,26 +332,13 @@
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>210</y>
+     <y>190</y>
      <width>61</width>
      <height>20</height>
     </rect>
    </property>
    <property name="text">
     <string>1</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="simulationTime">
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>30</y>
-     <width>61</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>2</string>
    </property>
   </widget>
  </widget>
