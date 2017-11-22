@@ -14,9 +14,12 @@ def biflow_constrain(biflow, stock, non_negative):
 
 def outflow_constrain(outflow=0, stock=0, inflow=0, non_negative=True, dt=1):
     if not non_negative:
+        print 'nto hello'
         return outflow
     else:
-        return np.multiply(outflow > 0, np.minimum(outflow, np.add(stock, inflow * dt)))
+        constrain = np.minimum(outflow, np.add(stock, inflow * dt))
+
+        return np.multiply(outflow > 0, np.multiply(constrain > 0, constrain))
 
 def update(stock, inflow=0, outflow=0, dt=1, non_negative=True):
     value = np.add(stock[-1], (inflow - outflow) * dt)

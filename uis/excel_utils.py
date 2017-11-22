@@ -2,12 +2,20 @@ __author__ = 'TuHV'
 
 # Excel utils to get data
 
+def chop_off_array(array):
+    try:
+        index = array.index(u'')
+        if index > 0:
+            return array[0: index]
+        return array
+    except ValueError:
+        return array
 
-def read_array_data(sheet, col_start, col_end, row_start, row_end):
-    data = {}
+
+def read_array_data(data, sheet, col_start, col_end, row_start):
     for col in range(col_start, col_end):
-        col_values = sheet.col_values(colx=col, start_rowx=row_start, end_rowx=row_end)
-        data[col_values[0]] = col_values[1:]
+        col_values = sheet.col_values(colx=col, start_rowx=row_start)
+        data[col_values[0]] = chop_off_array(col_values[1:])
     return data
 
 

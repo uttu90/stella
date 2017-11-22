@@ -245,7 +245,8 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
     def update_result(self, output, time):
         self.periodUpdate = int(self.parameters['Run_Specs']['outputUpdate'])
         simulationTime = int(self.parameters['Run_Specs']['runto'])
-        self.simulatingTime.setText(str(simulationTime))
+        self.simulatingTime.setText(str(time))
+        # self.totalTime.setText(str(simulationTime))
         self.simulatingProgress.setValue(int((time + 1) * 100 / simulationTime))
         self.outputTimeseries.update_display(output['timeseries'], time)
         if time % self.periodUpdate == 0:

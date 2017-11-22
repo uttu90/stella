@@ -5,9 +5,10 @@ import constants
 from os import path as file_path
 from utils import excel_utils
 import xlwt
-
+import numpy as np
 from matplotlib import cm as cms
 from matplotlib.cbook import MatplotlibDeprecationWarning
+import matplotlib.pyplot as plt
 
 from matplotlib.figure import Figure
 import matplotlib.animation as animation
@@ -21,7 +22,71 @@ from matplotlib.backends import qt4_compat
 
 from stella_output import Stella_Output
 
+pages = ['Page 1', 'Page 2', 'Page 3', 'Page 4', 'Page 5']
 display_sections = ['Water Balance', 'HEPP']
+display_colors = {
+    'I_RFlowdata_mmday': 'r',
+    'L_InFlowtoLake': 'b',
+
+    'O_RainAcc': 'g',
+    'O_IntercAcc': 'r',
+    'O_SurfQFlowAcc': 'k',
+    'O_InfAcc': 'b',
+
+    'O_DeepInfAcc': 'r',
+    'O_PercAcc': 'k',
+    'O_EvapoTransAcc': 'grey',
+    'O_BaseFlowAcc': 'b',
+    'O_SoilQFlowAcc': 'y',
+
+    'O_CumRain': 'r',
+    'O_CumIntercepEvap': 'g',
+    'O_CumEvapotrans': 'b',
+    'O_CumSurfQFlow': 'k',
+    'O_CumInfiltration': 'y',
+
+    'O_CumPercolation': 'g',
+    'O_CumDeepInfilt': 'b',
+    'O_CumBaseFlow': 'k',
+    'O_CumSoilQFlow': 'y',
+
+    'L_HEPPWatUseFlow': 'r',
+    'L_LakeVol': 'g',
+    'L_HEPP_Kwh': 'b',
+    'L_LakeLevel': 'k',
+}
+
+display_spines = {
+    'I_RFlowdata_mmday': 20,
+    'L_InFlowtoLake': 40,
+
+    'O_RainAcc': 20,
+    'O_IntercAcc': 40,
+    'O_SurfQFlowAcc': 60,
+    'O_InfAcc': 80,
+    'O_EvapoTransAcc': 100,
+
+    'O_DeepInfAcc': 15,
+    'O_PercAcc': 30,
+    'O_BaseFlowAcc': 45,
+    'O_SoilQFlowAcc': 60,
+
+    'O_CumRain': 20,
+    'O_CumIntercepEvap': 15,
+    'O_CumEvapotrans': 30,
+    'O_CumSurfQFlow': 45,
+    'O_CumInfiltration': 60,
+
+    'O_CumPercolation': 15,
+    'O_CumDeepInfilt': 30,
+    'O_CumBaseFlow': 45,
+    'O_CumSoilQFlow': 60,
+
+    'L_HEPPWatUseFlow': 0,
+    'L_LakeVol': 15,
+    'L_HEPP_Kwh': 30,
+    'L_LakeLevel': 45,
+}
 
 class OutputTimeseries(
     QtGui.QDialog,
@@ -31,157 +96,139 @@ class OutputTimeseries(
         super(OutputTimeseries, self).__init__(parent)
         self.setupUi(self)
         self.selected_maps = ["Water Balance", "HEPP"]
-        self.exportData.clicked.connect(self._exportData)
-        self.outputFile = (file_path.join(outputFolder, 'output.xls') if
-                           outputFolder
-                           else file_path.join(file_path.dirname(__file__), 'output.xls'))
 
-        # self.autoUpdate = self.checkBox.isChecked()
-        self.checkBox.toggled.connect(self._trigger_timer)
-        # self.nextBtn.clicked.connect(self._next)
-        # self.backBtn.clicked.connect(self._back)
         self.simulationTime = simulationTime
         self.currentTime = 0
-        self.dataQueue = []
-        if not hasattr(self, 'updateQueue'):
-            self.updateQueue = []
-        timer = QtCore.QTimer(self)
-        timer.timeout.connect(self._timer_timeout)
-        self.selectedTimeseries = []
-        # if self.autoUpdate:
-        #     self.timer.start(3000)
-        for widget in self.children():
-            if isinstance(widget, QtGui.QGroupBox):
-                for subWidget in widget.children():
-                    subWidget.toggled.connect(self.selectTimeseries)
-                    if subWidget.isChecked():
-                        self.selectedTimeseries.append(str(subWidget.text()))
-        self.displayOutput = {'Water Balance': {'Page 1': {}, 'Page 2': {}, 'Page 3': {}, 'Page 4': {}, 'Page 5': {}}, 'HEPP': {}}
-        self.lock = False
+        self.selected_page = 'Page 1'
+        self.waterBalanceData = {}
+        self.heppData = {}
         self._prepare_display()
+        self.page1Btn.clicked.connect(self._select_page_1)
+        self.page2Btn.clicked.connect(self._select_page_2)
+        self.page3Btn.clicked.connect(self._select_page_3)
+        self.page4Btn.clicked.connect(self._select_page_4)
+        self.page5Btn.clicked.connect(self._select_page_5)
+        self.lock = False
 
-    def selectTimeseries(self):
-        self.selectedTimeseries = []
-        for widget in self.children():
-            if isinstance(widget, QtGui.QGroupBox):
-                for subWidget in widget.children():
-                    # subWidget.toggled.connect(self.selectTimeseries)
-                    if subWidget.isChecked():
-                        self.selectedTimeseries.append(str(subWidget.text()))
+    def _clear_waterBalance_page(self):
+        for page in pages:
+            for timeseries in self.waterBalanceData[page].keys():
+                self.waterBalanceAxes[timeseries].clear()
 
-    def getOutput(self, output, time):
-        self.data = {'Water Balance': {}, 'HEPP': {}}
-        for section in display_sections:
-            self.data[section] = {}
-            for timeseries in self.selectedTimeseries:
-                if timeseries in output[section]:
-                    self.data[section][timeseries] = output[section][timeseries]
-                    # self.data[section].append(output[section][timeseries])
+    def _select_page_1(self):
+        self.selected_page = 'Page 1'
+        self._clear_waterBalance_page()
 
-    def _timer_timeout(self):
-        self.currentTime = self.currentTime + 1
-        self.display_selected_maps()
+    def _select_page_2(self):
+        self.selected_page = 'Page 2'
+        self._clear_waterBalance_page()
 
-    def _next(self):
-        self.currentTime = (self.currentTime + 1
-                            if self.currentTime < len(self.updateQueue) - 1
-                            else self.currentTime)
-        self.display_selected_maps()
+    def _select_page_3(self):
+        self.selected_page = 'Page 3'
+        self._clear_waterBalance_page()
 
-    def _back(self):
-        self.currentTime = self.currentTime - 1 if self.currentTime > 0 else 0
-        self.display_selected_maps()
+    def _select_page_4(self):
+        self.selected_page = 'Page 4'
+        self._clear_waterBalance_page()
 
-    def _trigger_timer(self):
-        if self.autoUpdate:
-            self.autoUpdate = not self.autoUpdate
-            self.timer.stop()
-        else:
-            self.autoUpdate = True
-            self.timer.start(3000)
+    def _select_page_5(self):
+        self.selected_page = 'Page 5'
+        self._clear_waterBalance_page()
 
-    def _exportData(self):
-        print('Start saving')
-        outputWb = xlwt.Workbook()
-        outputWs = outputWb.add_sheet('outputData')
-        time, lastData = self.dataQueue[self.currentTime]
-        excel_utils.write_dict(lastData, outputWs, 0)
-        outputWb.save(self.outputFile)
-        # outputWb.save('test.xls')
-        print('End saving')
+    # def _exportData(self):
+    #     print('Start saving')
+    #     outputWb = xlwt.Workbook()
+    #     outputWs = outputWb.add_sheet('outputData')
+    #     time, lastData = self.dataQueue[self.currentTime]
+    #     excel_utils.write_dict(lastData, outputWs, 0)
+    #     outputWb.save(self.outputFile)
+    #     # outputWb.save('test.xls')
+    #     print('End saving')
+
+    def displayTimeseries(self, i):
+        axes = self.fig.add_subplot(1,1,1)
+        axes.clear()
+        axes.set_xlim(0, self.simulationTime)
+        for timeseries in self.data.keys():
+            ax = axes.twinx()
+            ax.plot(self.data[timeseries])
 
     def _prepare_display(self):
-        self.main_frame = self.displayResult
+        main_frame = self.displayResult
         self.fig = Figure((1.0, 1.0), dpi=60)
-        self.canvas = FigureCanvas(self.fig)
-        self.canvas.setParent(self.main_frame)
-        self.canvas.setFocusPolicy(QtCore.Qt.StrongFocus)
-        self.canvas.setFocus()
-        self.canvas.setSizePolicy(
+        canvas = FigureCanvas(self.fig)
+        canvas.setParent(main_frame)
+        canvas.setFocusPolicy(QtCore.Qt.StrongFocus)
+        canvas.setFocus()
+        canvas.setSizePolicy(
             QtGui.QSizePolicy.Expanding,
             QtGui.QSizePolicy.Expanding)
-        self.mpl_toolbar = NavigationToolbar(self.canvas, self.main_frame)
+        mpl_toolbar = NavigationToolbar(canvas, main_frame)
         vbox = QtGui.QVBoxLayout()
-        vbox.addWidget(self.canvas)
-        vbox.addWidget(self.mpl_toolbar)
-        self.main_frame.setLayout(vbox)
+        vbox.addWidget(canvas)
+        vbox.addWidget(mpl_toolbar)
+        main_frame.setLayout(vbox)
         ani = animation.FuncAnimation(self.fig, self.display_selected_maps, interval=1000)
-        self.canvas.draw()
+        self.ax1 = self.fig.add_subplot(211)
+        self.ax1.yaxis.set_ticks([])
+        self.waterBalanceAxes = {
+            'I_RFlowdata_mmday': self.ax1.twinx(),
+            'L_InFlowtoLake': self.ax1.twinx(),
+
+            'O_RainAcc': self.ax1.twinx(),
+            'O_IntercAcc': self.ax1.twinx(),
+            'O_SurfQFlowAcc': self.ax1.twinx(),
+            'O_InfAcc': self.ax1.twinx(),
+
+            'O_DeepInfAcc': self.ax1.twinx(),
+            'O_PercAcc': self.ax1.twinx(),
+            'O_EvapoTransAcc': self.ax1.twinx(),
+            'O_BaseFlowAcc': self.ax1.twinx(),
+            'O_SoilQFlowAcc': self.ax1.twinx(),
+
+            'O_CumRain': self.ax1.twinx(),
+            'O_CumIntercepEvap': self.ax1.twinx(),
+            'O_CumEvapotrans': self.ax1.twinx(),
+            'O_CumSurfQFlow': self.ax1.twinx(),
+            'O_CumInfiltration': self.ax1.twinx(),
+
+            'O_CumPercolation': self.ax1.twinx(),
+            'O_CumDeepInfilt': self.ax1.twinx(),
+            'O_CumBaseFlow': self.ax1.twinx(),
+            'O_CumSoilQFlow': self.ax1.twinx(),
+        }
+        self.ax2 = self.fig.add_subplot(212)
+        self.ax2.yaxis.set_ticks([])
+        self.heppAxes = {
+            'L_HEPPWatUseFlow': self.ax2.twinx(),
+            'L_LakeVol': self.ax2.twinx(),
+            'L_HEPP_Kwh': self.ax2.twinx(),
+            'L_LakeLevel': self.ax2.twinx(),
+        }
+        canvas.draw()
 
     def display_selected_maps(self, i):
-        screen_positions = [611, 612, 613, 614, 615, 616]
-        pages = ['Page 1', 'Page 2', 'Page 3', 'Page 4', 'Page 5']
-        # display_sections = ['Water Balance', 'HEPP']
-        self.lock = True
-        for index, page in enumerate(pages):
-            self.axes = self.fig.add_subplot(screen_positions[index])
-            self.axes.clear()
-            self.axes.set_xlim(0, self.simulationTime)
-            for timeseries in self.displayOutput['Water Balance'][page].keys():
-                self.axes.plot(self.displayOutput['Water Balance'][page][timeseries])
-            self.axes = self.fig.add_subplot(616)
-            self.axes.clear()
-            self.axes.set_xlim(0, self.simulationTime)
-            for timeseries in self.displayOutput['HEPP'].keys():
-                self.axes.plot(self.displayOutput['HEPP'][timeseries])
-
-        #
-        # for index, section in enumerate(display_sections):
-        #     self.axes = self.fig.add_subplot(screen_positions[index])
-        #     self.axes.clear()
-        #     self.axes.set_xlim(0, self.simulationTime)
-        #     for timeseries in self.displayOutput[section].keys():
-        #         self.axes.plot(self.displayOutput[section][timeseries])
-        #         self.axes.set_title(timeseries)
-        #     self.axes.legend()
-            # self.axes.set_title()
-        self.lock = False
-        # if self.isVisible() and len(self.updateQueue) > self.currentTime:
-        #     time, output = self.updateQueue[self.currentTime]
-        #     self.dayProgress.display(time)
-        #     self.yearProgress.display(time / 365 + 1)
-        #     self.fig.clear()
-        #     for index, timeseries in enumerate(self.selected_maps):
-        #         dict = output[timeseries]
-        #         self.axes = self.fig.add_subplot(screen_position[index])
-        #         for key in self.selectedTimeseries:
-        #             if key in dict:
-        #                 array = dict[key]
-        #                 display_array = array[-100:] if len(array) > 0 else array
-        #                 self.axes.plot(display_array, label=key)
-        #         self.axes.legend()
-        #         self.axes.set_title(timeseries)
-        #         self.canvas.draw()
+        if self.isActiveWindow():
+            self.lock = True
+            self.ax1.clear()
+            for timeseries in self.waterBalanceData[self.selected_page].keys():
+                self.waterBalanceAxes[timeseries].clear()
+                self.waterBalanceAxes[timeseries].plot(self.waterBalanceData[self.selected_page][timeseries], color=display_colors[timeseries])
+                self.waterBalanceAxes[timeseries].spines['right'].set_position(('outward', display_spines[timeseries]))
+                # self.waterBalanceAxes[timeseries].yaxis.set_ticks([max(self.waterBalanceData[self.selected_page][timeseries]) or [0]])
+            self.ax2.clear()
+            for timeseries in self.heppData.keys():
+                self.heppAxes[timeseries].clear()
+                self.heppAxes[timeseries].plot(self.heppData[timeseries], color=display_colors[timeseries])
+            self.lock = False
 
     def update_display(self, output, time):
         self.dayProgress.display(time)
         self.yearProgress.display(time / 365 + 1)
         if not self.lock:
-            # self.getOutput(output['display'], time)
-            self.displayOutput = output['display']
+            self.waterBalanceData = output['display']['Water Balance']
+            self.heppData = output['display']['HEPP']
 
-        # self.updateQueue.append((time, output['display']))
-        # self.dataQueue.append((time, output['data']))
 
 if __name__ == "__main__":
     import sys
