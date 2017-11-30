@@ -22,17 +22,18 @@ def outflow_constrain(outflow=0, stock=0, inflow=0, non_negative=True, dt=1):
         return np.multiply(outflow > 0, np.multiply(constrain > 0, constrain))
 
 def update(stock, inflow=0, outflow=0, dt=1, non_negative=True):
-    value = np.add(stock[-1], (inflow - outflow) * dt)
+    value = np.add(stock, (inflow - outflow) * dt)
     if non_negative:
         value = np.maximum(0, value)
-    stock.append(value)
+    return value
+    # stock.append(value)
 
 
 def update_conveyor(stock, inflow=0, outflow=[0], transitTime=0, time=0, dt=1):
     # None
-    new_value = np.add(stock[time], np.subtract(inflow, outflow[time]) * dt)
+    new_value = np.add(stock, np.subtract(inflow, outflow[time]) * dt)
     # new_value = np.zeros_like(stock[time])
-    stock.append(new_value)
+    # stock.append(new_value)
     ts = int(np.max(np.around(transitTime)) + 1)
     # for future in range(1, ts):
 
@@ -40,3 +41,4 @@ def update_conveyor(stock, inflow=0, outflow=[0], transitTime=0, time=0, dt=1):
         outflow += [np.zeros_like(outflow[time]) for _ in range(len(outflow), time + ts)]
     for future in range(1, ts):
         outflow[time + future] = np.add(outflow[time + future], np.multiply(transitTime == future, inflow))
+    return new_value
