@@ -65,7 +65,7 @@ class Input_Run_Specs_Diaglog(
         wksheet3 = xl_workbook.sheet_by_name("LinktoStella9(2)")
         utils.read_array_data(self.inputData, wksheet, col_start=1, col_end=30, row_start=3)
         utils.read_array_data(self.inputData, wksheet, col_start=51, col_end=80, row_start=3)
-        utils.read_array_data(self.inputData, wksheet3, col_start=0, col_end=80, row_start=3)
+        utils.read_array_data(self.inputData, wksheet3, col_start=0, col_end=81, row_start=3)
         self.inputData['I_MultiplierEvapoTrans'] = utils.read_table_to_matrix(wksheet, col_start=30, col_end=50, row_start=4, row_end=16)
         a = self.inputData['I_MultiplierEvapoTrans']
         for ia in a:

@@ -130,3 +130,10 @@ def write_dict(data, sheet, column):
             sheet.write(1, column + index, key)
             write_array(data[key], sheet, column + index)
             index += 1
+
+
+def write_params(sheet, time, *args):
+    for index in range(0, len(args), 2):
+        if time == 1:
+            sheet.write(0, index, args[index])
+        sheet.write(time, index + 1, args[index+1])
