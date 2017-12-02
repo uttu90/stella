@@ -214,12 +214,12 @@ class OutputTimeseries(
             for timeseries in self.waterBalanceData[self.selected_page].keys():
                 self.waterBalanceAxes[timeseries].clear()
                 self.waterBalanceAxes[timeseries].plot(self.waterBalanceData[self.selected_page][timeseries], color=display_colors[timeseries])
-                self.waterBalanceAxes[timeseries].spines['right'].set_position(('outward', display_spines[timeseries]))
+                # self.waterBalanceAxes[timeseries].spines['right'].set_position(('outward', display_spines[timeseries]))
                 # self.waterBalanceAxes[timeseries].yaxis.set_ticks([max(self.waterBalanceData[self.selected_page][timeseries]) or [0]])
             self.ax2.clear()
             for timeseries in self.heppData.keys():
                 self.heppAxes[timeseries].clear()
-                self.heppAxes[timeseries].plot(self.heppData[timeseries], color=display_colors[timeseries])
+                # self.heppAxes[timeseries].plot(self.heppData[timeseries], color=display_colors[timeseries])
             self.lock = False
 
     def update_display(self, output, time):

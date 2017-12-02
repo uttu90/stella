@@ -58,7 +58,7 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
-          <widget class="QLineEdit" name="lineEdit">
+          <widget class="QLineEdit" name="goDayEdit">
            <property name="maximumSize">
             <size>
              <width>300</width>
@@ -148,7 +148,7 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
-          <widget class="QGroupBox" name="groupBox">
+          <widget class="QGroupBox" name="screen1GroupBox">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -164,7 +164,7 @@
            <property name="title">
             <string>Screen 1</string>
            </property>
-           <widget class="QRadioButton" name="radioButton">
+           <widget class="QRadioButton" name="subcatchmentRadio">
             <property name="geometry">
              <rect>
               <x>10</x>
@@ -177,7 +177,7 @@
              <string>Subcatchment map</string>
             </property>
            </widget>
-           <widget class="QRadioButton" name="radioButton_5">
+           <widget class="QRadioButton" name="landcoverRadio">
             <property name="geometry">
              <rect>
               <x>10</x>
@@ -193,7 +193,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="groupBox_2">
+          <widget class="QGroupBox" name="screen2GroupBox">
            <property name="minimumSize">
             <size>
              <width>100</width>
@@ -209,7 +209,7 @@
            <property name="title">
             <string>Screen 2</string>
            </property>
-           <widget class="QRadioButton" name="radioButton_2">
+           <widget class="QRadioButton" name="radioButton">
             <property name="geometry">
              <rect>
               <x>10</x>
@@ -219,7 +219,7 @@
              </rect>
             </property>
             <property name="text">
-             <string>L_InFlowToLake</string>
+             <string>L_InFlowtoLake</string>
             </property>
            </widget>
            <widget class="QRadioButton" name="radioButton_3">
@@ -264,7 +264,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="groupBox_3">
+          <widget class="QGroupBox" name="screen3GroupBox">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -335,7 +335,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="groupBox_4">
+          <widget class="QGroupBox" name="screen4GroupBox">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -405,6 +405,19 @@
            </widget>
           </widget>
          </item>
+         <item>
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
         </layout>
        </item>
       </layout>
@@ -423,7 +436,6 @@
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
-       <zorder>verticalLayoutWidget</zorder>
       </widget>
      </item>
     </layout>

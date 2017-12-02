@@ -1,0 +1,10 @@
+{
+  "Water Balance": {
+    "Page 1": ["I_RFlowdata_mmday", "L_InFlowtoLake"],
+    "Page 2": ["O_RainAcc", "O_IntercAcc", "O_SurfQFlowAcc", "O_InfAcc"],
+    "Page 3": ["O_DeepInfAcc", "O_PercAcc", "O_EvapoTransAcc", "O_BaseFlowAcc", "O_SoilQFlowAcc"],
+    "Page 4": ["O_CumRain", "O_CumIntercepEvap", "O_CumEvapotrans", "O_CumSurfQFlow", "O_CumInfiltration"],
+    "Page 5": ["O_CumPercolation", "O_CumDeepInfilt", "O_CumBaseFlow", "O_CumSoilQFlow"]
+  },
+  "HEPP": []
+}

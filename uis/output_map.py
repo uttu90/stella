@@ -10,6 +10,7 @@ from utils import np_utils
 from matplotlib import cm as cms
 from matplotlib.cbook import MatplotlibDeprecationWarning
 
+import matplotlib.animation as animation
 from matplotlib.figure import Figure
 from matplotlib import colors as colorsmap
 from matplotlib.backend_bases import key_press_handler
@@ -19,7 +20,11 @@ from matplotlib.backends.backend_qt4agg import (
 from matplotlib.backends import qt4_compat
 from stella_output import Stella_Output
 import landcover_info
+from functools import partial
 
+mapDataToDisplay = {
+
+}
 
 class OutputMap(
     QtGui.QDialog,
@@ -28,44 +33,7 @@ class OutputMap(
     def __init__(self, parent=None, subcatchment='', landcover='', period=[]):
         super(OutputMap, self).__init__(parent)
         self.setupUi(self)
-        self.resultBox.addItems(constants.outputMapsSubcatchment)
-        self.resultBox_2.addItems(constants.outputMapsSubcatchment)
-        self.resultBox_3.addItems(constants.outputMapsSubcatchment)
-        self.resultBox_4.addItems(constants.outputMapsSubcatchment)
-        self.resultBox.setCurrentIndex(
-            constants.outputMapsSubcatchment.index('L_InFlowtoLake')
-        )
-        self.resultBox_2.setCurrentIndex(
-            constants.outputMapsSubcatchment.index('O_EvapoTransAcc')
-        )
-        self.resultBox_3.setCurrentIndex(
-            constants.outputMapsSubcatchment.index('O_PercAcc')
-        )
-        self.resultBox_4.setCurrentIndex(
-            constants.outputMapsSubcatchment.index('O_RainAcc')
-        )
-        self.selected_maps = [
-            str(self.resultBox.currentText()),
-            str(self.resultBox_2.currentText()),
-            str(self.resultBox_3.currentText()),
-            str(self.resultBox_4.currentText()),
-        ]
-        self.resultBox.currentIndexChanged.connect(self._selectionchange)
-        self.resultBox_2.currentIndexChanged.connect(self._selectionchange_2)
-        self.resultBox_3.currentIndexChanged.connect(self._selectionchange_3)
-        self.resultBox_4.currentIndexChanged.connect(self._selectionchange_4)
-        self.subcatchmentFile = subcatchment
-        self.landcoverFiles = landcover
-        self.autoUpdate = self.checkBox.isChecked()
-        self.checkBox.toggled.connect(self._trigger_timer)
-        if file_path.isfile(self.subcatchmentFile):
-            ds = gdal.Open(self.subcatchmentFile)
-            band = ds.GetRasterBand(1)
-            subcachmentArray = band.ReadAsArray()
-            self.subcachmentArray = numpy.ma.masked_where(
-                subcachmentArray <= 0,
-                subcachmentArray
-            )
+
         self.landcoverArrays = []
         for landcoverFile in landcover:
             if file_path.isfile(landcoverFile):
@@ -77,24 +45,70 @@ class OutputMap(
                     DataArray
                 )
                 self.landcoverArrays.append(landcoverArray)
+        self
         self.nextBtn.clicked.connect(self._next)
         self.backBtn.clicked.connect(self._back)
-        self.period = period
+        # self.period = period
         self._prepare_display()
         self.subcachmentId = [_ for _ in range(1, 21)]
-        self.updateQueue = []
-        self.currentTime = 0
-        self.timer = QtCore.QTimer(self)
-        self.timer.timeout.connect(self._timer_timeout)
-        if self.autoUpdate:
-            self.timer.start(3000)
+        if file_path.isfile(subcatchment):
+            print 'aldfja;fkja;flkajf;lkajf;alkjfa;lfjkalskfja;fjkl'
+            ds = gdal.Open(subcatchment)
+            band = ds.GetRasterBand(1)
+            subcachmentArray = band.ReadAsArray()
+            self.subcachmentArray = numpy.ma.masked_where(
+                subcachmentArray <= 0,
+                subcachmentArray
+            )
+        # self.updateQueue = []
+        # self.currentTime = 0
+        # self.timer = QtCore.QTimer(self)
+        # self.timer.timeout.connect(self._timer_timeout)
+        # if self.autoUpdate:
+        #     self.timer.start(3000)
         self.landcoverDialog = landcover_info.LandcoverInfo()
         self.landcoverColors = self.landcoverDialog.colorResult
         self.landcoverCMaps = colorsmap.ListedColormap(self.landcoverColors)
-        print(self.landcoverCMaps)
-        self.landcoverInfo.clicked.connect(self.openLandcoverInfo)
+        # print(self.landcoverCMaps)
+        self.screens = {
+            'screen 1': '',
+            'screen 2': '',
+            'screen 3': '',
+            'screen 4': '',
+        }
+        self.displayData = {
+            'screen 1': '',
+            'screen 2': '',
+            'screen 3': '',
+            'screen 4': '',
+        }
 
-    def openLandcoverInfo(self):
+        self.data = {}
+
+        for index, screen in enumerate([self.screen1GroupBox, self.screen2GroupBox, self.screen3GroupBox, self.screen4GroupBox]):
+            for radioBtn in screen.children():
+                screenText = 'screen %d' % (index + 1)
+                radioBtn.toggled.connect(partial(self.triggerRadioBtn, radioBtn, screenText))
+
+        self.landcoverBtn.clicked.connect(self.openLandCover)
+        self.subcatchBtn.clicked.connect(self.openSubcatch)
+        self.goBtn.clicked.connect(self.gotoDay)
+
+        self.currentTime = 0
+        self.lock = False
+
+    def triggerRadioBtn(self, radioBtn, screen):
+        if radioBtn.isChecked():
+            self.screens[screen] = str(radioBtn.text())
+
+    def gotoDay(self):
+        self.currentTime = int(self.goDayEdit.text()) or 0
+        self.display_selected_maps()
+
+    def openSubcatch(self):
+        self.landcoverDialog.exec_()
+
+    def openLandCover(self):
         self.landcoverDialog.exec_()
         self.landcoverColors = self.landcoverDialog.colorResult
         self.landcoverCMaps = colorsmap.ListedColormap(self.landcoverColors)
@@ -104,11 +118,13 @@ class OutputMap(
         self.display_selected_maps()
 
     def _next(self):
-        self.currentTime = (self.currentTime + 1
-                            if self.currentTime < len(self.updateQueue) - 1
-                            else self.currentTime)
-        # nextTime, data = self.updateQueue[self.currentTime]
+        self.currentTime = self.currentTime + 1
         self.display_selected_maps()
+        # self.currentTime = (self.currentTime + 1
+        #                     if self.currentTime < len(self.updateQueue) - 1
+        #                     else self.currentTime)
+        # nextTime, data = self.updateQueue[self.currentTime]
+        # self.display_selected_maps()
 
     def _back(self):
         self.currentTime = self.currentTime - 1 if self.currentTime > 0 else 0
@@ -133,49 +149,49 @@ class OutputMap(
         if time/365 > self.period[2]:
             return self.landcoverArrays[3]
 
-    def _selectionchange(self):
-        selection = str(self.resultBox.currentText())
-        self.selected_maps[0] = selection
-
-    def _selectionchange_2(self):
-        selection = str(self.resultBox_2.currentText())
-        self.selected_maps[1] = selection
-
-    def _selectionchange_3(self):
-        selection = str(self.resultBox_3.currentText())
-        self.selected_maps[2] = selection
-
-    def _selectionchange_4(self):
-        selection = str(self.resultBox_4.currentText())
-        self.selected_maps[3] = selection
-
     def display_selected_maps(self):
         screen_position = [221, 222, 223, 224]
-        # self.currentTime = self.currentTime + 1
-        if self.isVisible() and len(self.updateQueue) > self.currentTime:
-            time, output = self.updateQueue[self.currentTime]
-            self.dayProgress.display(time)
-            self.yearProgress.display(time / 365 + 1)
+        if self.isVisible():
+            for screen in self.screens.keys():
+                if screen != 'screen 1' and self.screens[screen] != '':
+                    self.displayData[screen] = self.data[self.screens[screen]][self.currentTime]
+            print self.displayData
+            self.dayLCD.display(self.currentTime)
             self.fig.clear()
-            for index, map in enumerate(self.selected_maps):
-                self.axes = self.fig.add_subplot(screen_position[index])
-                if map == 'Landcover':
-                    self.resul1_array = self._get_landcover(time)
-                    plt = self.axes.imshow(self.resul1_array, cmap=self.landcoverCMaps)
-                    self.fig.colorbar(plt)
-                    self.axes.set_title(map)
-                    self.canvas.draw()
-                else:
-                    self.resul1_array = np_utils.array_to_maps(
-                        self.subcachmentId,
-                        output[map][time],
-                        self.subcachmentArray
-                    )
+            self.lock = True
+            for index, screen in enumerate(self.screens.keys()):
+                if screen != 'screen 1' and self.screens[screen] != '':
+                    displayMap = self.displayData[screen]
+                    axes = self.fig.add_subplot(screen_position[index])
+                    displayArray = np_utils.array_to_maps(self.subcachmentId, displayMap, self.subcachmentArray)
                     cm = colorsmap.LinearSegmentedColormap.from_list('abc', [(0.4, 0.76, 1), (0, 0.12, 0.2)])
-                    plt = self.axes.imshow(self.resul1_array, cmap=cm)
+                    plt = axes.imshow(displayArray, cmap=cm)
                     self.fig.colorbar(plt)
-                    self.axes.set_title(map)
-                    self.canvas.draw()
+                    axes.set_title(self.screens[screen])
+                    axes.xaxis.set_ticks([])
+                    axes.yaxis.set_ticks([])
+                self.canvas.draw()
+
+            self.lock = False
+            # for index, map in enumerate(self.screens.keys()):
+            #     self.axes = self.fig.add_subplot(screen_position[index])
+            #     if map == 'Landcover':
+            #         self.resul1_array = self._get_landcover(self.currentTime)
+            #         plt = self.axes.imshow(self.resul1_array, cmap=self.landcoverCMaps)
+            #         self.fig.colorbar(plt)
+            #         self.axes.set_title(map)
+            #         self.canvas.draw()
+            #     else:
+            #         self.resul1_array = np_utils.array_to_maps(
+            #             self.subcachmentId,
+            #             output[map][self.currentTime],
+            #             self.subcachmentArray
+            #         )
+            #         cm = colorsmap.LinearSegmentedColormap.from_list('abc', [(0.4, 0.76, 1), (0, 0.12, 0.2)])
+            #         plt = self.axes.imshow(self.resul1_array, cmap=cm)
+            #         self.fig.colorbar(plt)
+            #         self.axes.set_title(map)
+            #         self.canvas.draw()
 
     def _prepare_display(self):
         self.main_frame = self.displayResult
@@ -193,16 +209,21 @@ class OutputMap(
         vbox.addWidget(self.canvas)
         vbox.addWidget(self.mpl_toolbar)
         self.main_frame.setLayout(vbox)
+        # ani = animation.FuncAnimation(self.fig, self.display_selected_maps, interval=1000)
+        # self.canvas.draw()
 
     def update_display(self, output, time):
-        # self.nextBtn.setEnabled(playingState)
-        # self.autoUpdate = playingState
-        # if not playingState:
-        #     self.checkBox.setChecked(False)
-        #
-        #     self.pausingTime = time
-        #     self.timer.stop()
-        self.updateQueue.append((time, output))
+        if time == 100:
+            for var in output.keys():
+                print var, output[var][time].shape
+        if time == 1:
+            for var in output.keys():
+                print var, output[var][time].shape
+        if not self.lock:
+            self.data = output
+        # for screen in self.screens.keys():
+        #     self.displayData[screen] = output[self.screens[screen]][self.currentTime]
+        # print self.isActiveWindow()
 
 if __name__ == "__main__":
     import sys

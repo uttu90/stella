@@ -8,8 +8,6 @@ import constants
 import xlwt
 
 
-
-
 class SimulatingThread(QtCore.QThread):
     def __init__(self, parameters, data):
         super(SimulatingThread, self).__init__()
@@ -2294,29 +2292,29 @@ class SimulatingThread(QtCore.QThread):
                 dt=dt
             )
             self.output['map']['O_EvapoTransAcc'].append(
-                D_ActEvapTransp +
-                D_InterceptEvap
+                np.sum(D_ActEvapTransp +
+                D_InterceptEvap, axis=1).reshape(subcatchment, 1)
             )
             self.output['map']['L_InFlowtoLake'].append(O_InFlowtoLake)
-            self.output['map']['O_PercAcc'].append(D_Percolation)
-            self.output['map']['O_RainAcc'].append(I_DailyRainAmount)
+            self.output['map']['O_PercAcc'].append(np.sum(D_Percolation, axis=1).reshape(subcatchment, 1))
+            self.output['map']['O_RainAcc'].append(np.sum(I_DailyRainAmount, axis=1).reshape(subcatchment, 1))
             self.output['map']['O_SurfQFlowAcc'].append(D_SurfaceFlow)
             self.output['map']['O_BaseFlowAcc'].append(
-                np.multiply(
+                np.sum(np.multiply(
                     D_GWaDisch,
                     np.multiply(I_Simulation_Time >= O_StartMDay,
                                 np.multiply(I_Simulation_Time < O_EndMDay,
                                             isI_StillWarmUp == 0)).transpose()
-                )
+                ), axis=1).reshape(subcatchment, 1)
             )
             self.output['map']['O_DeepInfAcc'].append(
                 D_DeepInfiltration
             )
-            self.output['map']['O_IntercAcc'].append(D_InterceptEvap)
-            self.output['map']['O_SoilQFlowAcc'].append(D_SoilDischarge)
-            self.output['map']['O_InfAcc'].append(D_Infiltration)
+            self.output['map']['O_IntercAcc'].append(np.sum(D_InterceptEvap, axis=1).reshape(subcatchment, 1))
+            self.output['map']['O_SoilQFlowAcc'].append(np.sum(D_SoilDischarge, axis=1).reshape(subcatchment, 1))
+            self.output['map']['O_InfAcc'].append(np.sum(D_Infiltration, axis=1).reshape(subcatchment, 1))
             self.output['map']['D_GWaDisch'].append(D_GWaDisch)
-            self.output['map']['D_SoilDischarge'].append(D_SoilDischarge)
+            self.output['map']['D_SoilDischarge'].append(np.sum(D_SoilDischarge, axis=1).reshape(subcatchment, 1))
 
             # Display Water Balance
             self.output['timeseries']['display']['Water Balance']['Page 1']['I_RFlowdata_mmday'].append(I_RFlowdata_mmday)

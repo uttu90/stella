@@ -235,6 +235,7 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
         self.actionStop.setEnabled(True)
         self.actionRun.setEnabled(False)
         self.actionStop.triggered.connect(self.onActionStop)
+        # self.output['timeseries'] = {}
         self.simulation.start()
 
     def onActionStop(self):
@@ -249,9 +250,9 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
         # self.totalTime.setText(str(simulationTime))
         self.simulatingProgress.setValue(int((time + 1) * 100 / simulationTime))
         self.outputTimeseries.update_display(output['timeseries'], time)
-        if time % self.periodUpdate == 0:
-            if hasattr(self, 'outputMap'):
-                self.outputMap.update_display(output['map'], time)
+        # if time % self.periodUpdate == 0:
+        #     if hasattr(self, 'outputMap'):
+        self.outputMap.update_display(output['map'], time)
 
     def get_parameter_cb(self, diaglog):
         diaglog_name = str(diaglog.objectName())

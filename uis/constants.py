@@ -74,3 +74,6 @@ ouputTimeSeries = [
     'Water Balance',
     'HEPP'
 ]
+
+subcatchmentTicks = range(0, 20)
+landCoverTicks = range(0, 20)
