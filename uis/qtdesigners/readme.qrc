@@ -2,4 +2,21 @@
   <qresource prefix="webview">
     <file>readme.html</file>
   </qresource>
+  <qresource prefix="images">
+    <file>excel_data.PNG</file>
+    <file>grass_and_castle.PNG</file>
+    <file>initial_run.PNG</file>
+    <file>lake.PNG</file>
+    <file>lake_hepp.PNG</file>
+    <file>landcover_maps.PNG</file>
+    <file>mainui.PNG</file>
+    <file>ouput_map.PNG</file>
+    <file>output_timeseries.PNG</file>
+    <file>rainfall.PNG</file>
+    <file>river.PNG</file>
+    <file>soil.PNG</file>
+    <file>soil_structure.PNG</file>
+    <file>subcatchment_balance.PNG</file>
+    <file>subcatchment_maps.PNG</file>
+  </qresource>
 </RCC>

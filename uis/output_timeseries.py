@@ -19,23 +19,58 @@ from matplotlib.backends.backend_qt4agg import (
     FigureCanvasQTAgg as FigureCanvas,
     NavigationToolbar2QT as NavigationToolbar)
 from matplotlib.backends import qt4_compat
+import math
 
 from stella_output import Stella_Output
 
 pages = ['Page 1', 'Page 2', 'Page 3', 'Page 4', 'Page 5']
 display_sections = ['Water Balance', 'HEPP']
-display_colors = {
-    'I_RFlowdata_mmday': 'r',
-    'L_InFlowtoLake': 'b',
+display_configuration = {
+    'I_RFlowdata_mmday': {
+        'color': 'r',
+        'position': 1,
+        'pad': True,
+    },
+    'L_InFlowtoLake': {
+        'color': 'b',
+        'position': 0.85,
+        'pad': False
+    },
+    'O_RainAcc': {
+        'color': 'r',
+        'position': 1,
+        'pad': True
+    },
+    'O_IntercAcc': {
+        'color': 'g',
+        'position': 0.85,
+        'pad': False
+    },
+    'O_EvapoTransAcc': {
+        'color': 'b',
+        'position': 0.7,
+        'pad': False
+    },
 
-    'O_RainAcc': 'g',
-    'O_IntercAcc': 'r',
-    'O_SurfQFlowAcc': 'k',
-    'O_InfAcc': 'b',
+    'O_SurfQFlowAcc': {
+        'color': 'y',
+        'position': 0.55,
+        'pad': False
+    },
+    'O_InfAcc': {
+        'color': 'k',
+        'position': 0.4,
+        'pad': False
+    },
 
-    'O_DeepInfAcc': 'r',
+    'O_DeepInfAcc': {
+        'color': 'g',
+        'position': 0.85,
+        'pad': False
+    },
+
     'O_PercAcc': 'k',
-    'O_EvapoTransAcc': 'grey',
+
     'O_BaseFlowAcc': 'b',
     'O_SoilQFlowAcc': 'y',
 
@@ -56,37 +91,10 @@ display_colors = {
     'L_LakeLevel': 'k',
 }
 
-display_spines = {
-    'I_RFlowdata_mmday': 20,
-    'L_InFlowtoLake': 40,
+colors = ['r', 'g', 'b', 'y', 'k']
+postions = [1, 0.9, 0.8, 0.7, 0.6]
+pads = [3.0, 0.0, 0.0, 0.0, 0.0]
 
-    'O_RainAcc': 20,
-    'O_IntercAcc': 40,
-    'O_SurfQFlowAcc': 60,
-    'O_InfAcc': 80,
-    'O_EvapoTransAcc': 100,
-
-    'O_DeepInfAcc': 15,
-    'O_PercAcc': 30,
-    'O_BaseFlowAcc': 45,
-    'O_SoilQFlowAcc': 60,
-
-    'O_CumRain': 20,
-    'O_CumIntercepEvap': 15,
-    'O_CumEvapotrans': 30,
-    'O_CumSurfQFlow': 45,
-    'O_CumInfiltration': 60,
-
-    'O_CumPercolation': 15,
-    'O_CumDeepInfilt': 30,
-    'O_CumBaseFlow': 45,
-    'O_CumSoilQFlow': 60,
-
-    'L_HEPPWatUseFlow': 0,
-    'L_LakeVol': 15,
-    'L_HEPP_Kwh': 30,
-    'L_LakeLevel': 45,
-}
 
 class OutputTimeseries(
     QtGui.QDialog,
@@ -109,6 +117,8 @@ class OutputTimeseries(
         self.page4Btn.clicked.connect(self._select_page_4)
         self.page5Btn.clicked.connect(self._select_page_5)
         self.lock = False
+        self.min = {}
+        self.max = {}
 
     def _clear_waterBalance_page(self):
         for page in pages:
@@ -171,6 +181,9 @@ class OutputTimeseries(
         ani = animation.FuncAnimation(self.fig, self.display_selected_maps, interval=1000)
         self.ax1 = self.fig.add_subplot(211)
         self.ax1.yaxis.set_ticks([])
+        self.wbAxes = {
+
+        }
         self.waterBalanceAxes = {
             'I_RFlowdata_mmday': self.ax1.twinx(),
             'L_InFlowtoLake': self.ax1.twinx(),
@@ -207,13 +220,47 @@ class OutputTimeseries(
         }
         canvas.draw()
 
+    def clear_axes(self):
+        for page in pages:
+            if not page == self.selected_page:
+                for timeseries in self.waterBalanceData[page].keys():
+                    try:
+                        self.wbAxes[timeseries].set_visible(False)
+                    except KeyError:
+                        None
+
     def display_selected_maps(self, i):
         if self.isActiveWindow():
             self.lock = True
-            self.ax1.clear()
-            for timeseries in self.waterBalanceData[self.selected_page].keys():
-                self.waterBalanceAxes[timeseries].clear()
-                self.waterBalanceAxes[timeseries].plot(self.waterBalanceData[self.selected_page][timeseries], color=display_colors[timeseries])
+            self.clear_axes()
+            ax1 = self.fig.add_subplot(211)
+            ax1.clear()
+            lines = []
+            for index, timeseries in enumerate(self.waterBalanceData[self.selected_page].keys()):
+                try:
+                    axes = self.wbAxes[timeseries]
+                except KeyError:
+                    self.wbAxes[timeseries] = ax1.twinx()
+                    axes = self.wbAxes[timeseries]
+                axeplot, = axes.plot(self.waterBalanceData[self.selected_page][timeseries], color=colors[index], label=timeseries)
+                lines.append(axeplot)
+                axes.yaxis.set_ticks([])
+                # axes.set_frame_on(True)
+                axes.set_visible(True)
+                # axes.set_title(timeseries)
+                # axes.patch.set_visible(False)
+                # for sp in axes.spines.values():
+                #     sp.set_visible(False)
+                axes.yaxis.tick_left()
+                ax1.yaxis.set_ticks([])
+                self.min[timeseries], y_max = axes.get_ylim()
+                # self.max[timeseries] = math.ceil(y_max/100) * 100
+                axes.set_yticks([self.min[timeseries], y_max * postions[index]])
+                axes.set_yticklabels(['0', '%0.4f' %(y_max)])
+
+                axes.tick_params('y', colors=colors[index], length=pads[index])
+                ax1.legend(lines, [l.get_label() for l in lines])
+                # print timeseries, axes.get_ylim()
                 # self.waterBalanceAxes[timeseries].spines['right'].set_position(('outward', display_spines[timeseries]))
                 # self.waterBalanceAxes[timeseries].yaxis.set_ticks([max(self.waterBalanceData[self.selected_page][timeseries]) or [0]])
             self.ax2.clear()
@@ -225,6 +272,7 @@ class OutputTimeseries(
     def update_display(self, output, time):
         self.dayProgress.display(time)
         self.yearProgress.display(time / 365 + 1)
+        # self.currentTime = time
         if not self.lock:
             self.waterBalanceData = output['display']['Water Balance']
             self.heppData = output['display']['HEPP']

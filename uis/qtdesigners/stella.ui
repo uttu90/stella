@@ -71,7 +71,7 @@
          <item row="0" column="4">
           <widget class="QProgressBar" name="simulatingProgress">
            <property name="value">
-            <number>24</number>
+            <number>0</number>
            </property>
           </widget>
          </item>
@@ -111,11 +111,6 @@
      <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuREADME">
-    <property name="title">
-     <string>README</string>
-    </property>
-   </widget>
    <widget class="QMenu" name="menuINPUT">
     <property name="title">
      <string>INPUT</string>
@@ -166,13 +161,19 @@
     </property>
     <addaction name="actionLandcover_colors"/>
    </widget>
-   <addaction name="menuREADME"/>
+   <widget class="QMenu" name="menuHELP">
+    <property name="title">
+     <string>HELP</string>
+    </property>
+    <addaction name="actionReadme"/>
+   </widget>
    <addaction name="menuINPUT"/>
    <addaction name="menuRUN_SPECS"/>
    <addaction name="menuOUTPUT"/>
    <addaction name="menuSIMULATION"/>
    <addaction name="menuLANGUAGE"/>
    <addaction name="menuOPTIONS"/>
+   <addaction name="menuHELP"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -300,6 +301,11 @@
   <action name="actionLandcover_colors">
    <property name="text">
     <string>Landcover Colors</string>
+   </property>
+  </action>
+  <action name="actionReadme">
+   <property name="text">
+    <string>Genriver Python</string>
    </property>
   </action>
  </widget>

@@ -20,6 +20,7 @@ import output_map
 import output_timeseries
 import landcover_info
 import copyright_view
+import readme
 
 
 class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
@@ -27,6 +28,8 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
         super(Stella_Main_Window, self).__init__(parent)
         self.setupUi(self)
         self.parameters = dict()
+        self.readme_Diaglog = readme.Readme(self)
+        self.actionReadme.triggered.connect(self.openReadme)
         self.inputRiver_Diaglog = input_river.Input_River_Diaglog(self)
         self.inputRiver_Diaglog.setObjectName("River")
         self.inputRainfall_Diaglog = input_rainfall.Input_Rainfall_Diaglog(self)
@@ -129,8 +132,11 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
         for time_result in ouputTimeSeries:
             self.output['timeseries'][time_result] = []
         self.actionStop.setEnabled(False)
-        self.totalTime = self.parameters['Run_Specs']['runto']
+        self.totalTime.setText(str(self.parameters['Run_Specs']['runto']))
         # self.outputTimeseries = output_timeseries.OutputTimeseries()
+
+    def openReadme(self):
+        self.readme_Diaglog.show()
 
     def actionDiaglog(self, diaglog):
         diaglog.show()
