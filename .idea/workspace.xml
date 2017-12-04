@@ -33,31 +33,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="copyright_ui.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/uis/qtdesigners/copyright_ui.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="copyright.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/uis/qtdesigners/copyright.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2142">
-              <caret line="126" column="0" lean-forward="false" selection-start-line="126" selection-start-column="0" selection-end-line="126" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="output_timeseries.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="output_timeseries.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/uis/output_timeseries.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="211">
-              <caret line="258" column="49" lean-forward="false" selection-start-line="258" selection-start-column="49" selection-end-line="258" selection-end-column="49" />
+            <state relative-caret-position="1853">
+              <caret line="132" column="29" lean-forward="false" selection-start-line="132" selection-start-column="29" selection-end-line="132" selection-end-column="29" />
               <folding>
                 <element signature="e#0#27#0" expanded="true" />
               </folding>
@@ -65,11 +45,47 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="model.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="landcover_info.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/uis/landcover_info.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="35" column="4" lean-forward="false" selection-start-line="35" selection-start-column="4" selection-end-line="39" selection-end-column="41" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="landcover_info_view.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/uis/landcover_info_view.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="493">
+              <caret line="34" column="28" lean-forward="false" selection-start-line="34" selection-start-column="28" selection-end-line="34" selection-end-column="28" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="output_map.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/uis/output_map.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="782">
+              <caret line="68" column="50" lean-forward="false" selection-start-line="68" selection-start-column="50" selection-end-line="68" selection-end-column="50" />
+              <folding>
+                <element signature="e#0#27#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="model.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="39729">
-              <caret line="2344" column="116" lean-forward="false" selection-start-line="2319" selection-start-column="12" selection-end-line="2344" selection-end-column="116" />
+            <state relative-caret-position="338">
+              <caret line="2432" column="75" lean-forward="false" selection-start-line="2432" selection-start-column="75" selection-end-line="2432" selection-end-column="75" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -80,8 +96,8 @@
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/uis/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="129" column="49" lean-forward="false" selection-start-line="129" selection-start-column="49" selection-end-line="129" selection-end-column="49" />
+            <state relative-caret-position="1802">
+              <caret line="128" column="42" lean-forward="false" selection-start-line="128" selection-start-column="42" selection-end-line="128" selection-end-column="42" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -111,6 +127,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="landcover_info.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/landcover_info.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="680">
+              <caret line="40" column="54" lean-forward="false" selection-start-line="40" selection-start-column="54" selection-end-line="40" selection-end-column="54" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -122,10 +148,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>I_Rain_IntensMean</find>
-      <find>RainN</find>
-      <find>O_RainAcc</find>
-      <find>stock</find>
       <find>[time]</find>
       <find>calculate</find>
       <find>calculate.update</find>
@@ -152,6 +174,10 @@
       <find>reshape</find>
       <find>totalTime</find>
       <find>currentTime</find>
+      <find>waterBalanceAxes</find>
+      <find>L_HEPPWatUseFlow</find>
+      <find>_clear_waterBalance_page</find>
+      <find>L_LakeVol</find>
     </findStrings>
     <replaceStrings>
       <replace>I_DailyRain</replace>
@@ -192,8 +218,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$USER_HOME$/PycharmProjects/stella-ui/utils.py" />
-        <option value="$USER_HOME$/PycharmProjects/stella-ui/constants.py" />
         <option value="$PROJECT_DIR$/uis/output_timeseries_ui.py" />
         <option value="$PROJECT_DIR$/spatrain.py" />
         <option value="$PROJECT_DIR$/uis/stella_output.py" />
@@ -220,7 +244,6 @@
         <option value="$PROJECT_DIR$/uis/copyright_view.py" />
         <option value="$PROJECT_DIR$/uis/copyright_ui.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/uis/landcover_info.py" />
         <option value="$PROJECT_DIR$/Equations.TXT" />
         <option value="$USER_HOME$/PycharmProjects/stella_map/utils.py" />
         <option value="$PROJECT_DIR$/uis/stella_ui.py" />
@@ -238,11 +261,14 @@
         <option value="$PROJECT_DIR$/calculate.py" />
         <option value="$PROJECT_DIR$/uis/constants.py" />
         <option value="$PROJECT_DIR$/model.py" />
-        <option value="$PROJECT_DIR$/uis/output_map.py" />
         <option value="$PROJECT_DIR$/uis/qtdesigners/copyright_ui.py" />
         <option value="$PROJECT_DIR$/uis/qtdesigners/readme.py" />
         <option value="$PROJECT_DIR$/uis/__init__.py" />
         <option value="$PROJECT_DIR$/uis/output_timeseries.py" />
+        <option value="$PROJECT_DIR$/landcover_info.json" />
+        <option value="$PROJECT_DIR$/uis/landcover_info.py" />
+        <option value="$PROJECT_DIR$/uis/output_map.py" />
+        <option value="$PROJECT_DIR$/uis/landcover_info_view.py" />
       </list>
     </option>
   </component>
@@ -335,7 +361,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="utils" />
+              <option name="myItemId" value="uis" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -350,6 +376,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="uis" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="qtdesigners" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -374,19 +404,19 @@
     </option>
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\PHUONGTRANG\Documents\GitHub\stella\uis" />
-      <recent name="C:\Users\adm\PycharmProjects\stella-ui\old" />
-      <recent name="C:\Users\adm\PycharmProjects\stella-ui\uis" />
-      <recent name="C:\Users\adm\PycharmProjects\stella-ui\uis\qtdesigners" />
-      <recent name="C:\Users\adm\Documents\GitHub\stella\utils" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\PHUONGTRANG\Documents\GitHub\stella\uis" />
       <recent name="C:\Users\PHUONGTRANG\Documents\GitHub\stella\uis\qtdesigners" />
       <recent name="C:\Users\PHUONGTRANG\Documents\GitHub\stella" />
       <recent name="C:\Users\adm\Documents\GitHub\stella\uis" />
       <recent name="C:\Users\adm\PycharmProjects\stella-ui\uis\qtdesigners" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\PHUONGTRANG\Documents\GitHub\stella\uis" />
+      <recent name="C:\Users\adm\PycharmProjects\stella-ui\old" />
+      <recent name="C:\Users\adm\PycharmProjects\stella-ui\uis" />
+      <recent name="C:\Users\adm\PycharmProjects\stella-ui\uis\qtdesigners" />
+      <recent name="C:\Users\adm\Documents\GitHub\stella\utils" />
     </key>
   </component>
   <component name="RunManager" selected="Python.stella">
@@ -643,27 +673,27 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18594436" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18594436" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3559055" sideWeight="0.5204978" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.49703264" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3280757" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22204724" sideWeight="0.4795022" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39708266" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22204724" sideWeight="0.4795022" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.07874016" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32901135" sideWeight="0.49703264" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39708266" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -691,34 +721,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/uis/landcover_info_ui.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="16" lean-forward="false" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/uis/input_subcatchment_balance_ui.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/uis/input_subcatchment_balance.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="21" column="15" lean-forward="false" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/uis/qtdesigners/output_map_ui.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/uis/copyright_rc.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -730,20 +732,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
           <caret line="27" column="32" lean-forward="false" selection-start-line="27" selection-start-column="32" selection-end-line="27" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/uis/landcover_info.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/uis/landcover_info.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="80" column="0" lean-forward="false" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -926,7 +914,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="8" lean-forward="false" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -955,7 +942,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -963,7 +949,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2142">
           <caret line="126" column="0" lean-forward="false" selection-start-line="126" selection-start-column="0" selection-end-line="126" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -971,13 +956,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="7" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/uis/output_map.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="171" column="42" lean-forward="false" selection-start-line="171" selection-start-column="42" selection-end-line="171" selection-end-column="42" />
         </state>
       </provider>
     </entry>
@@ -1010,16 +988,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/uis/readme.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="3" column="12" lean-forward="false" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/uis/stella_ui.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -1027,13 +995,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model.py">
+    <entry file="file://$PROJECT_DIR$/uis/output_timeseries.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="39729">
-          <caret line="2344" column="116" lean-forward="false" selection-start-line="2319" selection-start-column="12" selection-end-line="2344" selection-end-column="116" />
+        <state relative-caret-position="1853">
+          <caret line="132" column="29" lean-forward="false" selection-start-line="132" selection-start-column="29" selection-end-line="132" selection-end-column="29" />
           <folding>
-            <element signature="e#0#24#0" expanded="true" />
+            <element signature="e#0#27#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/uis/landcover_info.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-308">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1045,22 +1020,84 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/landcover_info.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="40" column="54" lean-forward="false" selection-start-line="40" selection-start-column="54" selection-end-line="40" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/uis/readme.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="3" column="12" lean-forward="false" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/uis/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="129" column="49" lean-forward="false" selection-start-line="129" selection-start-column="49" selection-end-line="129" selection-end-column="49" />
+        <state relative-caret-position="1802">
+          <caret line="128" column="42" lean-forward="false" selection-start-line="128" selection-start-column="42" selection-end-line="128" selection-end-column="42" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/uis/output_timeseries.py">
+    <entry file="file://$PROJECT_DIR$/uis/qtdesigners/landcover_info_view.ui">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="258" column="49" lean-forward="false" selection-start-line="258" selection-start-column="49" selection-end-line="258" selection-end-column="49" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/uis/landcover_info_view_ui.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/uis/output_map.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="782">
+          <caret line="68" column="50" lean-forward="false" selection-start-line="68" selection-start-column="50" selection-end-line="68" selection-end-column="50" />
           <folding>
             <element signature="e#0#27#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/uis/landcover_info.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="35" column="4" lean-forward="false" selection-start-line="35" selection-start-column="4" selection-end-line="39" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/uis/landcover_info_view.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="34" column="28" lean-forward="false" selection-start-line="34" selection-start-column="28" selection-end-line="34" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="2432" column="75" lean-forward="false" selection-start-line="2432" selection-start-column="75" selection-end-line="2432" selection-end-column="75" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>

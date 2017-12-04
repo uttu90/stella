@@ -19,7 +19,7 @@ from matplotlib.backends.backend_qt4agg import (
     NavigationToolbar2QT as NavigationToolbar)
 from matplotlib.backends import qt4_compat
 from stella_output import Stella_Output
-import landcover_info
+import landcover_info_view
 from functools import partial
 
 mapDataToDisplay = {
@@ -66,7 +66,7 @@ class OutputMap(
         # self.timer.timeout.connect(self._timer_timeout)
         # if self.autoUpdate:
         #     self.timer.start(3000)
-        self.landcoverDialog = landcover_info.LandcoverInfo()
+        self.landcoverDialog = landcover_info_view.LandcoverInfo()
         self.landcoverColors = self.landcoverDialog.colorResult
         self.landcoverCMaps = colorsmap.ListedColormap(self.landcoverColors)
         # print(self.landcoverCMaps)

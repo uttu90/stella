@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>573</width>
-    <height>276</height>
+    <height>202</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>200</x>
-     <y>210</y>
+     <y>160</y>
      <width>341</width>
      <height>32</height>
     </rect>
@@ -40,42 +40,6 @@
    </property>
    <property name="text">
     <string>DT</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="inputSimulationFile">
-   <property name="geometry">
-    <rect>
-     <x>200</x>
-     <y>110</y>
-     <width>251</width>
-     <height>20</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="selectSimulationFile">
-   <property name="geometry">
-    <rect>
-     <x>470</x>
-     <y>110</y>
-     <width>75</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Select</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_131">
-   <property name="geometry">
-    <rect>
-     <x>260</x>
-     <y>80</y>
-     <width>161</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Choose Python simulation file</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="runfrom">
@@ -177,68 +141,6 @@
    </property>
    <property name="text">
     <string>2</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>160</y>
-     <width>81</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Output update</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="outputUpdate">
-   <property name="geometry">
-    <rect>
-     <x>120</x>
-     <y>160</y>
-     <width>51</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>100</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_132">
-   <property name="geometry">
-    <rect>
-     <x>260</x>
-     <y>140</y>
-     <width>161</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Choose output folder</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="outputFolder">
-   <property name="geometry">
-    <rect>
-     <x>200</x>
-     <y>160</y>
-     <width>251</width>
-     <height>20</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="selectOuputFolder">
-   <property name="geometry">
-    <rect>
-     <x>470</x>
-     <y>160</y>
-     <width>75</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Select</string>
    </property>
   </widget>
  </widget>

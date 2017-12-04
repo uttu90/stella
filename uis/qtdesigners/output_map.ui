@@ -51,7 +51,7 @@
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>Input day to go</string>
+          <string>Choose day to go</string>
          </property>
         </widget>
        </item>

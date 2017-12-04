@@ -504,7 +504,7 @@
         </size>
        </property>
        <property name="title">
-        <string>HEEP</string>
+        <string>HEPP</string>
        </property>
        <widget class="QLabel" name="label">
         <property name="geometry">
@@ -558,11 +558,6 @@
          <string>L_LakeLevel</string>
         </property>
        </widget>
-       <zorder>label</zorder>
-       <zorder>label_2</zorder>
-       <zorder>label_3</zorder>
-       <zorder>label_4</zorder>
-       <zorder>groupBox_2</zorder>
       </widget>
      </item>
      <item>
@@ -603,9 +598,6 @@
     </widget>
    </item>
   </layout>
-  <zorder>verticalLayoutWidget</zorder>
-  <zorder>label_168</zorder>
-  <zorder>displayResult</zorder>
  </widget>
  <resources/>
  <connections/>

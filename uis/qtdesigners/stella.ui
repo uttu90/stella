@@ -49,7 +49,7 @@
           <widget class="QLabel" name="totalTime">
            <property name="minimumSize">
             <size>
-             <width>35</width>
+             <width>30</width>
              <height>0</height>
             </size>
            </property>
@@ -78,7 +78,7 @@
          <item row="0" column="2">
           <widget class="QLabel" name="label_2">
            <property name="text">
-            <string>simulating time: </string>
+            <string>Simulating time: </string>
            </property>
           </widget>
          </item>
@@ -160,11 +160,13 @@
      <string>OPTIONS</string>
     </property>
     <addaction name="actionLandcover_colors"/>
+    <addaction name="actionSubcatchmentColors"/>
    </widget>
    <widget class="QMenu" name="menuHELP">
     <property name="title">
      <string>HELP</string>
     </property>
+    <addaction name="actionCopyright"/>
     <addaction name="actionReadme"/>
    </widget>
    <addaction name="menuINPUT"/>
@@ -300,12 +302,22 @@
   </action>
   <action name="actionLandcover_colors">
    <property name="text">
-    <string>Landcover Colors</string>
+    <string>Landcover Settings</string>
    </property>
   </action>
   <action name="actionReadme">
    <property name="text">
-    <string>Genriver Python</string>
+    <string>Model Manual</string>
+   </property>
+  </action>
+  <action name="actionSubcatchmentColors">
+   <property name="text">
+    <string>Subcatchment Settings</string>
+   </property>
+  </action>
+  <action name="actionCopyright">
+   <property name="text">
+    <string>Copyright</string>
    </property>
   </action>
  </widget>
