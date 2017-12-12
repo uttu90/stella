@@ -1,5 +1,5 @@
 import PyQt4.QtGui as QtGui
-import input_run_specs_ui
+from qtdesigners import input_run_specs_ui
 from os import path as file_path
 import stella_input
 import excel_utils as utils
@@ -14,8 +14,8 @@ class Input_Run_Specs_Diaglog(
         self.inputData = dict()
         self.file = 'input_run_specs.json'
         self.selectDataFile.clicked.connect(self.get_data_file)
-        self.selectSimulationFile.clicked.connect(self.get_simulation_file)
-        self.selectOuputFolder.clicked.connect(self.get_output_folder)
+        # self.selectSimulationFile.clicked.connect(self.get_simulation_file)
+        # self.selectOuputFolder.clicked.connect(self.get_output_folder)
         if file_path.isfile(self.file):
             self._initiate_value()
         else:

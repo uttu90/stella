@@ -1,6 +1,6 @@
 import PyQt4.QtGui as QtGui
 from os import path as file_path
-import input_lake_hepp_ui
+from qtdesigners import input_lake_hepp_ui
 import stella_input
 
 

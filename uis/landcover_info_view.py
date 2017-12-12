@@ -3,14 +3,19 @@ from PyQt4 import QtGui, QtCore
 from functools import partial
 import json
 
-import landcover_info_view_ui
+from qtdesigners import landcover_info_view_ui
 
 
 class LandcoverInfo(QtGui.QDialog, landcover_info_view_ui.Ui_landcover_dlg):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, landcover=True):
         super(LandcoverInfo, self).__init__(parent)
         self.setupUi(self)
-        self.file = 'landcover_info.json'
+        if landcover:
+            self.file = 'landcover_info.json'
+            self.setWindowTitle('Landcover info')
+        else:
+            self.file = 'subcatchment_info.json'
+            self.setWindowTitle('Subcatchment info')
         self.data = {}
         self.colorResult = [None for _ in range(1, 21)]
         if os.path.isfile(self.file):

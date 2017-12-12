@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\input_subcatchment_map.ui'
+# Form implementation generated from reading ui file 'input_subcatchment_map.ui'
 #
 # Created by: PyQt4 UI code generator 4.11.4
 #
@@ -26,6 +26,9 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
         Dialog.resize(468, 177)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/background/GenRiver logo.jpg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        Dialog.setWindowIcon(icon)
         self.buttonBox = QtGui.QDialogButtonBox(Dialog)
         self.buttonBox.setGeometry(QtCore.QRect(100, 130, 341, 32))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
@@ -51,3 +54,4 @@ class Ui_Dialog(object):
         self.label.setText(_translate("Dialog", "Subcatchment Map", None))
         self.subcatchmentMap_btn.setText(_translate("Dialog", "Choose File", None))
 
+import images_rc

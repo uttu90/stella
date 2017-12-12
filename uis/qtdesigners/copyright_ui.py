@@ -26,6 +26,9 @@ class Ui_genRiver(object):
     def setupUi(self, genRiver):
         genRiver.setObjectName(_fromUtf8("genRiver"))
         genRiver.resize(766, 518)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/background/GenRiver logo.jpg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        genRiver.setWindowIcon(icon)
         self.gridLayout = QtGui.QGridLayout(genRiver)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         self.webView = QtWebKit.QWebView(genRiver)
@@ -41,3 +44,4 @@ class Ui_genRiver(object):
 
 from PyQt4 import QtWebKit
 import copyright_rc
+import images_rc

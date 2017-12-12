@@ -1,6 +1,6 @@
 import PyQt4.QtGui as QtGui
 import os.path as file_path
-import input_grass_and_cattle_ui
+from qtdesigners import input_grass_and_cattle_ui
 import stella_input
 
 

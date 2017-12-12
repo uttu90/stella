@@ -26,6 +26,9 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
         Dialog.resize(692, 387)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/background/GenRiver logo.jpg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        Dialog.setWindowIcon(icon)
         self.buttonBox = QtGui.QDialogButtonBox(Dialog)
         self.buttonBox.setGeometry(QtCore.QRect(340, 340, 341, 32))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
@@ -232,3 +235,4 @@ class Ui_Dialog(object):
         self.I_SurfLossFrac.setText(_translate("Dialog", "0", None))
         self.I_RiverflowDispersalFactor.setText(_translate("Dialog", "0.6", None))
 
+import images_rc

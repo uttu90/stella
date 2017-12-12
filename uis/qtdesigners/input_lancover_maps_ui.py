@@ -26,6 +26,9 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
         Dialog.resize(548, 360)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/background/GenRiver logo.jpg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        Dialog.setWindowIcon(icon)
         self.buttonBox = QtGui.QDialogButtonBox(Dialog)
         self.buttonBox.setGeometry(QtCore.QRect(190, 320, 341, 32))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
@@ -84,3 +87,4 @@ class Ui_Dialog(object):
         self.landCoverMap_btn3.setText(_translate("Dialog", "Choose File", None))
         self.landCoverMap_btn4.setText(_translate("Dialog", "Choose File", None))
 
+import images_rc

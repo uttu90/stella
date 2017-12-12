@@ -1,5 +1,5 @@
 import PyQt4.QtGui as QtGui
-import input_subcatchment_map_ui
+from qtdesigners import input_subcatchment_map_ui
 from os import path as file_path
 import stella_input
 import excel_utils as utils

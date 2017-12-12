@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Output Timeseries</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="images.qrc">
+    <normaloff>:/background/GenRiver logo.jpg</normaloff>:/background/GenRiver logo.jpg</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -599,6 +603,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
  <connections/>
 </ui>

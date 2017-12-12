@@ -1,5 +1,5 @@
 import PyQt4.QtGui as QtGui
-import input_initial_run_ui
+from qtdesigners import input_initial_run_ui
 import os.path as file_path
 import stella_input
 

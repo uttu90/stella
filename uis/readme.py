@@ -1,5 +1,5 @@
 from PyQt4 import QtGui
-import readme_ui
+from qtdesigners import readme_ui
 
 class Readme(QtGui.QDialog, readme_ui.Ui_readme):
     def __init__(self, parent=None):

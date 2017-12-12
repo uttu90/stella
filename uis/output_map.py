@@ -1,9 +1,11 @@
+import sys
+import gc
 import PyQt4.QtGui as QtGui
 import PyQt4.QtCore as QtCore
-import output_map_ui
+from qtdesigners import output_map_ui
 import constants
 from osgeo import gdal
-import numpy
+import numpy as np
 import os.path as file_path
 
 from utils import np_utils
@@ -26,11 +28,25 @@ mapDataToDisplay = {
 
 }
 
+screens = [
+    'screen 1',
+    'screen 2',
+    'screen 3',
+    'screen 4',
+]
+
+mapScreens = {
+    'screen 1': ['subcatchment', 'landcover'],
+    'screen 2': ['L_InFlowtoLake', 'O_PercAcc', 'O_EvapoTransAcc', 'O_RainAcc'],
+    'screen 3': ['O_SurfQFlowAcc', 'O_DeepInfAcc', 'O_BaseFlowAcc', 'O_IntercAcc'],
+    'screen 4': ['O_SoilQFlowAcc', 'D_GWaDisch', 'O_InfAcc', 'D_SoilDischarge'],
+}
+
 class OutputMap(
     QtGui.QDialog,
     output_map_ui.Ui_Dialog,
     Stella_Output):
-    def __init__(self, parent=None, subcatchment='', landcover='', period=[]):
+    def __init__(self, parent=None, subcatchment='', landcover='', period=[], simulationTime=10000):
         super(OutputMap, self).__init__(parent)
         self.setupUi(self)
 
@@ -40,35 +56,31 @@ class OutputMap(
                 ds = gdal.Open(landcoverFile)
                 band = ds.GetRasterBand(1)
                 DataArray = band.ReadAsArray()
-                landcoverArray = numpy.ma.masked_where(
+                landcoverArray = np.ma.masked_where(
                     DataArray <= 0,
                     DataArray
                 )
                 self.landcoverArrays.append(landcoverArray)
-        self
         self.nextBtn.clicked.connect(self._next)
         self.backBtn.clicked.connect(self._back)
-        # self.period = period
+        self.period = period
         self._prepare_display()
-        self.subcachmentId = [_ for _ in range(1, 21)]
+        self.subcachmentId = [2, 4, 12, 11, 13, 9, 1, 3, 7, 6, 5, 14, 18, 8, 19, 16, 15, 10, 17, 20]
         if file_path.isfile(subcatchment):
-            print 'aldfja;fkja;flkajf;lkajf;alkjfa;lfjkalskfja;fjkl'
             ds = gdal.Open(subcatchment)
             band = ds.GetRasterBand(1)
             subcachmentArray = band.ReadAsArray()
-            self.subcachmentArray = numpy.ma.masked_where(
+            self.subcachmentArray = np.ma.masked_where(
                 subcachmentArray <= 0,
                 subcachmentArray
             )
-        # self.updateQueue = []
-        # self.currentTime = 0
-        # self.timer = QtCore.QTimer(self)
-        # self.timer.timeout.connect(self._timer_timeout)
-        # if self.autoUpdate:
-        #     self.timer.start(3000)
+
         self.landcoverDialog = landcover_info_view.LandcoverInfo()
-        self.landcoverColors = self.landcoverDialog.colorResult
-        self.landcoverCMaps = colorsmap.ListedColormap(self.landcoverColors)
+        landcoverColors = self.landcoverDialog.colorResult
+        self.subcatchmentDiaglog = landcover_info_view.LandcoverInfo(self, landcover=False)
+        subcatchmentColors = self.subcatchmentDiaglog.colorResult
+        self.landcoverCMaps = colorsmap.ListedColormap(landcoverColors)
+        self.subcatchmentCMaps = colorsmap.ListedColormap(subcatchmentColors)
         # print(self.landcoverCMaps)
         self.screens = {
             'screen 1': '',
@@ -84,6 +96,8 @@ class OutputMap(
         }
 
         self.data = {}
+        for mapName in constants.outputMap:
+            self.data[mapName] = np.empty(simulationTime, dtype=object)
 
         for index, screen in enumerate([self.screen1GroupBox, self.screen2GroupBox, self.screen3GroupBox, self.screen4GroupBox]):
             for radioBtn in screen.children():
@@ -152,14 +166,13 @@ class OutputMap(
     def display_selected_maps(self):
         screen_position = [221, 222, 223, 224]
         if self.isVisible():
-            for screen in self.screens.keys():
+            for screen in screens:
                 if screen != 'screen 1' and self.screens[screen] != '':
                     self.displayData[screen] = self.data[self.screens[screen]][self.currentTime]
-            print self.displayData
             self.dayLCD.display(self.currentTime)
             self.fig.clear()
             self.lock = True
-            for index, screen in enumerate(self.screens.keys()):
+            for index, screen in enumerate(screens):
                 if screen != 'screen 1' and self.screens[screen] != '':
                     displayMap = self.displayData[screen]
                     axes = self.fig.add_subplot(screen_position[index])
@@ -168,8 +181,27 @@ class OutputMap(
                     plt = axes.imshow(displayArray, cmap=cm)
                     self.fig.colorbar(plt)
                     axes.set_title(self.screens[screen])
-                    axes.xaxis.set_ticks([])
-                    axes.yaxis.set_ticks([])
+                    # axes.xaxis.set_ticks([])
+                    # axes.yaxis.set_ticks([])
+                else:
+                    if screen == 'screen 1':
+                        if self.screens['screen 1'] == 'Landcover map':
+                            displayArray = self._get_landcover(self.currentTime)
+                            axes = self.fig.add_subplot(221)
+                            # cm = colorsmap.LinearSegmentedColormap.from_list('abc', [(0.4, 0.76, 1), (0, 0.12, 0.2)])
+                            plt = axes.imshow(displayArray, cmap=self.landcoverCMaps)
+                            self.fig.colorbar(plt, ticks=range(1, 21))
+                            axes.set_title('landcover')
+                        # axes.xaxis.set_ticks([])
+                        # axes.yaxis.set_ticks([])
+                        if self.screens['screen 1'] == 'Subcatchment map':
+                            # displayArray = self.subcachmentArray
+                            axes = self.fig.add_subplot(221)
+                            plt = axes.imshow(self.subcachmentArray, cmap=self.subcatchmentCMaps)
+                            self.fig.colorbar(plt, ticks=range(1, 21))
+                            axes.set_title('subcatchment')
+                axes.xaxis.set_ticks([])
+                axes.yaxis.set_ticks([])
                 self.canvas.draw()
 
             self.lock = False
@@ -213,17 +245,21 @@ class OutputMap(
         # self.canvas.draw()
 
     def update_display(self, output, time):
-        if time == 100:
-            for var in output.keys():
-                print var, output[var][time].shape
-        if time == 1:
-            for var in output.keys():
-                print var, output[var][time].shape
-        if not self.lock:
-            self.data = output
+        for mapName in constants.outputMap:
+            self.data[mapName] = output[mapName]
+        del output
+        # if time == 100:
+        #     for var in output.keys():
+        #         print var, output[var][time].shape
+        # if time == 1:
+        #     for var in output.keys():
+        #         print var, output[var][time].shape
+        # if not self.lock:
+        #     self.data = output
         # for screen in self.screens.keys():
         #     self.displayData[screen] = output[self.screens[screen]][self.currentTime]
         # print self.isActiveWindow()
+
 
 if __name__ == "__main__":
     import sys

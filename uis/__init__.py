@@ -1,9 +1,10 @@
 import imp
+import sys
 from os import path as file_path
 from PyQt4 import QtCore, QtGui
 from functools import partial
 
-from stella_ui import Ui_MainWindow
+from qtdesigners.stella_ui import Ui_MainWindow
 import input_grass_and_cattle
 import input_lake
 import input_subcatchment_balance
@@ -79,6 +80,10 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
         self.inputSubcatchment_maps_Diaglog.setObjectName("Subcatchment_map")
         self.inputLandcover_colors_Diaglog = landcover_info.LandcoverInfo(self)
         self.inputLandcover_colors_Diaglog.setObjectName("Landcover_info")
+        self.inputSubcatchmentColors_Diaglog = landcover_info.LandcoverInfo(self, landcover=False)
+        self.inputSubcatchmentColors_Diaglog.setObjectName("Subcatchment_info")
+        # self.actionSubcatchmentColors
+        # self.landcover
         copyright = copyright_view.Copyright(self)
         copyright.show()
         for diaglog in self.children():
@@ -168,12 +173,6 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
             self._show_message(dir_name, message, func)
 
     def onActionRun(self):
-        simulation_file = self.parameters['Run_Specs']['inputSimulationFile']
-        self._check_file(
-            'simulation file',
-            simulation_file,
-            self.inputRun_Specs_Diaglog.get_simulation_file
-        )
         subcatchment_file = self.parameters['Subcatchment_map']['subcatchmentMap']
         self._check_file(
             'subcatchment file',
@@ -198,12 +197,7 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
             inputdata_file,
             self.inputRun_Specs_Diaglog.get_data_file
         )
-        output_folder = self.parameters['Run_Specs']['outputFolder']
-        self._check_dir(
-            'output_folder',
-            output_folder,
-            self.inputRun_Specs_Diaglog.get_output_folder
-        )
+
         self.get_parameter(self.inputRun_Specs_Diaglog)
         self.get_parameter(self.inputLandcover_maps_Diaglog)
         self.get_parameter(self.inputSubcatchment_maps_Diaglog)
@@ -212,13 +206,14 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
         self.data = self.inputRun_Specs_Diaglog.inputData
         self.simulation_module = imp.load_source(
             'model',
-            self.parameters['Run_Specs']['inputSimulationFile'])
+            'model.py')
         self.simulation = self.simulation_module.SimulatingThread(
             parameters=self.parameters,
             data=self.inputRun_Specs_Diaglog.inputData
         )
         self.connect(self.simulation, QtCore.SIGNAL("update"),
                      self.update_result)
+
         landcover_files = [
             self.parameters['Landcover_maps']['landcoverMap_1'],
             self.parameters['Landcover_maps']['landcoverMap_2'],
@@ -230,35 +225,43 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
             int(self.parameters['Initial_Run']['I_StartMYear_2']),
             int(self.parameters['Initial_Run']['I_StartMYear_3'])
         ]
+        simulationTime = int(self.parameters['Run_Specs']['runto'])
         self.outputMap = output_map.OutputMap(
             subcatchment=self.parameters['Subcatchment_map']['subcatchmentMap'],
             landcover=landcover_files,
-            period=year_period
+            period=year_period,
+            simulationTime=simulationTime
         )
         self.outputTimeseries = output_timeseries.OutputTimeseries(
-            outputFolder = self.parameters['Run_Specs']['outputFolder']
+            outputFolder = '',
+            simulationTime=simulationTime
         )
         self.actionStop.setEnabled(True)
         self.actionRun.setEnabled(False)
         self.actionStop.triggered.connect(self.onActionStop)
+        self.outputMap.connect(self.simulation, QtCore.SIGNAL("updateMap"),
+                               self.outputMap.update_display)
+        self.outputTimeseries.connect(self.simulation, QtCore.SIGNAL("updateTimeseries"),
+                                      self.outputTimeseries.update_display)
         # self.output['timeseries'] = {}
+        self.connect(self.simulation, QtCore.SIGNAL("finished()"), self.finish_simulation)
         self.simulation.start()
+
+    def finish_simulation(self):
+        delattr(self.simulation, 'output')
+        print 'Finished'
 
     def onActionStop(self):
         self.actionRun.setChecked(False)
         self.actionRun.setEnabled(True)
-        self.simulation.stop()
+        delattr(self.outputMap, 'data')
+        delattr(self.outputTimeseries, 'timeseriesData')
 
-    def update_result(self, output, time):
-        self.periodUpdate = int(self.parameters['Run_Specs']['outputUpdate'])
+    def update_result(self, time):
         simulationTime = int(self.parameters['Run_Specs']['runto'])
         self.simulatingTime.setText(str(time))
-        # self.totalTime.setText(str(simulationTime))
+        self.totalTime.setText(str(simulationTime))
         self.simulatingProgress.setValue(int((time + 1) * 100 / simulationTime))
-        self.outputTimeseries.update_display(output['timeseries'], time)
-        # if time % self.periodUpdate == 0:
-        #     if hasattr(self, 'outputMap'):
-        self.outputMap.update_display(output['map'], time)
 
     def get_parameter_cb(self, diaglog):
         diaglog_name = str(diaglog.objectName())

@@ -1,6 +1,6 @@
 import PyQt4.QtGui as QtGui
 from os import path as file_path
-import input_soil_and_plant_water_ui
+from qtdesigners import input_soil_and_plant_water_ui
 import stella_input
 
 

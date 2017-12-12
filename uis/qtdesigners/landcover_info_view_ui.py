@@ -26,6 +26,9 @@ class Ui_landcover_dlg(object):
     def setupUi(self, landcover_dlg):
         landcover_dlg.setObjectName(_fromUtf8("landcover_dlg"))
         landcover_dlg.resize(663, 372)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/background/GenRiver logo.jpg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        landcover_dlg.setWindowIcon(icon)
         self.lcName_13 = QtGui.QLineEdit(landcover_dlg)
         self.lcName_13.setEnabled(False)
         self.lcName_13.setGeometry(QtCore.QRect(520, 110, 113, 20))
@@ -317,3 +320,4 @@ class Ui_landcover_dlg(object):
         self.label.setText(_translate("landcover_dlg", "ID", None))
         self.label_6.setText(_translate("landcover_dlg", "3", None))
 
+import images_rc

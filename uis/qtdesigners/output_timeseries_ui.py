@@ -26,6 +26,9 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
         Dialog.resize(1076, 618)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/background/GenRiver logo.jpg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        Dialog.setWindowIcon(icon)
         self.gridLayout_2 = QtGui.QGridLayout(Dialog)
         self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
         self.verticalLayout = QtGui.QVBoxLayout()
@@ -178,11 +181,6 @@ class Ui_Dialog(object):
         self.label_4 = QtGui.QLabel(self.groupBox)
         self.label_4.setGeometry(QtCore.QRect(10, 40, 81, 16))
         self.label_4.setObjectName(_fromUtf8("label_4"))
-        self.label.raise_()
-        self.label_2.raise_()
-        self.label_3.raise_()
-        self.label_4.raise_()
-        self.groupBox_2.raise_()
         self.verticalLayout.addWidget(self.groupBox)
         spacerItem1 = QtGui.QSpacerItem(20, 20, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem1)
@@ -198,8 +196,6 @@ class Ui_Dialog(object):
         self.displayResult.setFrameShadow(QtGui.QFrame.Raised)
         self.displayResult.setObjectName(_fromUtf8("displayResult"))
         self.gridLayout_2.addWidget(self.displayResult, 0, 1, 1, 1)
-        self.label_168.raise_()
-        self.displayResult.raise_()
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -237,9 +233,10 @@ class Ui_Dialog(object):
         self.label_24.setText(_translate("Dialog", "O_CumDeepInfilt", None))
         self.label_25.setText(_translate("Dialog", "O_CumBaseFlow", None))
         self.label_26.setText(_translate("Dialog", "O_CumSoilQFlow", None))
-        self.groupBox.setTitle(_translate("Dialog", "HEEP", None))
+        self.groupBox.setTitle(_translate("Dialog", "HEPP", None))
         self.label.setText(_translate("Dialog", "L_HEPPWatUseFlow", None))
         self.label_2.setText(_translate("Dialog", "L_LakeVol", None))
         self.label_3.setText(_translate("Dialog", "L_HEPP_Kwh", None))
         self.label_4.setText(_translate("Dialog", "L_LakeLevel", None))
 
+import images_rc

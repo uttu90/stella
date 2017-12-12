@@ -1,6 +1,8 @@
+import sys
+import gc
 import PyQt4.QtGui as QtGui
 import PyQt4.QtCore as QtCore
-import output_timeseries_ui
+from qtdesigners import output_timeseries_ui
 import constants
 from os import path as file_path
 from utils import excel_utils
@@ -24,7 +26,44 @@ import math
 from stella_output import Stella_Output
 
 pages = ['Page 1', 'Page 2', 'Page 3', 'Page 4', 'Page 5']
-display_sections = ['Water Balance', 'HEPP']
+wbPages = {
+    'Page 1': ['I_RFlowdata_mmday', 'L_InFlowtoLake'],
+    'Page 2': [
+        'O_RainAcc',
+        'O_IntercAcc',
+        'O_EvapoTransAcc',
+        'O_SurfQFlowAcc',
+        'O_InfAcc'],
+    'Page 3': [
+        'O_RainAcc',
+        'O_DeepInfAcc',
+        'O_PercAcc',
+        'O_BaseFlowAcc',
+        'O_SoilQFlowAcc'
+    ],
+    'Page 4': [
+        'O_CumRain',
+        'O_CumIntercepEvap',
+        'O_CumEvapotrans',
+        'O_CumSurfQFlow',
+        'O_CumInfiltration'
+    ],
+    'Page 5': [
+        'O_CumRain',
+        'O_CumPercolation',
+        'O_CumDeepInfilt',
+        'O_CumBaseFlow',
+        'O_CumSoilQFlow'
+    ],
+}
+
+heppPages = [
+    'L_LakeVol',
+    'L_HEPPWatUseFlow',
+    'L_HEPP_Kwh',
+    'L_LakeLevel'
+]
+# display_sections = ['Water Balance', 'HEPP']
 
 colors = ['r', 'g', 'b', 'y', 'k']
 postions = [1, 0.9, 0.8, 0.7, 0.6]
@@ -43,8 +82,13 @@ class OutputTimeseries(
         self.simulationTime = simulationTime
         self.currentTime = 0
         self.selected_page = 'Page 1'
+        self.timeseriesData = {}
         self.waterBalanceData = {}
         self.heppData = {}
+        for timeseries in constants.ouputTimeSeries:
+            self.timeseriesData[timeseries] = np.empty(simulationTime)
+        # for mapName in constants.outputMaps:
+        #     self.
         self._prepare_display()
         self.page1Btn.clicked.connect(self._select_page_1)
         self.page2Btn.clicked.connect(self._select_page_2)
@@ -62,22 +106,27 @@ class OutputTimeseries(
 
     def _select_page_1(self):
         self.selected_page = 'Page 1'
+        self.display_selected_maps()
         # self._clear_waterBalance_page()
 
     def _select_page_2(self):
         self.selected_page = 'Page 2'
+        self.display_selected_maps()
         # self._clear_waterBalance_page()
 
     def _select_page_3(self):
         self.selected_page = 'Page 3'
+        self.display_selected_maps()
         # self._clear_waterBalance_page()
 
     def _select_page_4(self):
         self.selected_page = 'Page 4'
+        self.display_selected_maps()
         # self._clear_waterBalance_page()
 
     def _select_page_5(self):
         self.selected_page = 'Page 5'
+        self.display_selected_maps()
         # self._clear_waterBalance_page()
 
     def displayTimeseries(self, i):
@@ -91,19 +140,19 @@ class OutputTimeseries(
     def _prepare_display(self):
         main_frame = self.displayResult
         self.fig = Figure((1.0, 1.0), dpi=60)
-        canvas = FigureCanvas(self.fig)
-        canvas.setParent(main_frame)
-        canvas.setFocusPolicy(QtCore.Qt.StrongFocus)
-        canvas.setFocus()
-        canvas.setSizePolicy(
+        self.canvas = FigureCanvas(self.fig)
+        self.canvas.setParent(main_frame)
+        self.canvas.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.canvas.setFocus()
+        self.canvas.setSizePolicy(
             QtGui.QSizePolicy.Expanding,
             QtGui.QSizePolicy.Expanding)
-        mpl_toolbar = NavigationToolbar(canvas, main_frame)
+        mpl_toolbar = NavigationToolbar(self.canvas, main_frame)
         vbox = QtGui.QVBoxLayout()
-        vbox.addWidget(canvas)
+        vbox.addWidget(self.canvas)
         vbox.addWidget(mpl_toolbar)
         main_frame.setLayout(vbox)
-        ani = animation.FuncAnimation(self.fig, self.display_selected_maps, interval=1000)
+        # ani = animation.FuncAnimation(self.fig, self.display_selected_maps, interval=1000)
         self.ax1 = self.fig.add_subplot(211)
         self.ax1.yaxis.set_ticks([])
         self.wbAxes = {
@@ -114,16 +163,65 @@ class OutputTimeseries(
         self.ax2.yaxis.set_ticks([])
         self.heppAxes = {
         }
-        canvas.draw()
+        self.canvas.draw()
 
     def clear_axes(self):
         for page in pages:
             if not page == self.selected_page:
-                for timeseries in self.waterBalanceData[page].keys():
+                for timeseries in wbPages[page]:
                     try:
                         self.wbAxes[timeseries].set_visible(False)
                     except KeyError:
                         None
+
+    def display_waterbalance(self):
+        ax = self.fig.add_subplot(211)
+        ax.clear()
+        lines = []
+        self.clear_axes()
+        for index, timeseries in enumerate(wbPages[self.selected_page]):
+            try:
+                axes = self.wbAxes[timeseries]
+            except KeyError:
+                self.wbAxes[timeseries] = ax.twinx()
+                axes = self.wbAxes[timeseries]
+            axeplot, = axes.plot(self.timeseriesData[timeseries], color=colors[index],
+                                 label=timeseries)
+            lines.append(axeplot)
+            axes.yaxis.set_ticks([])
+            axes.set_visible(True)
+            axes.yaxis.tick_left()
+            ax.yaxis.set_ticks([])
+            y_min, y_max = axes.get_ylim()
+            axes.set_yticks([y_min, y_max * postions[index]])
+            axes.set_yticklabels(['0', '%0.4f' % (y_max)])
+            axes.tick_params('y', colors=colors[index], length=pads[index])
+            ax.legend(lines, [l.get_label() for l in lines])
+
+    def display_hepp(self):
+        ax = self.fig.add_subplot(212)
+        ax.clear()
+        lines = []
+        # self.clear_axes()
+        for index, timeseries in enumerate(heppPages):
+            try:
+                axes = self.heppAxes[timeseries]
+            except KeyError:
+                self.heppAxes[timeseries] = ax.twinx()
+                axes = self.heppAxes[timeseries]
+            axeplot, = axes.plot(self.timeseriesData[timeseries], color=colors[index],
+                                 label=timeseries)
+            lines.append(axeplot)
+            axes.yaxis.set_ticks([])
+            axes.set_visible(True)
+            axes.yaxis.tick_left()
+            ax.yaxis.set_ticks([])
+            y_min, y_max = axes.get_ylim()
+            print y_max, postions[index]
+            axes.set_yticks([y_min, y_max * postions[index]])
+            axes.set_yticklabels(['0', '%0.4f' % (y_max)])
+            axes.tick_params('y', colors=colors[index], length=pads[index])
+            ax.legend(lines, [l.get_label() for l in lines])
 
     def display_map(self, data, dataAxes, pos):
         mainAx = self.fig.add_subplot(pos)
@@ -150,77 +248,33 @@ class OutputTimeseries(
             axes.tick_params('y', colors=colors[index], length=pads[index])
             mainAx.legend(lines, [l.get_label() for l in lines])
 
+    def showEvent(self, e):
+        print "show", e
+        self.display_selected_maps()
 
-    def display_selected_maps(self, i):
-        if self.isActiveWindow():
-            self.lock = True
-            self.display_map(self.waterBalanceData[self.selected_page], self.wbAxes, 211)
-            self.display_map(self.heppData, self.heppAxes, 212)
-
-            # self.clear_axes()
-            # ax1 = self.fig.add_subplot(211)
-            # ax1.clear()
-            # lines = []
-            # for index, timeseries in enumerate(self.waterBalanceData[self.selected_page].keys()):
-            #     try:
-            #         axes = self.wbAxes[timeseries]
-            #     except KeyError:
-            #         self.wbAxes[timeseries] = ax1.twinx()
-            #         axes = self.wbAxes[timeseries]
-            #     axeplot, = axes.plot(self.waterBalanceData[self.selected_page][timeseries], color=colors[index], label=timeseries)
-            #     lines.append(axeplot)
-            #     axes.yaxis.set_ticks([])
-            #     # axes.set_frame_on(True)
-            #     axes.set_visible(True)
-            #     # axes.set_title(timeseries)
-            #     # axes.patch.set_visible(False)
-            #     # for sp in axes.spines.values():
-            #     #     sp.set_visible(False)
-            #     axes.yaxis.tick_left()
-            #     ax1.yaxis.set_ticks([])
-            #     y_min, y_max = axes.get_ylim()
-            #     # self.max[timeseries] = math.ceil(y_max/100) * 100
-            #     axes.set_yticks([y_min, y_max * postions[index]])
-            #     axes.set_yticklabels(['0', '%0.4f' %(y_max)])
-            #
-            #     axes.tick_params('y', colors=colors[index], length=pads[index])
-            #     ax1.legend(lines, [l.get_label() for l in lines])
-            #     # print timeseries, axes.get_ylim()
-            #     # self.waterBalanceAxes[timeseries].spines['right'].set_position(('outward', display_spines[timeseries]))
-            #     # self.waterBalanceAxes[timeseries].yaxis.set_ticks([max(self.waterBalanceData[self.selected_page][timeseries]) or [0]])
-            # # self.ax2.clear()
-            # ax2 = self.fig.add_subplot(212)
-            # ax2.clear()
-            # hepplines = []
-            # for heppIndex, heppName in enumerate(self.heppData.keys()):
-            #     # print heppName
-            #     try:
-            #         heppAxes = self.heppAxes[heppName]
-            #     except KeyError:
-            #         self.heppAxes[heppName] = ax2.twinx()
-            #         heppAxes = self.heppAxes[heppName]
-            #
-            #     heppAxes.clear()
-                # axeplot, = heppAxes.plot(self.heppData[heppName], color=colors[heppIndex],
-                #                      label=heppName)
-                # hepplines.append(axeplot)
-                # heppAxes.yaxis.set_ticks([])
-                # heppAxes.yaxis.tick_left()
-                # ax2.yaxis.set_ticks([])
-                # y_min, y_max = heppAxes.get_ylim()
-                # heppAxes.set_yticks([y_min, y_max * postions[heppIndex]])
-                # heppAxes.set_yticklabels(['0', '%0.4f' % (y_max)])
-                # heppAxes.tick_params('y', colors=colors[heppIndex], length=pads[heppIndex])
-                # ax2.legend(lines, [_.get_label() for _ in hepplines])
-            self.lock = False
+    def display_selected_maps(self):
+        self.lock = True
+        self.display_waterbalance()
+        self.display_hepp()
+        self.canvas.draw()
 
     def update_display(self, output, time):
         self.dayProgress.display(time)
         self.yearProgress.display(time / 365 + 1)
-        # self.currentTime = time
-        if not self.lock:
-            self.waterBalanceData = output['display']['Water Balance']
-            self.heppData = output['display']['HEPP']
+        for timeseries in constants.ouputTimeSeries:
+            self.timeseriesData[timeseries] = output[timeseries]
+            # if time in [self.simulationTime/4, self.simulationTime/2, self.simulationTime-1]:
+            #     self.display_selected_maps()
+        del output
+        # if not self.lock:
+        #     self.waterBalanceData = output['display']['Water Balance']
+        #     self.heppData = output['display']['HEPP']
+
+        # print 'by by output timeseries'
+        # print sys.getsizeof(self.timeseriesData)
+        # self.timeseriesData = None
+        # gc.collect()
+
 
 
 if __name__ == "__main__":

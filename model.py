@@ -14,129 +14,17 @@ class SimulatingThread(QtCore.QThread):
         self.stopped = False
         self.parameters = parameters
         self.data = data
-        self.output = {}
+        self.output = dict()
         self.output['map'] = {}
         self.output['timeseries'] = {}
 
         self.outputWb = xlwt.Workbook()
         self.sheet = self.outputWb.add_sheet('outputData')
-        # outputWb.save('output.xls')
-
-        self.output['map']['L_InFlowtoLake'] = []
-        self.output['map']['O_RainAcc'] = []
-        self.output['map']['O_IntercAcc'] = []
-        self.output['map']['O_EvapoTransAcc'] = []
-        self.output['map']['O_SoilQFlowAcc'] = []
-        self.output['map']['O_InfAcc'] = []
-        self.output['map']['O_PercAcc'] = []
-        self.output['map']['O_DeepInfAcc'] = []
-        self.output['map']['O_BaseFlowAcc'] = []
-        self.output['map']['O_SurfQFlowAcc'] = []
-        self.output['map']['D_SoilDischarge'] = []
-        self.output['map']['D_GWaDisch'] = []
-
-        # Display Water Balance
-        self.output['timeseries']['display'] = {}
-        self.output['timeseries']['display']['Water Balance'] = {}
-        self.output['timeseries']['display']['Water Balance']['Page 1'] = {}
-        self.output['timeseries']['display']['Water Balance']['Page 1']['I_RFlowdata_mmday'] = []
-        self.output['timeseries']['display']['Water Balance']['Page 1']['L_InFlowtoLake'] = []
-
-        self.output['timeseries']['display']['Water Balance']['Page 2'] = {}
-        self.output['timeseries']['display']['Water Balance']['Page 2']['O_RainAcc'] = []
-        self.output['timeseries']['display']['Water Balance']['Page 2']['O_IntercAcc'] = []
-        self.output['timeseries']['display']['Water Balance']['Page 2']['O_EvapoTransAcc'] = []
-        self.output['timeseries']['display']['Water Balance']['Page 2']['O_SurfQFlowAcc'] = []
-        self.output['timeseries']['display']['Water Balance']['Page 2']['O_InfAcc'] = []
-
-        self.output['timeseries']['display']['Water Balance']['Page 3'] = {}
-        self.output['timeseries']['display']['Water Balance']['Page 3']['O_RainAcc'] = []
-        self.output['timeseries']['display']['Water Balance']['Page 3']['O_DeepInfAcc'] = []
-        self.output['timeseries']['display']['Water Balance']['Page 3']['O_PercAcc'] = []
-        self.output['timeseries']['display']['Water Balance']['Page 3']['O_BaseFlowAcc'] = []
-        self.output['timeseries']['display']['Water Balance']['Page 3']['O_SoilQFlowAcc'] = []
-
-        self.output['timeseries']['display']['Water Balance']['Page 4'] = {}
-        self.output['timeseries']['display']['Water Balance']['Page 4']['O_CumRain'] = []
-        self.output['timeseries']['display']['Water Balance']['Page 4']['O_CumIntercepEvap'] = []
-        self.output['timeseries']['display']['Water Balance']['Page 4']['O_CumEvapotrans'] = []
-        self.output['timeseries']['display']['Water Balance']['Page 4']['O_CumSurfQFlow'] = []
-        self.output['timeseries']['display']['Water Balance']['Page 4']['O_CumInfiltration'] = []
-
-        self.output['timeseries']['display']['Water Balance']['Page 5'] = {}
-        self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumRain'] = []
-        self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumPercolation'] = []
-        self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumDeepInfilt'] = []
-        self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumBaseFlow'] = []
-        self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumSoilQFlow'] = []
-
-        # Display HEPP
-        self.output['timeseries']['display']['HEPP'] = {}
-        self.output['timeseries']['display']['HEPP']['L_HEPPWatUseFlow'] = []
-        self.output['timeseries']['display']['HEPP']['L_LakeVol'] = []
-        self.output['timeseries']['display']['HEPP']['L_HEPP_Kwh'] = []
-        self.output['timeseries']['display']['HEPP']['L_LakeLevel'] = []
-
-        # Data Water Balance:
-        self.output['timeseries']['data'] = {}
-        self.output['timeseries']['data']['Water Balance'] = {}
-        self.output['timeseries']['data']['Water Balance']['I_RFlowdata_mmday'] = []
-        self.output['timeseries']['data']['Water Balance']['L_InFlowtoLake'] = []
-        self.output['timeseries']['data']['Water Balance']['O_RainAcc'] = []
-        self.output['timeseries']['data']['Water Balance']['O_IntercAcc'] = []
-        self.output['timeseries']['data']['Water Balance']['O_EvapoTransAcc'] = []
-        self.output['timeseries']['data']['Water Balance']['O_SoilQFlowAcc'] = []
-        self.output['timeseries']['data']['Water Balance']['O_InfAcc'] = []
-        self.output['timeseries']['data']['Water Balance']['O_PercAcc'] = []
-        self.output['timeseries']['data']['Water Balance']['O_DeepInfAcc'] = []
-        self.output['timeseries']['data']['Water Balance']['O_BaseFlowAcc'] = []
-        self.output['timeseries']['data']['Water Balance']['O_SurfQFlowAcc'] = []
-
-        # Data Watershed Indicator
-        self.output['timeseries']['data']['Watershed Indicator'] = {}
-        self.output['timeseries']['data']['Watershed Indicator']['I_RainDoY'] = []
-        self.output['timeseries']['data']['Watershed Indicator']['L_InFlowtoLake'] = []
-        self.output['timeseries']['data']['Watershed Indicator']['O_RainAcc'] = []
-        self.output['timeseries']['data']['Watershed Indicator']['O_IntercAcc'] = []
-        self.output['timeseries']['data']['Watershed Indicator']['O_EvapoTransAcc'] = []
-        self.output['timeseries']['data']['Watershed Indicator']['O_SoilQFlowAcc'] = []
-        self.output['timeseries']['data']['Watershed Indicator']['O_InfAcc'] = []
-        self.output['timeseries']['data']['Watershed Indicator']['O_PercAcc'] = []
-        self.output['timeseries']['data']['Watershed Indicator']['I_RFlowdata_mmday'] = []
-        self.output['timeseries']['data']['Watershed Indicator']['O_SurfQFlowAcc'] = []
-
-        # Data HEPP
-        self.output['timeseries']['data']['HEPP'] = {}
-        self.output['timeseries']['data']['HEPP']['O_BestYyHEPP'] = []
-        self.output['timeseries']['data']['HEPP']['O_WorstYHEPP'] = []
-        self.output['timeseries']['data']['HEPP']['L_CumHEPPUse'] = []
-        self.output['timeseries']['data']['HEPP']['O_FrBaseFlow'] = []
-        self.output['timeseries']['data']['HEPP']['O_FrSoilQuickFlow'] = []
-        self.output['timeseries']['data']['HEPP']['O_FrSurfQuickFlow'] = []
-
-        # self.output['timeseries']['O_RainAcc'] = []
-        # self.output['timeseries']['O_IntercAcc'] = []
-        # self.output['timeseries']['O_EvapoTransAcc'] = []
-        # self.output['timeseries']['O_SoilQFlowAcc'] = []
-        # self.output['timeseries']['O_InfAcc'] = []
-        # self.output['timeseries']['O_PercAcc'] = []
-        # self.output['timeseries']['O_DeepInfAcc'] = []
-        # self.output['timeseries']['O_BaseFlowAcc'] = []
-        # self.output['timeseries']['O_SurfQFlowAcc'] = []
-        # self.output['timeseries']['I_RainDoY'] = []
-        # self.output['timeseries']['L_RivOutFlow'] = []
-        # self.output['timeseries']['I_DailyRain'] = []
-        # self.output['timeseries']['L_HEPPWatUseFlow'] = []
-        # self.output['timeseries']['L_HEPP_Kwh'] = []
-        # self.output['timeseries']['L_LakeVol'] = []
-        # self.output['timeseries']['L_LakeLevel'] = []
-        # self.output['timeseries']['O_BestYyHEPP'] = []
-        # self.output['timeseries']['O_WorstYHEPP'] = []
-        # self.output['timeseries']['L_CumHEPPUse'] = []
-        # self.output['timeseries']['O_FrBaseFlow'] = []
-        # self.output['timeseries']['O_FrSoilQuickFlow'] = []
-        # self.output['timeseries']['I_DailyRainAmount'] = []
-        # self.output['timeseries']['D_SurfaceFlow'] = []
+        simulationTime = 10000
+        for mapName in constants.outputMap:
+            self.output['map'][mapName] = np.empty(simulationTime, dtype=object)
+        for timeseries in constants.outputTimeseries:
+            self.output['timeseries'][timeseries] = np.empty(simulationTime)
 
     def __del__(self):
         print 'end'
@@ -2291,15 +2179,48 @@ class SimulatingThread(QtCore.QThread):
                 outflow=D_EvaporReservoir + D_SubCResOutflow,
                 dt=dt
             )
-            self.output['map']['O_EvapoTransAcc'].append(
-                np.sum(D_ActEvapTransp +
-                D_InterceptEvap, axis=1).reshape(subcatchment, 1)
-            )
-            self.output['map']['L_InFlowtoLake'].append(O_InFlowtoLake)
-            self.output['map']['O_PercAcc'].append(np.sum(D_Percolation, axis=1).reshape(subcatchment, 1))
-            self.output['map']['O_RainAcc'].append(np.sum(I_DailyRainAmount, axis=1).reshape(subcatchment, 1))
-            self.output['map']['O_SurfQFlowAcc'].append(D_SurfaceFlow)
-            self.output['map']['O_BaseFlowAcc'].append(
+            # self.output['map']['O_EvapoTransAcc'].append(
+            #     np.sum(D_ActEvapTransp +
+            #     D_InterceptEvap, axis=1).reshape(subcatchment, 1)
+            # )
+
+            # self.output['timeseries'] = {
+            self.output['timeseries']['I_RFlowdata_mmday'][time] =  I_RFlowdata_mmday
+            self.output['timeseries']['L_InFlowtoLake'][time] =  L_InFlowtoLake
+            self.output['timeseries']['O_RainAcc'][time] =  O_RainAcc
+            self.output['timeseries']['O_IntercAcc'][time] =  O_IntercAcc
+            self.output['timeseries']['O_EvapoTransAcc'][time] =  O_EvapoTransAcc
+            self.output['timeseries']['O_SurfQFlowAcc'][time] =  O_SurfQFlowAcc
+            self.output['timeseries']['O_InfAcc'][time] =  O_InfAcc
+            # self.output['timeseries'][]# 'O_RainAcc'][time: = O_RainAcc
+            self.output['timeseries']['O_DeepInfAcc'][time] =  O_DeepInfAcc
+            self.output['timeseries']['O_PercAcc'][time] =  O_PercAcc
+            self.output['timeseries']['O_BaseFlowAcc'][time] =  O_BaseFlowAcc
+            self.output['timeseries']['O_SoilQFlowAcc'][time] =  O_SoilQFlowAcc
+            self.output['timeseries']['O_CumRain'][time] =  O_CumRain
+            self.output['timeseries']['O_CumIntercepEvap'][time] =  O_CumIntercepEvap
+            self.output['timeseries']['O_CumEvapotrans'][time] =  O_CumEvapotrans
+            self.output['timeseries']['O_CumSurfQFlow'][time] =  O_CumSurfQFlow
+            self.output['timeseries']['O_CumInfiltration'][time] =  O_CumInfiltration
+            # self.output['timeseries'][]# 'O_CumRain'][time: = O_CumRain
+            self.output['timeseries']['O_CumPercolation'][time] =  O_CumPercolation
+            self.output['timeseries']['O_CumDeepInfilt'][time] =  O_CumDeepInfilt
+            self.output['timeseries']['O_CumBaseFlow'][time] =  O_CumBaseFlow
+            self.output['timeseries']['O_CumSoilQFlow'][time] =  O_CumSoilQFlow
+            self.output['timeseries']['L_HEPPWatUseFlow'][time] =  L_HEPPWatUseFlow
+            self.output['timeseries']['L_LakeVol'][time] =  L_LakeVol
+            self.output['timeseries']['L_HEPP_Kwh'][time] =  L_HEPP_Kwh
+            self.output['timeseries']['L_LakeLevel'][time] =  L_LakeLevel
+            # }
+
+            # self.output['map'] = {
+            self.output['map']['O_EvapoTransAcc'][time] = np.sum(D_ActEvapTransp +
+            D_InterceptEvap, axis=1).reshape(subcatchment, 1)
+            self.output['map']['L_InFlowtoLake'][time] = (O_InFlowtoLake)
+            self.output['map']['O_PercAcc'][time] = (np.sum(D_Percolation, axis=1).reshape(subcatchment, 1))
+            self.output['map']['O_RainAcc'][time] = (np.sum(I_DailyRainAmount, axis=1).reshape(subcatchment, 1))
+            self.output['map']['O_SurfQFlowAcc'][time] = (D_SurfaceFlow)
+            self.output['map']['O_BaseFlowAcc'][time] = (
                 np.sum(np.multiply(
                     D_GWaDisch,
                     np.multiply(I_Simulation_Time >= O_StartMDay,
@@ -2307,48 +2228,69 @@ class SimulatingThread(QtCore.QThread):
                                             isI_StillWarmUp == 0)).transpose()
                 ), axis=1).reshape(subcatchment, 1)
             )
-            self.output['map']['O_DeepInfAcc'].append(
-                D_DeepInfiltration
-            )
-            self.output['map']['O_IntercAcc'].append(np.sum(D_InterceptEvap, axis=1).reshape(subcatchment, 1))
-            self.output['map']['O_SoilQFlowAcc'].append(np.sum(D_SoilDischarge, axis=1).reshape(subcatchment, 1))
-            self.output['map']['O_InfAcc'].append(np.sum(D_Infiltration, axis=1).reshape(subcatchment, 1))
-            self.output['map']['D_GWaDisch'].append(D_GWaDisch)
-            self.output['map']['D_SoilDischarge'].append(np.sum(D_SoilDischarge, axis=1).reshape(subcatchment, 1))
+            self.output['map']['O_DeepInfAcc'][time] = ( D_DeepInfiltration )
+            self.output['map']['O_IntercAcc'][time] = (np.sum(D_InterceptEvap, axis=1).reshape(subcatchment, 1))
+            self.output['map']['O_SoilQFlowAcc'][time] = (np.sum(D_SoilDischarge, axis=1).reshape(subcatchment, 1))
+            self.output['map']['O_InfAcc'][time] = (np.sum(D_Infiltration, axis=1).reshape(subcatchment, 1))
+            self.output['map']['D_GWaDisch'][time] = (D_GWaDisch)
+            self.output['map']['D_SoilDischarge'][time] = (np.sum(D_SoilDischarge, axis=1).reshape(subcatchment, 1))
+            # }
+
+            # self.output['map']['L_InFlowtoLake'].append(O_InFlowtoLake)
+            # self.output['map']['O_PercAcc'].append(np.sum(D_Percolation, axis=1).reshape(subcatchment, 1))
+            # self.output['map']['O_RainAcc'].append(np.sum(I_DailyRainAmount, axis=1).reshape(subcatchment, 1))
+            # self.output['map']['O_SurfQFlowAcc'].append(D_SurfaceFlow)
+            # self.output['map']['O_BaseFlowAcc'].append(
+            #     np.sum(np.multiply(
+            #         D_GWaDisch,
+            #         np.multiply(I_Simulation_Time >= O_StartMDay,
+            #                     np.multiply(I_Simulation_Time < O_EndMDay,
+            #                                 isI_StillWarmUp == 0)).transpose()
+            #     ), axis=1).reshape(subcatchment, 1)
+            # )
+            # self.output['map']['O_DeepInfAcc'].append(
+            #     D_DeepInfiltration
+            # )
+            # self.output['map']['O_IntercAcc'].append(np.sum(D_InterceptEvap, axis=1).reshape(subcatchment, 1))
+            # self.output['map']['O_SoilQFlowAcc'].append(np.sum(D_SoilDischarge, axis=1).reshape(subcatchment, 1))
+            # self.output['map']['O_InfAcc'].append(np.sum(D_Infiltration, axis=1).reshape(subcatchment, 1))
+            # self.output['map']['D_GWaDisch'].append(D_GWaDisch)
+            # self.output['map']['D_SoilDischarge'].append(np.sum(D_SoilDischarge, axis=1).reshape(subcatchment, 1))
+
 
             # Display Water Balance
-            self.output['timeseries']['display']['Water Balance']['Page 1']['I_RFlowdata_mmday'].append(I_RFlowdata_mmday)
-            self.output['timeseries']['display']['Water Balance']['Page 1']['L_InFlowtoLake'].append(L_InFlowtoLake)
-
-            self.output['timeseries']['display']['Water Balance']['Page 2']['O_RainAcc'].append(O_RainAcc)
-            self.output['timeseries']['display']['Water Balance']['Page 2']['O_IntercAcc'].append(O_IntercAcc)
-            self.output['timeseries']['display']['Water Balance']['Page 2']['O_EvapoTransAcc'].append(O_EvapoTransAcc)
-            self.output['timeseries']['display']['Water Balance']['Page 2']['O_SurfQFlowAcc'].append(O_SurfQFlowAcc)
-            self.output['timeseries']['display']['Water Balance']['Page 2']['O_InfAcc'].append(O_InfAcc)
-
-            self.output['timeseries']['display']['Water Balance']['Page 3']['O_RainAcc'].append(O_RainAcc)
-            self.output['timeseries']['display']['Water Balance']['Page 3']['O_DeepInfAcc'].append(O_DeepInfAcc)
-            self.output['timeseries']['display']['Water Balance']['Page 3']['O_PercAcc'].append(O_PercAcc)
-            self.output['timeseries']['display']['Water Balance']['Page 3']['O_BaseFlowAcc'].append(O_BaseFlowAcc)
-            self.output['timeseries']['display']['Water Balance']['Page 3']['O_SoilQFlowAcc'].append(O_SoilQFlowAcc)
-
-            self.output['timeseries']['display']['Water Balance']['Page 4']['O_CumRain'].append(O_CumRain)
-            self.output['timeseries']['display']['Water Balance']['Page 4']['O_CumIntercepEvap'].append(O_CumIntercepEvap)
-            self.output['timeseries']['display']['Water Balance']['Page 4']['O_CumEvapotrans'].append(O_CumEvapotrans)
-            self.output['timeseries']['display']['Water Balance']['Page 4']['O_CumSurfQFlow'].append(O_CumSurfQFlow)
-            self.output['timeseries']['display']['Water Balance']['Page 4']['O_CumInfiltration'].append(O_CumInfiltration)
-
-            self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumRain'].append(O_CumRain)
-            self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumPercolation'].append(O_CumPercolation)
-            self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumDeepInfilt'].append(O_CumDeepInfilt)
-            self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumBaseFlow'].append(O_CumBaseFlow)
-            self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumSoilQFlow'].append(O_CumSoilQFlow)
+            # self.output['timeseries']['display']['Water Balance']['Page 1']['I_RFlowdata_mmday'].append(I_RFlowdata_mmday)
+            # self.output['timeseries']['display']['Water Balance']['Page 1']['L_InFlowtoLake'].append(L_InFlowtoLake)
+            #
+            # self.output['timeseries']['display']['Water Balance']['Page 2']['O_RainAcc'].append(O_RainAcc)
+            # self.output['timeseries']['display']['Water Balance']['Page 2']['O_IntercAcc'].append(O_IntercAcc)
+            # self.output['timeseries']['display']['Water Balance']['Page 2']['O_EvapoTransAcc'].append(O_EvapoTransAcc)
+            # self.output['timeseries']['display']['Water Balance']['Page 2']['O_SurfQFlowAcc'].append(O_SurfQFlowAcc)
+            # self.output['timeseries']['display']['Water Balance']['Page 2']['O_InfAcc'].append(O_InfAcc)
+            #
+            # self.output['timeseries']['display']['Water Balance']['Page 3']['O_RainAcc'].append(O_RainAcc)
+            # self.output['timeseries']['display']['Water Balance']['Page 3']['O_DeepInfAcc'].append(O_DeepInfAcc)
+            # self.output['timeseries']['display']['Water Balance']['Page 3']['O_PercAcc'].append(O_PercAcc)
+            # self.output['timeseries']['display']['Water Balance']['Page 3']['O_BaseFlowAcc'].append(O_BaseFlowAcc)
+            # self.output['timeseries']['display']['Water Balance']['Page 3']['O_SoilQFlowAcc'].append(O_SoilQFlowAcc)
+            #
+            # self.output['timeseries']['display']['Water Balance']['Page 4']['O_CumRain'].append(O_CumRain)
+            # self.output['timeseries']['display']['Water Balance']['Page 4']['O_CumIntercepEvap'].append(O_CumIntercepEvap)
+            # self.output['timeseries']['display']['Water Balance']['Page 4']['O_CumEvapotrans'].append(O_CumEvapotrans)
+            # self.output['timeseries']['display']['Water Balance']['Page 4']['O_CumSurfQFlow'].append(O_CumSurfQFlow)
+            # self.output['timeseries']['display']['Water Balance']['Page 4']['O_CumInfiltration'].append(O_CumInfiltration)
+            #
+            # self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumRain'].append(O_CumRain)
+            # self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumPercolation'].append(O_CumPercolation)
+            # self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumDeepInfilt'].append(O_CumDeepInfilt)
+            # self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumBaseFlow'].append(O_CumBaseFlow)
+            # self.output['timeseries']['display']['Water Balance']['Page 5']['O_CumSoilQFlow'].append(O_CumSoilQFlow)
             # print O_CumPercolation
             # Display HEPP
-            self.output['timeseries']['display']['HEPP']['L_HEPPWatUseFlow'].append(L_HEPPWatUseFlow)
-            self.output['timeseries']['display']['HEPP']['L_LakeVol'].append(L_LakeVol)
-            self.output['timeseries']['display']['HEPP']['L_HEPP_Kwh'].append(L_HEPP_Kwh)
-            self.output['timeseries']['display']['HEPP']['L_LakeLevel'].append(L_LakeLevel)
+            # self.output['timeseries']['display']['HEPP']['L_HEPPWatUseFlow'].append(L_HEPPWatUseFlow)
+            # self.output['timeseries']['display']['HEPP']['L_LakeVol'].append(L_LakeVol)
+            # self.output['timeseries']['display']['HEPP']['L_HEPP_Kwh'].append(L_HEPP_Kwh)
+            # self.output['timeseries']['display']['HEPP']['L_LakeLevel'].append(L_LakeLevel)
 
             # Data Water Balance:
             # self.output['timeseries']['data']['Water Balance']['I_RFlowdata_mmday'].append(I_RFlowdata_mmday)
@@ -2434,7 +2376,10 @@ class SimulatingThread(QtCore.QThread):
                                      )
 
 
-            self.emit(QtCore.SIGNAL('update'), self.output, time)
+            # self.emit(QtCore.SIGNAL('update'), self.output, time)
+            self.emit(QtCore.SIGNAL('update'), time)
+            self.emit(QtCore.SIGNAL('updateTimeseries'), self.output['timeseries'], time)
+            self.emit(QtCore.SIGNAL('updateMap'), self.output['map'], time)
             time = time + 1
 
             if time == 10000:

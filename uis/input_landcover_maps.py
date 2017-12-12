@@ -1,5 +1,5 @@
 import PyQt4.QtGui as QtGui
-import input_landcover_maps_ui
+from qtdesigners import input_lancover_maps_ui
 from os import path as file_path
 import stella_input
 from functools import partial
@@ -8,7 +8,7 @@ import xlrd
 
 
 class Input_Landcover_Maps_Diaglog(
-    QtGui.QDialog, input_landcover_maps_ui.Ui_Dialog, stella_input.StellaInput):
+    QtGui.QDialog, input_lancover_maps_ui.Ui_Dialog, stella_input.StellaInput):
     def __init__(self, parent=None):
         super(Input_Landcover_Maps_Diaglog, self).__init__(parent)
         self.setupUi(self)

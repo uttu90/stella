@@ -70,23 +70,38 @@ outputMapsSubcatchment = [
     'D_SoilDischarge'
 ]
 
-ouputTimeSeries = [
-    'I_RainDoY',
-    'I_DailyRain',
-    'L_RivOutFlow',
-    'O_BestYyHEPP',
-    'O_WorstYHEPP',
-    'L_HEPPWatUseFlow',
-    'L_HEPP_Kwh',
-    'O_FrBaseFlow',
-    'O_FrSoilQuickFlow',
-    'I_DailyRainAmount',
-    'D_SurfaceFlow',
-    'L_LakeVol',
-    'L_LakeLevel',
-    'L_CumHEPPUse',
+outputTimeseries = [
+    'I_RFlowdata_mmday',
     'L_InFlowtoLake',
+    'O_RainAcc',
+    'O_IntercAcc',
     'O_EvapoTransAcc',
+    'O_SurfQFlowAcc',
+    'O_InfAcc',
+    # 'O_RainAcc'
+    'O_DeepInfAcc',
+    'O_PercAcc',
+    'O_BaseFlowAcc',
+    'O_SoilQFlowAcc',
+    'O_CumRain',
+    'O_CumIntercepEvap',
+    'O_CumEvapotrans',
+    'O_CumSurfQFlow',
+    'O_CumInfiltration',
+    # 'O_CumRain'
+    'O_CumPercolation',
+    'O_CumDeepInfilt',
+    'O_CumBaseFlow',
+    'O_CumSoilQFlow',
+    'L_HEPPWatUseFlow',
+    'L_LakeVol',
+    'L_HEPP_Kwh',
+    'L_LakeLevel'
+]
+
+outputMap = [
+    'O_EvapoTransAcc',
+    'L_InFlowtoLake',
     'O_PercAcc',
     'O_RainAcc',
     'O_SurfQFlowAcc',
@@ -95,4 +110,6 @@ ouputTimeSeries = [
     'O_IntercAcc',
     'O_SoilQFlowAcc',
     'O_InfAcc',
+    'D_GWaDisch',
+    'D_SoilDischarge',
 ]

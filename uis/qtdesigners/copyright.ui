@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>GenRiver version 2.0</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="images.qrc">
+    <normaloff>:/background/GenRiver logo.jpg</normaloff>:/background/GenRiver logo.jpg</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <widget class="QWebView" name="webView">
@@ -34,6 +38,7 @@
  </customwidgets>
  <resources>
   <include location="copyright.qrc"/>
+  <include location="images.qrc"/>
  </resources>
  <connections/>
 </ui>

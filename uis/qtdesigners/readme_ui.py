@@ -26,6 +26,9 @@ class Ui_readme(object):
     def setupUi(self, readme):
         readme.setObjectName(_fromUtf8("readme"))
         readme.resize(964, 532)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/background/GenRiver logo.jpg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        readme.setWindowIcon(icon)
         self.gridLayout = QtGui.QGridLayout(readme)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         self.webView = QtWebKit.QWebView(readme)
@@ -40,4 +43,5 @@ class Ui_readme(object):
         readme.setWindowTitle(_translate("readme", "Readme", None))
 
 from PyQt4 import QtWebKit
+import images_rc
 import readme_rc

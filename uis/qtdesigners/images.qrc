@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="background">
+    <file>GenRiver logo.jpg</file>
     <file>genriver.png</file>
   </qresource>
 </RCC>

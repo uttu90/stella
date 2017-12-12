@@ -26,6 +26,9 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
         Dialog.resize(773, 374)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/background/GenRiver logo.jpg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        Dialog.setWindowIcon(icon)
         self.buttonBox = QtGui.QDialogButtonBox(Dialog)
         self.buttonBox.setGeometry(QtCore.QRect(410, 310, 341, 32))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
@@ -208,3 +211,4 @@ class Ui_Dialog(object):
         self.label_198.setText(_translate("Dialog", "Evapotranspiration", None))
         self.I_MaxDynGWConst.setText(_translate("Dialog", "100", None))
 
+import images_rc

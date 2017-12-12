@@ -26,6 +26,9 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
         Dialog.resize(825, 621)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/background/GenRiver logo.jpg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        Dialog.setWindowIcon(icon)
         self.gridLayout = QtGui.QGridLayout(Dialog)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         self.horizontalLayout_6 = QtGui.QHBoxLayout()
@@ -167,7 +170,7 @@ class Ui_Dialog(object):
         Dialog.setWindowTitle(_translate("Dialog", "Output Maps", None))
         self.landcoverBtn.setText(_translate("Dialog", "Landcover info", None))
         self.subcatchBtn.setText(_translate("Dialog", "Subcatchment info", None))
-        self.label.setText(_translate("Dialog", "Input day to go", None))
+        self.label.setText(_translate("Dialog", "Choose day to go", None))
         self.goBtn.setText(_translate("Dialog", "GO", None))
         self.backBtn.setText(_translate("Dialog", "< Back", None))
         self.nextBtn.setText(_translate("Dialog", "Next >", None))
@@ -191,3 +194,4 @@ class Ui_Dialog(object):
         self.radioButton_13.setText(_translate("Dialog", "D_GWaDisch", None))
         self.radioButton_14.setText(_translate("Dialog", "D_SoilDischarge", None))
 
+import images_rc

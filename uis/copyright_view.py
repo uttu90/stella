@@ -1,5 +1,5 @@
 from PyQt4 import QtGui
-import copyright_ui
+from qtdesigners import copyright_ui
 
 class Copyright(QtGui.QDialog, copyright_ui.Ui_genRiver):
     def __init__(self, parent=None):
