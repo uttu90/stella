@@ -233,7 +233,6 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
             simulationTime=simulationTime
         )
         self.outputTimeseries = output_timeseries.OutputTimeseries(
-            outputFolder = '',
             simulationTime=simulationTime
         )
         self.actionStop.setEnabled(True)
@@ -248,18 +247,18 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
         self.simulation.start()
 
     def finish_simulation(self):
-        delattr(self.simulation, 'output')
+        # delattr(self.simulation, 'output')
         print 'Finished'
 
     def onActionStop(self):
         self.actionRun.setChecked(False)
         self.actionRun.setEnabled(True)
-        delattr(self.outputMap, 'data')
-        delattr(self.outputTimeseries, 'timeseriesData')
+        # delattr(self.outputMap, 'data')
+        # delattr(self.outputTimeseries, 'timeseriesData')
 
     def update_result(self, time):
         simulationTime = int(self.parameters['Run_Specs']['runto'])
-        self.simulatingTime.setText(str(time))
+        self.simulatingTime.setText(str(time + 1))
         self.totalTime.setText(str(simulationTime))
         self.simulatingProgress.setValue(int((time + 1) * 100 / simulationTime))
 

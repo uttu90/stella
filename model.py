@@ -20,11 +20,12 @@ class SimulatingThread(QtCore.QThread):
 
         self.outputWb = xlwt.Workbook()
         self.sheet = self.outputWb.add_sheet('outputData')
-        simulationTime = 10000
+        # simulationTime = 10000
+        self.simulationTime = int(self.parameters['Run_Specs']['runto'])
         for mapName in constants.outputMap:
-            self.output['map'][mapName] = np.empty(simulationTime, dtype=object)
+            self.output['map'][mapName] = np.empty(self.simulationTime, dtype=object)
         for timeseries in constants.outputTimeseries:
-            self.output['timeseries'][timeseries] = np.empty(simulationTime)
+            self.output['timeseries'][timeseries] = np.empty(self.simulationTime)
 
     def __del__(self):
         print 'end'
@@ -38,13 +39,13 @@ class SimulatingThread(QtCore.QThread):
     def run(self):
         run_specs = self.parameters['Run_Specs']
         begin = int(run_specs['runfrom'])
-        simulationTime = int(run_specs['runto'])
+        # simulationTime = int(run_specs['runto'])
         dt = int(run_specs['rundt'])
         obsPoint = 8
         vegClass = 20
         measurePeriod = 3
         subcatchment = 20
-        print self.stopped
+        # print self.stopped
         self.stopped = False
         initial_run = self.parameters['Initial_Run']
         # simulationTime = int(initial_run['simulationTime'])
@@ -851,7 +852,7 @@ class SimulatingThread(QtCore.QThread):
 
         # Initial stock value
 
-        time = 0
+        time = begin
         C_StockingRate = 1
         D_InitLakeVol = 0
         D_InitRivVol = 0
@@ -1004,9 +1005,9 @@ class SimulatingThread(QtCore.QThread):
         # D_RoutingTimeInit = I_RivFlowTimes[0]
         # D_SurfFlowTransitTime = np.Round()
         D_SurfFlowRiver = [0]
-        while time < int(simulationTime) and not self.stopped:
+        while time < self.simulationTime and not self.stopped:
             # RainNormal[time]
-            print time
+            # print time
             I_Warmedup = 1 if time > int(I_WarmUpTime) else 0
             I_Simulation_Time = (
                 time +
@@ -2363,16 +2364,30 @@ class SimulatingThread(QtCore.QThread):
             # self.output['timeseries']['D_SurfaceFlow'].append(np_utils.array_sum(D_SurfaceFlow))
 
             excel_utils.write_params(self.sheet, time + 1,
+                                     'L_InFlowtoLake', L_InFlowtoLake,
+                                     'I_RFlowdata_mmday', I_RFlowdata_mmday,
                                      'O_RainAcc', O_RainAcc,
                                      'O_IntercAcc', O_IntercAcc,
                                      'O_EvapoTransAcc', O_EvapoTransAcc,
+                                     'O_SurfQFlowAcc', O_SurfQFlowAcc,
                                      'O_InfAcc', O_InfAcc,
                                      'O_PercAcc' ,O_PercAcc,
                                      'O_DeepInfAcc', O_DeepInfAcc,
                                      'O_BaseFlowAcc', O_BaseFlowAcc,
-                                     'O_SurfQFlowAcc', O_SurfQFlowAcc,
-                                     'L_InFlowtoLake', L_InFlowtoLake,
-                                     'I_RFlowdata_mmday', I_RFlowdata_mmday
+                                     'O_SoilQFlowAcc', O_SoilQFlowAcc,
+                                     'O_CumRain', O_CumRain,
+                                     'O_CumSurfQFlow', O_CumSurfQFlow,
+                                     'O_CumEvapotrans', O_CumEvapotrans,
+                                     'O_CumInfiltration', O_CumInfiltration,
+                                     'O_CumIntercepEvap', O_CumIntercepEvap,
+                                     'O_CumBaseFlow', O_CumBaseFlow,
+                                     'O_CumPercolation', O_CumPercolation,
+                                     'O_CumSoilQFlow', O_CumSoilQFlow,
+                                     'O_CumDeepInInflt', O_CumDeepInfilt,
+                                     'L_HEPPWatUseFlow', L_HEPPWatUseFlow,
+                                     'L_LakeVol', L_LakeVol,
+                                     'L_LakeLevel', L_LakeLevel,
+                                     'L_HEPP_Kwh', L_HEPP_Kwh
                                      )
 
 
@@ -2380,7 +2395,7 @@ class SimulatingThread(QtCore.QThread):
             self.emit(QtCore.SIGNAL('update'), time)
             self.emit(QtCore.SIGNAL('updateTimeseries'), self.output['timeseries'], time)
             self.emit(QtCore.SIGNAL('updateMap'), self.output['map'], time)
-            time = time + 1
+            time = time + dt
 
-            if time == 10000:
+            if time >= self.simulationTime:
                 self.outputWb.save('output.xls')

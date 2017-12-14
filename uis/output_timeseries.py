@@ -74,7 +74,7 @@ class OutputTimeseries(
     QtGui.QDialog,
     output_timeseries_ui.Ui_Dialog,
     Stella_Output):
-    def __init__(self, parent=None, outputFolder='', simulationTime=1000):
+    def __init__(self, parent=None, simulationTime=1000):
         super(OutputTimeseries, self).__init__(parent)
         self.setupUi(self)
         self.selected_maps = ["Water Balance", "HEPP"]
@@ -196,7 +196,8 @@ class OutputTimeseries(
             axes.set_yticks([y_min, y_max * postions[index]])
             axes.set_yticklabels(['0', '%0.4f' % (y_max)])
             axes.tick_params('y', colors=colors[index], length=pads[index])
-            ax.legend(lines, [l.get_label() for l in lines])
+        ax.legend(lines, [l.get_label() for l in lines])
+        ax.set_xlabel('day')
 
     def display_hepp(self):
         ax = self.fig.add_subplot(212)
@@ -217,11 +218,12 @@ class OutputTimeseries(
             axes.yaxis.tick_left()
             ax.yaxis.set_ticks([])
             y_min, y_max = axes.get_ylim()
-            print y_max, postions[index]
+            # print y_max, postions[index]
             axes.set_yticks([y_min, y_max * postions[index]])
             axes.set_yticklabels(['0', '%0.4f' % (y_max)])
             axes.tick_params('y', colors=colors[index], length=pads[index])
-            ax.legend(lines, [l.get_label() for l in lines])
+        ax.legend(lines, [l.get_label() for l in lines])
+        ax.set_xlabel('day')
 
     def display_map(self, data, dataAxes, pos):
         mainAx = self.fig.add_subplot(pos)
@@ -249,7 +251,7 @@ class OutputTimeseries(
             mainAx.legend(lines, [l.get_label() for l in lines])
 
     def showEvent(self, e):
-        print "show", e
+        # print "show", e
         self.display_selected_maps()
 
     def display_selected_maps(self):

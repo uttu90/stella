@@ -68,8 +68,8 @@ class Input_Run_Specs_Diaglog(
         utils.read_array_data(self.inputData, wksheet3, col_start=0, col_end=81, row_start=3)
         self.inputData['I_MultiplierEvapoTrans'] = utils.read_table_to_matrix(wksheet, col_start=30, col_end=50, row_start=4, row_end=16)
         a = self.inputData['I_MultiplierEvapoTrans']
-        for ia in a:
-            print len(ia)
+        # for ia in a:
+            # print len(ia)
         self.inputData['I_RoutingDistance'] = utils.read_table_to_matrix(wksheet, col_start=80, col_end=87, row_start=4, row_end=24)
         del xl_workbook
 

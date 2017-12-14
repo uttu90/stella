@@ -66,6 +66,8 @@ class OutputMap(
         self.period = period
         self._prepare_display()
         self.subcachmentId = [2, 4, 12, 11, 13, 9, 1, 3, 7, 6, 5, 14, 18, 8, 19, 16, 15, 10, 17, 20]
+        # self.landCoverId = [1, 2, 8, 10, 11, 12, 15, 16, 17, 18, 19, 20, 21, 22, 31, 32, 33, 34, 35]
+        self.landCoverId = range(0, 20)
         if file_path.isfile(subcatchment):
             ds = gdal.Open(subcatchment)
             band = ds.GetRasterBand(1)
@@ -77,9 +79,13 @@ class OutputMap(
 
         self.landcoverDialog = landcover_info_view.LandcoverInfo()
         landcoverColors = self.landcoverDialog.colorResult
+        landcoverSettings = [u'#ffffff' for _ in range(1, 22)]
+        for i in range(len(self.landCoverId)):
+            landcoverSettings[self.landCoverId[i]] = landcoverColors[i]
         self.subcatchmentDiaglog = landcover_info_view.LandcoverInfo(self, landcover=False)
         subcatchmentColors = self.subcatchmentDiaglog.colorResult
-        self.landcoverCMaps = colorsmap.ListedColormap(landcoverColors)
+        # print landcoverColors
+        self.landcoverCMaps = colorsmap.ListedColormap(landcoverSettings)
         self.subcatchmentCMaps = colorsmap.ListedColormap(subcatchmentColors)
         # print(self.landcoverCMaps)
         self.screens = {
@@ -114,6 +120,7 @@ class OutputMap(
     def triggerRadioBtn(self, radioBtn, screen):
         if radioBtn.isChecked():
             self.screens[screen] = str(radioBtn.text())
+            self.display_selected_maps()
 
     def gotoDay(self):
         self.currentTime = int(self.goDayEdit.text()) or 0
@@ -190,7 +197,7 @@ class OutputMap(
                             axes = self.fig.add_subplot(221)
                             # cm = colorsmap.LinearSegmentedColormap.from_list('abc', [(0.4, 0.76, 1), (0, 0.12, 0.2)])
                             plt = axes.imshow(displayArray, cmap=self.landcoverCMaps)
-                            self.fig.colorbar(plt, ticks=range(1, 21))
+                            self.fig.colorbar(plt, ticks=range(1, 22))
                             axes.set_title('landcover')
                         # axes.xaxis.set_ticks([])
                         # axes.yaxis.set_ticks([])
