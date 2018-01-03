@@ -152,16 +152,9 @@
     <addaction name="actionRun"/>
     <addaction name="actionStop"/>
    </widget>
-   <widget class="QMenu" name="menuLANGUAGE">
-    <property name="title">
-     <string>LANGUAGE</string>
-    </property>
-    <addaction name="actionEnglish"/>
-    <addaction name="actionVietnamese"/>
-   </widget>
    <widget class="QMenu" name="menuOPTIONS">
     <property name="title">
-     <string>OPTIONS</string>
+     <string>SETTING</string>
     </property>
     <addaction name="actionLandcover_colors"/>
     <addaction name="actionSubcatchmentColors"/>
@@ -177,7 +170,6 @@
    <addaction name="menuRUN_SPECS"/>
    <addaction name="menuOUTPUT"/>
    <addaction name="menuSIMULATION"/>
-   <addaction name="menuLANGUAGE"/>
    <addaction name="menuOPTIONS"/>
    <addaction name="menuHELP"/>
   </widget>

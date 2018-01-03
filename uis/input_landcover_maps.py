@@ -1,4 +1,5 @@
 import PyQt4.QtGui as QtGui
+from PyQt4 import QtCore
 from qtdesigners import input_lancover_maps_ui
 from os import path as file_path
 import stella_input
@@ -38,9 +39,8 @@ class Input_Landcover_Maps_Diaglog(
         self.save()
 
     def accept(self):
-        self._collect_value()
-        self.data_cb()
-        self.save()
+        self.pre_accept()
+        self.emit(QtCore.SIGNAL('update'), self.data)
         super(Input_Landcover_Maps_Diaglog, self).accept()
 
     def reject(self):

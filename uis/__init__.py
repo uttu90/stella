@@ -84,12 +84,15 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
         self.inputSubcatchmentColors_Diaglog.setObjectName("Subcatchment_info")
         # self.actionSubcatchmentColors
         # self.landcover
-        copyright = copyright_view.Copyright(self)
-        copyright.show()
+        self.copyright = copyright_view.Copyright(self)
+        self.copyright.show()
+        self.actionCopyright.triggered.connect(self.openCopyright)
         for diaglog in self.children():
             if isinstance(diaglog, QtGui.QDialog):
                 self.get_parameter(diaglog)
-                diaglog.data_cb = partial(self.get_parameter_cb, diaglog)
+                data_cb = partial(self.update_param, diaglog)
+                self.connect(diaglog, QtCore.SIGNAL("update"), data_cb)
+                # diaglog.data_cb = partial(self.get_parameter_cb, diaglog)
 
         for action in self.children():
             if isinstance(action, QtGui.QAction):
@@ -137,11 +140,15 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
         for time_result in ouputTimeSeries:
             self.output['timeseries'][time_result] = []
         self.actionStop.setEnabled(False)
+        self.actionTimeseries.setEnabled(False)
+        self.actionMaps.setEnabled(False)
         self.totalTime.setText(str(self.parameters['Run_Specs']['runto']))
-        # self.outputTimeseries = output_timeseries.OutputTimeseries()
 
     def openReadme(self):
         self.readme_Diaglog.show()
+
+    def openCopyright(self):
+        self.copyright.show()
 
     def actionDiaglog(self, diaglog):
         diaglog.show()
@@ -242,19 +249,20 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
                                self.outputMap.update_display)
         self.outputTimeseries.connect(self.simulation, QtCore.SIGNAL("updateTimeseries"),
                                       self.outputTimeseries.update_display)
-        # self.output['timeseries'] = {}
+        self.actionTimeseries.setEnabled(True)
+        self.actionMaps.setEnabled(True)
         self.connect(self.simulation, QtCore.SIGNAL("finished()"), self.finish_simulation)
         self.simulation.start()
 
     def finish_simulation(self):
-        # delattr(self.simulation, 'output')
+        self.actionStop.setEnabled(False)
+        self.actionRun.setEnabled(True)
+        self.actionRun.setChecked(False)
         print 'Finished'
 
     def onActionStop(self):
         self.actionRun.setChecked(False)
         self.actionRun.setEnabled(True)
-        # delattr(self.outputMap, 'data')
-        # delattr(self.outputTimeseries, 'timeseriesData')
 
     def update_result(self, time):
         simulationTime = int(self.parameters['Run_Specs']['runto'])
@@ -262,20 +270,24 @@ class Stella_Main_Window(QtGui.QMainWindow, Ui_MainWindow):
         self.totalTime.setText(str(simulationTime))
         self.simulatingProgress.setValue(int((time + 1) * 100 / simulationTime))
 
-    def get_parameter_cb(self, diaglog):
+    # def get_parameter_cb(self, diaglog):
+    #     diaglog_name = str(diaglog.objectName())
+    #     self.parameters[diaglog_name] = diaglog.data
+
+    def update_param(self, diaglog, data):
         diaglog_name = str(diaglog.objectName())
-        self.parameters[diaglog_name] = diaglog.data
+        self.parameters[diaglog_name] = data
 
     def get_parameter(self, diaglog):
         diaglog_name = str(diaglog.objectName())
         self.parameters[diaglog_name] = diaglog.data
 
 
-if __name__ == '__main__':
-    import sys
-    app = QtGui.QApplication(sys.argv)
-    form = Stella_Main_Window()
-    form.show()
-    app.exec_()
+# if __name__ == '__main__':
+# import sys
+# app = QtGui.QApplication(sys.argv)
+# form = Stella_Main_Window()
+# form.show()
+# app.exec_()
 
 

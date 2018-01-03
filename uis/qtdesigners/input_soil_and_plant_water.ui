@@ -56,7 +56,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Rainfall Interception [ mm]</string>
+    <string>Rainfall Interception [mm]</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_176">
@@ -238,7 +238,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Ground Water [ mm]</string>
+    <string>Ground Water [mm]</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="isI_SoilPropConst">

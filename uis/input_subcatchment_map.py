@@ -1,4 +1,5 @@
 import PyQt4.QtGui as QtGui
+from PyQt4 import QtCore
 from qtdesigners import input_subcatchment_map_ui
 from os import path as file_path
 import stella_input
@@ -29,9 +30,8 @@ class Input_Subcatchment_Map_Diaglog(
         self.save()
 
     def accept(self):
-        self._collect_value()
-        self.data_cb()
-        self.save()
+        self.pre_accept()
+        self.emit(QtCore.SIGNAL('update'), self.data)
         super(Input_Subcatchment_Map_Diaglog, self).accept()
 
     def reject(self):

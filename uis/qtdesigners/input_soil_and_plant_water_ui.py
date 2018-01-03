@@ -169,7 +169,7 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(_translate("Dialog", "Input Soil and Plant Water", None))
         self.label_174.setText(_translate("Dialog", "I_InitRelGW", None))
-        self.label_175.setText(_translate("Dialog", "Rainfall Interception [ mm]", None))
+        self.label_175.setText(_translate("Dialog", "Rainfall Interception [mm]", None))
         self.label_176.setText(_translate("Dialog", "Soil Quick Flow", None))
         self.label_177.setText(_translate("Dialog", "I_MaxInf", None))
         self.I_InitRelSoil.setText(_translate("Dialog", "1", None))
@@ -183,7 +183,7 @@ class Ui_Dialog(object):
         self.I_AvailQaterClassConst.setText(_translate("Dialog", "300", None))
         self.label_180.setText(_translate("Dialog", "I_MaxDynGWConst", None))
         self.I_SoilSatMinFCConst.setText(_translate("Dialog", "100", None))
-        self.label_181.setText(_translate("Dialog", "Ground Water [ mm]", None))
+        self.label_181.setText(_translate("Dialog", "Ground Water [mm]", None))
         self.isI_SoilPropConst.setText(_translate("Dialog", "0", None))
         self.label_182.setText(_translate("Dialog", "Infitration [mm day-1]", None))
         self.label_183.setText(_translate("Dialog", "I_GWRelFracConst", None))

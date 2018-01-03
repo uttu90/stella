@@ -1,4 +1,5 @@
 import PyQt4.QtGui as QtGui
+import PyQt4.QtCore as QtCore
 from qtdesigners import input_run_specs_ui
 from os import path as file_path
 import stella_input
@@ -53,9 +54,8 @@ class Input_Run_Specs_Diaglog(
         self.save()
 
     def accept(self):
-        self._collect_value()
-        self.data_cb()
-        self.save()
+        self.pre_accept()
+        self.emit(QtCore.SIGNAL('update'), self.data)
         super(Input_Run_Specs_Diaglog, self).accept()
 
     def get_input_data(self):

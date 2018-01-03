@@ -85,7 +85,7 @@ class OutputTimeseries(
         self.timeseriesData = {}
         self.waterBalanceData = {}
         self.heppData = {}
-        for timeseries in constants.ouputTimeSeries:
+        for timeseries in constants.outputTimeseries:
             self.timeseriesData[timeseries] = np.empty(simulationTime)
         # for mapName in constants.outputMaps:
         #     self.
@@ -263,7 +263,7 @@ class OutputTimeseries(
     def update_display(self, output, time):
         self.dayProgress.display(time)
         self.yearProgress.display(time / 365 + 1)
-        for timeseries in constants.ouputTimeSeries:
+        for timeseries in constants.outputTimeseries:
             self.timeseriesData[timeseries] = output[timeseries]
             # if time in [self.simulationTime/4, self.simulationTime/2, self.simulationTime-1]:
             #     self.display_selected_maps()

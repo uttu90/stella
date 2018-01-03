@@ -1,4 +1,5 @@
 from PyQt4 import QtGui
+from PyQt4 import QtCore
 import constants
 import json
 
@@ -28,6 +29,11 @@ class StellaInput(object):
 
     def get_params(self, dict):
         dict = self.data
+
+    def pre_accept(self):
+        self._collect_value()
+        # self.emit(QtCore.SIGNAL('update'), self.data)
+        self.save()
 
     def save(self):
         with open(self.file, 'w') as fp:

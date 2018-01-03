@@ -113,3 +113,6 @@ outputMap = [
     'D_GWaDisch',
     'D_SoilDischarge',
 ]
+
+subcatchmentTicks = range(0, 20)
+landCoverTicks = range(0, 20)

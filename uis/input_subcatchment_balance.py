@@ -1,4 +1,5 @@
 import PyQt4.QtGui as QtGui
+from PyQt4 import QtCore
 from os import path as file_path
 from qtdesigners import input_subcatchment_balance_ui
 import stella_input
@@ -18,9 +19,8 @@ class Input_Subcatchment_Balance_Diaglog(
             self._collect_value()
 
     def accept(self):
-        self._collect_value()
-        self.data_cb()
-        self.save()
+        self.pre_accept()
+        self.emit(QtCore.SIGNAL('update'), self.data)
         super(Input_Subcatchment_Balance_Diaglog, self).accept()
 
     def reject(self):

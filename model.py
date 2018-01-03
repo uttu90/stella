@@ -829,7 +829,8 @@ class SimulatingThread(QtCore.QThread):
             I_RFlowData_Year_25_to_28 +
             I_RFlowData_Year_29_to_32
                        )
-        RainNormal = self.data['RainNormal']
+        # RainNormal = self.data['RainNormal']
+
         I_InputDataYears = self.data['I_InputDataYears']
         I_InterceptClass = np.array(
             self.data['I_InterceptClass']
@@ -997,17 +998,13 @@ class SimulatingThread(QtCore.QThread):
         L_m3_per_kwh = 1.584
         L_LakeTranspMultiplier = 1
         isI_SubcContr = np.ones(shape=(subcatchment, 1))
-        # simulationTime = 100
-        # RainNormal = np.random.normal(1, I_Rain_IntensCoefVar, simulationTime)
+        np.random.seed(I_Rain_GenSeed)
+        RainNormal = np.random.normal(I_Rain_IntensMean, I_Rain_IntensCoefVar, size=self.simulationTime)
+
         G_GrassFract_Biomass = np.array([0.2, 0.1, 0.05, 0.001, 0.4, 0.2, 0.1, 0.01, 0.3, 0.1, 0.2, 1, 1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]).reshape(vegClass, 1)
 
-        # Init other params
-        # D_RoutingTimeInit = I_RivFlowTimes[0]
-        # D_SurfFlowTransitTime = np.Round()
         D_SurfFlowRiver = [0]
         while time < self.simulationTime and not self.stopped:
-            # RainNormal[time]
-            # print time
             I_Warmedup = 1 if time > int(I_WarmUpTime) else 0
             I_Simulation_Time = (
                 time +
