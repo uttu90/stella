@@ -196,8 +196,8 @@ class OutputTimeseries(
             axes.set_yticks([y_min, y_max * postions[index]])
             axes.set_yticklabels(['0', '%0.4f' % (y_max)])
             axes.tick_params('y', colors=colors[index], length=pads[index])
-        ax.legend(lines, [l.get_label() for l in lines])
-        ax.set_xlabel('day')
+        ax.legend(lines, [l.get_label() for l in lines], bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
+                      ncol=len(lines), mode="expand", borderaxespad=0.)
 
     def display_hepp(self):
         ax = self.fig.add_subplot(212)
@@ -222,7 +222,8 @@ class OutputTimeseries(
             axes.set_yticks([y_min, y_max * postions[index]])
             axes.set_yticklabels(['0', '%0.4f' % (y_max)])
             axes.tick_params('y', colors=colors[index], length=pads[index])
-        ax.legend(lines, [l.get_label() for l in lines])
+        ax.legend(lines, [l.get_label() for l in lines], bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
+                      ncol=len(lines), mode="expand", borderaxespad=0.)
         ax.set_xlabel('day')
 
     def display_map(self, data, dataAxes, pos):
@@ -248,7 +249,10 @@ class OutputTimeseries(
             axes.set_yticks([y_min, y_max * postions[index]])
             axes.set_yticklabels(['0', '%0.4f' % (y_max)])
             axes.tick_params('y', colors=colors[index], length=pads[index])
-            mainAx.legend(lines, [l.get_label() for l in lines])
+            mainAx.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
+                            ncol=len(lines), mode="expand", borderaxespad=0.)
+            # mainAx.legend(lines, [l.get_label() for l in lines])
+
 
     def showEvent(self, e):
         # print "show", e

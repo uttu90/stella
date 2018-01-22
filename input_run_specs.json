@@ -1,6 +1,6 @@
 {
    "runfrom": "0", 
-   "runto": "10000", 
+   "runto": "1000", 
    "rundt": "1", 
    "inputDataFile": "C:/Users/PHUONGTRANG/Downloads/GenRiver_Vietnam (20 LC) EXP (1).xls"
 }
