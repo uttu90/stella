@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'input_run_specs.ui'
+# Form implementation generated from reading ui file '.\input_run_specs.ui'
 #
 # Created by: PyQt4 UI code generator 4.11.4
 #
@@ -41,7 +41,7 @@ class Ui_Dialog(object):
         self.runfrom.setGeometry(QtCore.QRect(120, 40, 51, 20))
         self.runfrom.setObjectName(_fromUtf8("runfrom"))
         self.label_130 = QtGui.QLabel(Dialog)
-        self.label_130.setGeometry(QtCore.QRect(260, 20, 131, 16))
+        self.label_130.setGeometry(QtCore.QRect(240, 20, 181, 20))
         self.label_130.setObjectName(_fromUtf8("label_130"))
         self.selectDataFile = QtGui.QPushButton(Dialog)
         self.selectDataFile.setGeometry(QtCore.QRect(470, 50, 75, 23))
@@ -71,7 +71,7 @@ class Ui_Dialog(object):
         Dialog.setWindowTitle(_translate("Dialog", "Run Specs", None))
         self.label_129.setText(_translate("Dialog", "DT", None))
         self.runfrom.setText(_translate("Dialog", "0", None))
-        self.label_130.setText(_translate("Dialog", "Choose excel data file", None))
+        self.label_130.setText(_translate("Dialog", "Please choose Excel input data file", None))
         self.selectDataFile.setText(_translate("Dialog", "Select", None))
         self.rundt.setText(_translate("Dialog", "1", None))
         self.label_128.setText(_translate("Dialog", "To", None))

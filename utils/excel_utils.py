@@ -135,5 +135,5 @@ def write_dict(data, sheet, column):
 def write_params(sheet, time, *args):
     for index in range(0, len(args), 2):
         if time == 1:
-            sheet.write(0, index, args[index])
-        sheet.write(time, index, args[index+1])
+            sheet.write(0, index/2, args[index])
+        sheet.write(time, index/2, args[index+1])

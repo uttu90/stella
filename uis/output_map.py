@@ -127,7 +127,9 @@ class OutputMap(
         self.display_selected_maps()
 
     def openSubcatch(self):
-        self.landcoverDialog.exec_()
+        self.subcatchmentDiaglog.exec_()
+        self.subcatchmentColors = self.subcatchmentDiaglog.colorResult
+        self.subcatchmentCMaps = colorsmap.ListedColormap(self.subcatchmentColors)
 
     def openLandCover(self):
         self.landcoverDialog.exec_()

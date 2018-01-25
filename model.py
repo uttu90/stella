@@ -19,7 +19,9 @@ class SimulatingThread(QtCore.QThread):
         self.output['timeseries'] = {}
 
         self.outputWb = xlwt.Workbook()
-        self.sheet = self.outputWb.add_sheet('outputData')
+        self.waterBalanceSheet = self.outputWb.add_sheet('Water Balance')
+        self.heppSheet = self.outputWb.add_sheet('HEPP')
+        # self.sheet = self.outputWb.add_sheet('outputData')
         # simulationTime = 10000
         self.simulationTime = int(self.parameters['Run_Specs']['runto'])
         for mapName in constants.outputMap:
@@ -2360,7 +2362,8 @@ class SimulatingThread(QtCore.QThread):
             # self.output['timeseries']['I_DailyRainAmount'].append(np_utils.array_sum(I_DailyRainAmount))
             # self.output['timeseries']['D_SurfaceFlow'].append(np_utils.array_sum(D_SurfaceFlow))
 
-            excel_utils.write_params(self.sheet, time + 1,
+            excel_utils.write_params(self.waterBalanceSheet, time + 1,
+                                     'Days', time,
                                      'L_InFlowtoLake', L_InFlowtoLake,
                                      'I_RFlowdata_mmday', I_RFlowdata_mmday,
                                      'O_RainAcc', O_RainAcc,
@@ -2381,12 +2384,14 @@ class SimulatingThread(QtCore.QThread):
                                      'O_CumPercolation', O_CumPercolation,
                                      'O_CumSoilQFlow', O_CumSoilQFlow,
                                      'O_CumDeepInInflt', O_CumDeepInfilt,
+                                     )
+            excel_utils.write_params(self.heppSheet, time + 1,
+                                     'Days', time,
                                      'L_HEPPWatUseFlow', L_HEPPWatUseFlow,
                                      'L_LakeVol', L_LakeVol,
                                      'L_LakeLevel', L_LakeLevel,
                                      'L_HEPP_Kwh', L_HEPP_Kwh
                                      )
-
 
             # self.emit(QtCore.SIGNAL('update'), self.output, time)
             self.emit(QtCore.SIGNAL('update'), time)
@@ -2395,4 +2400,4 @@ class SimulatingThread(QtCore.QThread):
             time = time + dt
 
             if time >= self.simulationTime:
-                self.outputWb.save('output.xls')
+                self.outputWb.save('Output Timeseries.xls')
