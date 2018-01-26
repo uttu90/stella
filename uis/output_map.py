@@ -163,11 +163,11 @@ class OutputMap(
             self.timer.start(3000)
 
     def _get_landcover(self, time):
-        if time/365 < self.period[0]:
+        if time/365 <= self.period[0]:
             return self.landcoverArrays[0]
-        if time/365 > self.period[0] and time/365 < self.period[1]:
+        if time/365 > self.period[0] and time/365 <= self.period[1]:
             return self.landcoverArrays[1]
-        if time/365 > self.period[1] and time/365 < self.period[2]:
+        if time/365 > self.period[1] and time/365 <= self.period[2]:
             return self.landcoverArrays[2]
         if time/365 > self.period[2]:
             return self.landcoverArrays[3]
@@ -190,6 +190,8 @@ class OutputMap(
                     plt = axes.imshow(displayArray, cmap=cm)
                     self.fig.colorbar(plt)
                     axes.set_title(self.screens[screen])
+                    axes.xaxis.set_ticks([])
+                    axes.yaxis.set_ticks([])
                     # axes.xaxis.set_ticks([])
                     # axes.yaxis.set_ticks([])
                 else:
@@ -201,16 +203,16 @@ class OutputMap(
                             plt = axes.imshow(displayArray, cmap=self.landcoverCMaps)
                             self.fig.colorbar(plt, ticks=range(1, 22))
                             axes.set_title('landcover')
-                        # axes.xaxis.set_ticks([])
-                        # axes.yaxis.set_ticks([])
+                            axes.xaxis.set_ticks([])
+                            axes.yaxis.set_ticks([])
                         if self.screens['screen 1'] == 'Subcatchment map':
                             # displayArray = self.subcachmentArray
                             axes = self.fig.add_subplot(221)
                             plt = axes.imshow(self.subcachmentArray, cmap=self.subcatchmentCMaps)
                             self.fig.colorbar(plt, ticks=range(1, 21))
                             axes.set_title('subcatchment')
-                axes.xaxis.set_ticks([])
-                axes.yaxis.set_ticks([])
+                            axes.xaxis.set_ticks([])
+                            axes.yaxis.set_ticks([])
                 self.canvas.draw()
 
             self.lock = False
